@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-
 public class MainApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
