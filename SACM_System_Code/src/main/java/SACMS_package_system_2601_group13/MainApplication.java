@@ -20,24 +20,29 @@ public class MainApplication extends Application {
         primaryStage.show();
     }
 
-    public class DatabaseConnection {
-        public static Connection connect() throws SQLException {
+    public Connection connect() {
+        try {
             String url = "jdbc:mysql://localhost:3306/sacm_system";
             String username = "uzman";
             String password = "1234";
+            Connection connection = DriverManager.getConnection(url, username, password);
+            System.out.println("Connection successful!");
+            return connection;
+        } catch (SQLException e) {
+            System.out.println("Connection failed.");
+            e.printStackTrace();
 
-            return DriverManager.getConnection(url, username, password);
+            // ADD a prompt for the database connection failure alert box
+            return null;
         }
     }
 
     public static void main(String[] args) {
         try {
-            Connection connection = DatabaseConnection.connect();
+            MainApplication mainApplication = new MainApplication();
+            Connection connection = mainApplication.connect();
             if (connection != null) {
-                System.out.println("Connection successful!");
                 connection.close();
-            } else {
-                System.out.println("Connection failed.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
