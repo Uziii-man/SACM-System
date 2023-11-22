@@ -7,7 +7,7 @@ OOD CW --> Year 2 Sem 1
 3. Sign-up option with validation --> Haroon
 4. Sign-in option --> Gaindu
 5. Club advisor profile managment --> Seth
-6. Student advisor profile managment --> Gaindu
+6. Student profile managment --> Gaindu
 7. Club managment --> Seth
 8. Club creation --> Uzman
 9. Event handling --> Uzman
