@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="frontPane" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SACMS_package_system_2601_group13.MainController">
+   <children>
+      <Button layoutX="363.0" layoutY="151.0" mnemonicParsing="false" onAction="#signInOnActionButton" prefHeight="36.0" prefWidth="140.0" styleClass="mainButtons" stylesheets="@StyleSheet.css" text="Sign in">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <Button layoutX="366.0" layoutY="240.0" mnemonicParsing="false" onAction="#signUpClubAdvisorOnActionButton" prefHeight="36.0" prefWidth="134.0" styleClass="mainButtons" stylesheets="@StyleSheet.css" text="Sign up">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <Button layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#exitOnActionButton" prefHeight="25.0" prefWidth="50.0" styleClass="mainButtons" stylesheets="@StyleSheet.css" text="Exit" textFill="RED" />
+      <ImageView fitHeight="84.0" fitWidth="134.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/SACMS_logo.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student_Or_Advisor_ImageView" fitHeight="224.0" fitWidth="208.0" layoutX="109.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/club_advisor-preview.png" />
+         </image></ImageView>
+      <Button layoutX="536.0" layoutY="361.0" mnemonicParsing="false" onAction="#backOnActionButton" prefHeight="25.0" prefWidth="50.0" styleClass="mainButtons" stylesheets="@StyleSheet.css" text="Back" />
+   </children>
+</Pane>
