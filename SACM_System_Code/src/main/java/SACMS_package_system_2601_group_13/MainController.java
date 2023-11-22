@@ -1,9 +1,9 @@
-package com.example.sacm_system_code;
+package SACMS_package_system_2601_group_13;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class MainController {
     @FXML
     private Label welcomeText;
 

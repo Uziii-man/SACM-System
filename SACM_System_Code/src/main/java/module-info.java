@@ -3,6 +3,6 @@ module com.example.sacm_system_code {
     requires javafx.fxml;
 
 
-    opens com.example.sacm_system_code to javafx.fxml;
-    exports com.example.sacm_system_code;
+    opens SACMS_package_system_2601_group_13 to javafx.fxml;
+    exports SACMS_package_system_2601_group_13;
 }
