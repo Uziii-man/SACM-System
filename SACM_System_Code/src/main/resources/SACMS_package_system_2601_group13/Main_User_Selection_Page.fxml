@@ -9,11 +9,11 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="frontPane" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SACMS_package_system_2601_group13.MainController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="backgroundColor" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SACMS_package_system_2601_group13.MainController">
    <children>
-      <Button layoutX="14.0" layoutY="362.0" mnemonicParsing="false" onAction="#exitOnActionButton" prefHeight="25.0" prefWidth="47.0" styleClass="mainButtons" stylesheets="@StyleSheet.css" text="Exit" textFill="RED" />
-      <Button layoutX="520.0" layoutY="362.0" mnemonicParsing="false" onAction="#aboutUsOnActionButton" styleClass="mainButtons" stylesheets="@StyleSheet.css" text="About Us" />
-      <Button layoutX="77.0" layoutY="135.0" mnemonicParsing="false" onAction="#studentProfileOnActionClickButton" prefHeight="190.0" prefWidth="193.0" styleClass="mainButtons" stylesheets="@StyleSheet.css" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS">
+      <Button layoutX="14.0" layoutY="362.0" mnemonicParsing="false" onAction="#exitOnActionButton" prefHeight="25.0" prefWidth="47.0" styleClass="button" stylesheets="@StyleSheet.css" text="Exit" textFill="RED" />
+      <Button layoutX="520.0" layoutY="362.0" mnemonicParsing="false" onAction="#aboutUsOnActionButton" styleClass="button" stylesheets="@StyleSheet.css" text="About Us" />
+      <Button layoutX="77.0" layoutY="135.0" mnemonicParsing="false" onAction="#studentProfileOnActionClickButton" prefHeight="190.0" prefWidth="193.0" styleClass="button" stylesheets="@StyleSheet.css" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS">
          <font>
             <Font size="36.0" />
          </font>
@@ -25,7 +25,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="340.0" layoutY="135.0" mnemonicParsing="false" onAction="#clubAdvisorProfileOnActionClickButton" prefHeight="190.0" prefWidth="193.0" styleClass="mainButtons" stylesheets="@StyleSheet.css" textAlignment="JUSTIFY">
+      <Button layoutX="340.0" layoutY="135.0" mnemonicParsing="false" onAction="#clubAdvisorProfileOnActionClickButton" prefHeight="190.0" prefWidth="193.0" styleClass="button" stylesheets="@StyleSheet.css" textAlignment="JUSTIFY">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>

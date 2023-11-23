@@ -1,9 +1,8 @@
 .backgroundColor{
-    -fx-background-color: linear-gradient(to left, #EFE9F4, #676a77);
-    -fx-border-color: black;
+    -fx-background-color: linear-gradient(to bottom,#EBEBEB, #45495b)
 }
 
-.mainButtons {
+.button {
     -fx-background-radius: 12;
     -fx-background-color: #d0cdcd;
 }
@@ -18,13 +17,7 @@
     -fx-scale-x: 0.9;
 }
 
-.text-area {
+.textField {
     -fx-background-radius: 10px;
 }
 
-.frontPane {
-    -fx-background-color: linear-gradient(to bottom,#EBEBEB, #45495b)}
-
-.anchorPaneTextField{
-    -fx-border-color: black;
-}
