@@ -4,7 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
-public class UserValidation {
+public class Validation {
     boolean isValidData;
 
     // For ID validation

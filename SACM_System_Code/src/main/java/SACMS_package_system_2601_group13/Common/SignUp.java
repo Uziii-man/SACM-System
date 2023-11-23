@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
-public class SignUp extends UserValidation {
+public class SignUp extends Validation {
     @FXML
     private TextField firstNameTextArea, lastNameTextArea, staffIDTextArea, studentIDTextArea, gradeTextArea,
     emailTextArea, passwordTextArea, rePasswordTextArea;
