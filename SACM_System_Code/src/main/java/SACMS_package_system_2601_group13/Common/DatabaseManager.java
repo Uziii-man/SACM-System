@@ -51,7 +51,7 @@ public class DatabaseManager {
     }
 
     // Alert Boxes to successful sign up
-    public void userCreateAlertFunctionBox(String[] userHeader, ArrayList<String> userDetailsArray, String alertTitle, String headerText){
+    public void userCreateAlertFunctionBox(String[] userHeader, ArrayList<Object> userDetailsArray, String alertTitle, String headerText){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(alertTitle);
         alert.setHeaderText(headerText);

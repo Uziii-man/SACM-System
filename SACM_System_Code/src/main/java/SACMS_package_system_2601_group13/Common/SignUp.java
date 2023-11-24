@@ -22,8 +22,6 @@ public class SignUp extends Validation {
     MainController mainController = new MainController();
     DatabaseManager databaseManager= new DatabaseManager();
 
-
-
     boolean commonValidationChecker;
     private void commonValidationChecker(){
         // Getting validation in terms of boolean from the UserValidator class
@@ -76,29 +74,24 @@ public class SignUp extends Validation {
         System.out.print("end of club valid");
         // check if all the criteria are valid to signup
         if (commonValidationChecker && isValidStaffID){
-            // Adding details into an arraylist
             String[] clubAdvisorHeader = {"Staff ID", "First Name", "Last Name", "Email", "Password"};
             // Query for club advisor table to insert data
             String insertQuery = "INSERT INTO club_advisor (StaffID, FirstName, LastName, Email, Password) " +
                     "VALUES (?, ?, ?, ?, ?)";
-
-            ArrayList<String> clubAdvisorDetailsArrayList = new ArrayList<>(Arrays.asList(
+            // Adding details into an arraylist
+            ArrayList<Object> clubAdvisorDetailsArrayList = new ArrayList<>(Arrays.asList(
                     staffIDTextField.getText(),
                     firstNameTextField.getText(),
                     lastNameTextField.getText(),
                     emailTextField.getText(),
                     passwordTextField.getText()));
 
+            // Add details and update the database
+            InsertRecords insertClubAdvisorRecords = new InsertRecords(clubAdvisorDetailsArrayList, insertQuery);
+
             // Alert box
             databaseManager.userCreateAlertFunctionBox(clubAdvisorHeader, clubAdvisorDetailsArrayList,
                     "ClubAdvisor SignUp ", "You have SignUp as Club Advisor Successfully");
-
-            System.out.println("validation success");
-
-            // Add details and update the database
-            InsertRecords insertRecords = new InsertRecords(clubAdvisorDetailsArrayList, insertQuery);
-
-            System.out.print("added success");
 
             // No need to reset all the text area and label cause ones it moves to another pane it automatically resets.
             // if all the entered details are correct it will navigate to the signIn Page to log to the profile
@@ -124,13 +117,12 @@ public class SignUp extends Validation {
 
         // If all the details entered are correct
         if (commonValidationChecker && isValidStudentID && isValidGrade) {
-            // Adding details into an arraylist
             String[] studentHeader = {"Staff ID", "First Name", "Last Name", "Grade", "Email", "Password"};
             // Query for student table to insert data
             String insertQuery = "INSERT INTO student (StudentID, FirstName, LastName, Grade, Email, Password) " +
                     "VALUES (?, ?, ?, ?, ?, ?)";
             // Adding student details to an arraylist
-            ArrayList<String> studentDetailsArrayList = new ArrayList<>(Arrays.asList(
+            ArrayList<Object> studentDetailsArrayList = new ArrayList<>(Arrays.asList(
                     studentIDTextField.getText(),
                     firstNameTextField.getText(),
                     lastNameTextField.getText(),
@@ -138,12 +130,12 @@ public class SignUp extends Validation {
                     emailTextField.getText(),
                     passwordTextField.getText()));
 
+            // Add details and update the database
+            InsertRecords insertStudentRecords = new InsertRecords(studentDetailsArrayList , insertQuery);
+
             // Alert box
             databaseManager.userCreateAlertFunctionBox(studentHeader, studentDetailsArrayList,
                     "Club Advisor SignUp Alert Box", "You have SignUp as Student Successfully");
-
-            // Add details and update the database
-            InsertRecords insertRecords = new InsertRecords(studentDetailsArrayList , insertQuery);
 
             // if all the entered details are correct it will navigate to the signIn Page to log to the profile
             mainController.navigateFunction(actionEvent, "SignIn_Page.fxml", "Student SignIn");

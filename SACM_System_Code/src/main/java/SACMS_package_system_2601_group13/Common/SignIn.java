@@ -15,10 +15,10 @@ public class SignIn {
     private Label IDErrorLabel, passwordErrorLabel;
 
     // Getters and setters for the user ID
-    private static String userID;
-    public String getUserID() {return userID;}
-    public void setUserID(String userID) {
-        SignIn.userID = userID;
+    private static String loginUserID;
+    public String getLoginUserID() {return loginUserID;}
+    public void setLoginUserID(String userID) {
+        loginUserID = userID;
     }
 
     // Getters and setters for the user password
@@ -36,14 +36,14 @@ public class SignIn {
     @FXML
     protected void loginOnActionButton(ActionEvent actionEvent) throws IOException {
         // Get the entered username and password
-        setUserID(IDTextField.getText());
+        setLoginUserID(IDTextField.getText());
         setUserPassword(passwordTextField.getText());
 
         // To check if the user is a club advisor or student
         // If the user has selected club advisor previously
         if (mainController.getUserProfileClubAdvisor()) {
             // Validate the username and password
-            if(findRecords.validateLogin(getUserID(), getUserPassword(), "club_advisor", "StaffID",
+            if(findRecords.validateLogin(getLoginUserID(), getUserPassword(), "club_advisor", "StaffID",
                     5, IDErrorLabel, passwordErrorLabel)){
                 System.out.println("Club advisor login correct");
 
@@ -53,7 +53,7 @@ public class SignIn {
         }
         // If the user has selected student previously
         else {
-            if (findRecords.validateLogin(getUserID(), getUserPassword(), "student", "StudentID",
+            if (findRecords.validateLogin(getLoginUserID(), getUserPassword(), "student", "StudentID",
                     6, IDErrorLabel, passwordErrorLabel)) {
                 System.out.println("Student login correct");
 

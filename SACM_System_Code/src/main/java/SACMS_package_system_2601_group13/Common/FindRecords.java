@@ -38,8 +38,6 @@ public class FindRecords {
         }
     }
 
-
-
     // To validate login
     public boolean validateLogin(String enteredUsername, String enteredPassword, String tableName,
             String IDName, int passwordColumnNo, Label IDErrorLabel, Label passwordErrorLabel) {

@@ -7,10 +7,9 @@ import javafx.scene.paint.Color;
 
 public class Validation {
     boolean isValidData;
-FindRecords findRecords = new FindRecords();
+    FindRecords findRecords = new FindRecords();
 
     // For ID validation
-    // For staff ID validation
     private String userID;
 
     public void setUserID(String userID) {
@@ -24,7 +23,6 @@ FindRecords findRecords = new FindRecords();
     // ID validation common for both club advisor and student accept for the parameters in validation
     public boolean IDValidator(Label labelID, TextField textFieldID, String IDPattern, int requiredLength, String tableName, String columName) {
         isValidData = false;
-//        String userID = textFieldID.getText(); // assuming this is your input ID
 
         // Length validation
         if (userID.length() != requiredLength) {
@@ -54,9 +52,6 @@ FindRecords findRecords = new FindRecords();
         return isValidData;
     }
 
-
-
-    // Common validation for both student and club advisor and club
     // first name and last name validation will be same in validation and parameters (assumption)
     // name validation
     private String name;
@@ -263,7 +258,7 @@ FindRecords findRecords = new FindRecords();
             textAreaDescription.clear();
         } else {
             // Character validation
-            if (!getClubDescription().matches("[a-zA-Z0-9]+")) {
+            if (!getClubDescription().matches("[a-zA-Z0-9 ]+")) {
                 labelDescription.setTextFill(Color.RED);
                 labelDescription.setText("Description must contain only numbers and alphabets");
                 textAreaDescription.clear();
@@ -274,10 +269,6 @@ FindRecords findRecords = new FindRecords();
                 isValidData = true;
             }
         }
-
         return isValidData;
     }
-
-
-
 }

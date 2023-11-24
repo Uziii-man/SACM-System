@@ -1,15 +1,17 @@
 package SACMS_package_system_2601_group13.ClubAdvisor;
 
-import SACMS_package_system_2601_group13.Common.FindRecords;
-import SACMS_package_system_2601_group13.Common.InsertRecords;
-import SACMS_package_system_2601_group13.Common.SignIn;
-import SACMS_package_system_2601_group13.Common.Validation;
+import SACMS_package_system_2601_group13.Common.*;
 import SACMS_package_system_2601_group13.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ClubManagement {
     @FXML
@@ -23,10 +25,10 @@ public class ClubManagement {
     MainController mainController = new MainController();
     Validation validation = new Validation();
     FindRecords findRecords = new FindRecords();
+    DatabaseManager databaseManager = new DatabaseManager();
     SignIn signIn = new SignIn();
 
-
-    // if the club advisor wants to create a club after navigating to club creation page
+    // If the club advisor wants to create a club after navigating to club creation page
     @FXML
     protected void createClubOnActionButton(ActionEvent actionEvent) throws Exception {
         // setting up the club details using getters in the validation class
@@ -40,22 +42,51 @@ public class ClubManagement {
         validation.setClubDescription(clubDescriptionTextArea.getText());
         boolean isValidClubDescription = validation.clubDescriptionValidator(clubDescriptionErrorLabel, clubDescriptionTextArea);
 
+        // If all the details added are correct
         if(isValidClubName && isValidClubAbbreviation && isValidClubDescription){
+            // Get the current date in the local desktop's time zone
+            LocalDate currentDate = LocalDate.now();
+            // Convert to java.sql.Date for insertion into the database
+            Date ClubOriginDate = Date.valueOf(currentDate);
+
+            // For the club table
+            // Query for club table to insert data
+            String clubDataInsertQuery = "INSERT INTO club (ClubName, ClubAbbreviation, ClubOriginDate, ClubDescription) VALUES (?, ?, ?, ?)";
+
+            // Adding club details into an arraylist
+            ArrayList<Object> clubDetailsArrayList = new ArrayList<>(Arrays.asList(
+                    clubNameTextField.getText(),
+                    clubAbbreviationTextField.getText(),
+                    ClubOriginDate,
+                    clubDescriptionTextArea.getText()));
+
+            // Add details and update the database of the club table
+            InsertRecords insertClubRecords = new InsertRecords(clubDetailsArrayList, clubDataInsertQuery);
+
+            // For the club and club advisor relation table
+            // Query for club and club advisor relation table to insert data
+            String club_and_advisorDataInsertQuery = "INSERT INTO club_and_club_advisor (ClubID, StaffID, JoinDate) VALUES (?, ?, ?)";
+
+            System.out.println(signIn.getLoginUserID());
+
+            ArrayList<Object> club_clubAdvisorDetailsArrayList = new ArrayList<>(Arrays.asList(
+                    findRecords.getClubIdByClubName(validation.getName()),
+                    signIn.getLoginUserID(),
+                    ClubOriginDate));
+
+            // Add details into the club and club advisor relationship table
+            InsertRecords insertClubAndAdvisorRecords = new InsertRecords(club_clubAdvisorDetailsArrayList, club_and_advisorDataInsertQuery);
+
+            // Alert box
             // if all the details are valid it will display an alert box showing all the details
+            String[] clubHeader = {"Club Name" ,"Club Abbreviation", "Club Origin Date", "Club Description"};
 
-            // add the details the club table in database
-            InsertRecords clubRecords = new InsertRecords(validation.getName(), validation.getClubAbbreviation(), validation.getClubDescription());
+            databaseManager.userCreateAlertFunctionBox(clubHeader, clubDetailsArrayList,
+                    "Club Creation", "You have created a club successfully");
 
-            // add details into the club and club advisor relationship table
-            InsertRecords clubAndAdvisorRecords = new InsertRecords(findRecords.getClubIdByClubName(validation.getName()), signIn.getUserID());
-
-            // add an alert box
-            // ???????????????
-
-            // then navigate to the club advisor profile
+            // Then navigate to the club advisor profile
             mainController.navigateFunction(actionEvent, "Club_Advisor_Profile.fxml", "Club Advisor");
         }
-
     }
 
     // if the club advisor wants to go back from the system
