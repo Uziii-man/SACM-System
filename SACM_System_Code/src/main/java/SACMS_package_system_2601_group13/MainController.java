@@ -57,7 +57,7 @@ public class MainController {
     @FXML
     protected void signUpClubAdvisorOnActionButton(ActionEvent actionEvent) throws Exception{
         // signUp --> student
-        navigateFunction(actionEvent, "Signup_ClubAdvisor_Page.fxml", "Club Advisor SignUp");
+        navigateFunction(actionEvent, "SignUp_ClubAdvisor_Page.fxml", "Club Advisor SignUp");
     }
 
     //  To the signUp Page -->  Student

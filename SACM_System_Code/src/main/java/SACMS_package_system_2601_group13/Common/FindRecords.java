@@ -12,12 +12,9 @@ import java.sql.SQLException;
 public class FindRecords {
     // checking if the primary key exist in the table
     // Method to check if a primary key exists in the database
-    public boolean isPrimaryKeyValid(String primaryKey, String tableName, String columnName, Label labelID,
-                                     TextField textFieldID) {
+    public boolean isPrimaryKeyValid(String primaryKey, String tableName, String columnName) {
         // Connecting to the database via DatabaseManager Class
         try (Connection connection = DatabaseManager.connect()) {
-            System.out.println("in primary method");
-
             // Query to find the primary key
             String selectQuery = "SELECT * FROM " + tableName + " WHERE " + columnName + " = ?";
 
@@ -26,21 +23,12 @@ public class FindRecords {
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     // If there is at least one result, the primary key exists
-                    if (resultSet.next()) {
-                        // Primary key is not valid
-                        labelID.setTextFill(Color.RED);
-                        labelID.setText("ID already exists");
-                        textFieldID.clear();
-                        return false;
-                    } else {
-                        // Primary key is valid
-                        labelID.setTextFill(Color.GREEN);
-                        labelID.setText("ID is valid");
-                        return true;
-                    }
+                    System.out.println("result set is found");
+                    return !resultSet.next();
                 }
             }
         } catch (SQLException e) {
+            System.out.println("printStackTrace");
             e.printStackTrace();
             // Error occurred, treat as if primary key does not exist
             return false;
@@ -49,6 +37,8 @@ public class FindRecords {
             DatabaseManager.closeConnection();
         }
     }
+
+
 
     // To validate login
     public boolean validateLogin(String enteredUsername, String enteredPassword, String tableName,

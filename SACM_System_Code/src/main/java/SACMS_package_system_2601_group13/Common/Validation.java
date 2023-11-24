@@ -7,62 +7,54 @@ import javafx.scene.paint.Color;
 
 public class Validation {
     boolean isValidData;
+FindRecords findRecords = new FindRecords();
 
     // For ID validation
-    String IDPattern;
-    int requiredLength;
-
     // For staff ID validation
-    private String staffID;
+    private String userID;
 
-    // main usage of both these getters and setters is to give values of ID pattern and required length
-    public void setStaffID(String staffID) {
-        this.staffID = staffID;
+    public void setUserID(String userID) {
+        this.userID = userID;
         // Pattern for the staffID: starts with "stf" followed by exactly 4 digits
-        IDPattern = "stf\\d{4}";
-        requiredLength = 7;
     }
-
-    public String getStaffID() {
-        return staffID;
-    }
-
-    // For student ID validation
-    private String studentID;
-
-    public void setStudentID(String studentID) {
-        this.studentID = studentID;
-        // Pattern for the staffID: starts with "stu" followed by exactly 5 digits
-        IDPattern = "stu\\d{5}";
-        requiredLength = 8;
-    }
-    public String getStudentID() {
-        return studentID;
+    public String getUserID() {
+        return userID;
     }
 
     // ID validation common for both club advisor and student accept for the parameters in validation
-    public boolean IDValidator(Label labelID, TextField textFieldID, String ID) {
+    public boolean IDValidator(Label labelID, TextField textFieldID, String IDPattern, int requiredLength, String tableName, String columName) {
         isValidData = false;
+//        String userID = textFieldID.getText(); // assuming this is your input ID
+
         // Length validation
-        if (ID.length() != requiredLength) {
+        if (userID.length() != requiredLength) {
             labelID.setTextFill(Color.RED);
             labelID.setText("ID must be " + requiredLength + " characters");
             textFieldID.clear();
         } else {
             // Format validation
-            if (!ID.matches(IDPattern)) {
+            if (!userID.matches(IDPattern)) {
                 labelID.setTextFill(Color.RED);
                 labelID.setText("Invalid ID format");
                 textFieldID.clear();
             } else {
-                // Valid staffID
-                labelID.setTextFill(Color.GREEN);
-                labelID.setText("ID is Valid");
-                isValidData = true;
+                // Check if ID exists in the database
+                if (findRecords.isPrimaryKeyValid(userID, tableName, columName)) {
+                    // ID available
+                    labelID.setTextFill(Color.GREEN);
+                    labelID.setText("ID Valid");
+                    isValidData = true;
+                } else {
+                    // ID already exists in the database
+                    labelID.setTextFill(Color.RED);
+                    labelID.setText("ID Exists");
+                }
             }
         }
         return isValidData;
     }
+
+
 
     // Common validation for both student and club advisor and club
     // first name and last name validation will be same in validation and parameters (assumption)

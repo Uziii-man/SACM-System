@@ -1,8 +1,11 @@
 package SACMS_package_system_2601_group13.Common;
 
+import javafx.scene.control.Alert;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class DatabaseManager {
 
@@ -36,5 +39,29 @@ public class DatabaseManager {
                 connection = null; // Reset the connection reference
             }
         }
+    }
+
+    // Alert Boxes
+    public void alertFunctionBox(String alertTitle, String headerText, String alertText){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(alertTitle);
+        alert.setHeaderText(headerText);
+        alert.setContentText(alertText);
+        alert.showAndWait();
+    }
+
+    // Alert Boxes to successful sign up
+    public void userCreateAlertFunctionBox(String[] userHeader, ArrayList<String> userDetailsArray, String alertTitle, String headerText){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(alertTitle);
+        alert.setHeaderText(headerText);
+
+        StringBuilder message = new StringBuilder();
+        // To show the driver details in each line
+        for (int i = 0; i < userHeader.length; i++) {
+            message.append(userHeader[i]).append(" : ").append(userDetailsArray.get(i)).append("\n");
+        }
+        alert.setContentText(message.toString());
+        alert.showAndWait();
     }
 }
