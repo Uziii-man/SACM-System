@@ -1,6 +1,7 @@
 package SACMS_package_system_2601_group13.TableView;
 
 public class TableViewEncapsulation {
+    // Encapsulating the data from the database
     private String clubID;
     private String clubName;
     private String clubDescription;

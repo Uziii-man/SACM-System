@@ -87,14 +87,14 @@ public class ClubManagement {
         }
     }
 
-    // if the club advisor wants to go back from the system
+    // If the club advisor wants to go back from the system
     @FXML
     protected void backOnActionButton(ActionEvent actionEvent) throws Exception {
         mainController.navigateFunction(actionEvent, "Club_Advisor_Profile.fxml", "Club Advisor");
     }
 
 
-    // if the club advisor wants to signOut from the system
+    // If the club advisor wants to signOut from the system
     @FXML
     protected void signOutOnActionButton(ActionEvent actionEvent) throws Exception {
         mainController.navigateFunction(actionEvent, "Main_User_Selection_Page.fxml", "SACM System");

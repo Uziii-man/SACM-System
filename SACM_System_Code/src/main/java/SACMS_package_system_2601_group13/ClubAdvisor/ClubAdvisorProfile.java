@@ -9,27 +9,17 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 public class ClubAdvisorProfile {
-    @FXML
-    private TableView<TableViewEncapsulation> viewClubsTable;
-    @FXML
-    private TableColumn<TableViewEncapsulation, String> clubIDColumn;
-    @FXML
-    private TableColumn<TableViewEncapsulation, String> clubNameColumn;
-    @FXML
-    private TableColumn<TableViewEncapsulation, String> clubDescriptionColumn;
-    MainController mainController = new MainController();
-    TableViewController tableViewController = new TableViewController();
 
-    Runnable viewClub = () -> tableViewController.viewTable(viewClubsTable, clubIDColumn, clubNameColumn, clubDescriptionColumn);
+    MainController mainController = new MainController();
+
 
     // If the club advisor wants to view all the available club and details in a table
     @FXML
     protected void viewClubsOnActionButton(ActionEvent actionEvent) throws Exception {
         mainController.navigateFunction(actionEvent, "ViewSelectClubs.fxml", "SACM System");
-        System.out.println("panel loaded jigi jigi");
-        viewClub.run();
-        System.out.println("in runnable");
+        System.out.println("Directing to View Clubs");
     }
+
 
     // If the club advisor wants to create a club
     @FXML
