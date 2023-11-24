@@ -1,8 +1,10 @@
 package SACMS_package_system_2601_group13.Common;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class InsertRecords {
     // Method to add staff details
@@ -70,4 +72,67 @@ public class InsertRecords {
             System.err.println("Error adding student information: " + e.getMessage());
         }
     }
+
+    // Method to insert Club Data
+    public InsertRecords(String ClubName, String ClubAbbreviation, String ClubDescription) {
+        // Connecting to the database via DatabaseManager Class
+        Connection connection = DatabaseManager.connect();
+
+        String INSERT_QUERY = "INSERT INTO club (ClubName, ClubAbbreviation, ClubOriginDate, ClubDescription) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY)) {
+            // Set parameters for the PreparedStatement
+            preparedStatement.setString(1, ClubName);
+            preparedStatement.setString(2, ClubAbbreviation);
+
+            // Get the current date in the local desktop's time zone
+            LocalDate currentDate = LocalDate.now();
+            // Convert to java.sql.Date for insertion into the database
+            Date ClubOriginDate = Date.valueOf(currentDate);
+            preparedStatement.setDate(3, ClubOriginDate);
+
+            preparedStatement.setString(4, ClubDescription);
+
+            // Execute the insert statement
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Data inserted successfully!");
+            } else {
+                System.out.println("Failed to insert data.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Method to insert data to club and advisor relation table
+    public InsertRecords(int ClubID, String StaffID){
+        // Connecting to the database via DatabaseManager Class
+        Connection connection = DatabaseManager.connect();
+
+        String INSERT_QUERY = "INSERT INTO club_and_club_advisor (ClubID, StaffID, JoinDate) VALUES (?, ?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY)) {
+            // Set parameters for the PreparedStatement
+            preparedStatement.setInt(1, ClubID);
+            preparedStatement.setString(2, StaffID);
+            // Get the current date in the local desktop's time zone
+            LocalDate currentDate = LocalDate.now();
+            // Convert to java.sql.Date for insertion into the database
+            Date JoinDate = Date.valueOf(currentDate);
+            preparedStatement.setDate(3, JoinDate);
+
+            // Execute the insert statement
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Data inserted successfully!");
+            } else {
+                System.out.println("Failed to insert data.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
