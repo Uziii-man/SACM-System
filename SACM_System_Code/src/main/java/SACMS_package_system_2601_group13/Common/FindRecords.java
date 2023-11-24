@@ -51,8 +51,7 @@ public class FindRecords {
     }
 
     // To validate login
-    public boolean validateLogin(
-            String enteredUsername, String enteredPassword, String tableName,
+    public boolean validateLogin(String enteredUsername, String enteredPassword, String tableName,
             String IDName, int passwordColumnNo, Label IDErrorLabel, Label passwordErrorLabel) {
 
         boolean isValidLogin = false;
@@ -115,34 +114,56 @@ public class FindRecords {
     }
 
     // To find Club Advisor and Student Records
-    SignIn signIn = new SignIn();
-    public String retrieveUserDetails(String tableName, String userIDName,int passwordColumnNo) {
-        String userDetails = null;
-        String userID = signIn.getUserID();
-        String password = signIn.getUserPassword();
+//    SignIn signIn = new SignIn();
+//    public String retrieveUserDetails(String tableName, String userIDName,int passwordColumnNo) {
+//        String userDetails = null;
+//        String userID = signIn.getUserID();
+//        String password = signIn.getUserPassword();
+//
+//        String SELECT_DETAILS_QUERY = "SELECT details FROM " + tableName + " WHERE " + userIDName +
+//                " = ? AND password = ?";
+//
+//        try (Connection connection = DatabaseManager.connect();
+//             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DETAILS_QUERY)) {
+//
+//            // Set parameters for the query
+//            preparedStatement.setString(1, userID);
+//            preparedStatement.setString(passwordColumnNo, password);
+//
+//            // Execute the query
+//            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+//                if (resultSet.next()) {
+//                    // Retrieve the details column value
+//                    userDetails = resultSet.getString("details");
+//                    System.out.println(userDetails);
+//                }
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return userDetails;
+//    }
 
-        String SELECT_DETAILS_QUERY = "SELECT details FROM " + tableName + " WHERE " + userIDName +
-                " = ? AND password = ?";
+    // get the club ID
+    public int getClubIdByClubName(String clubName) {
+        // Default value if the club is not found
+        int clubId = -1;
+        String SEARCH_QUERY = "SELECT ClubID FROM club WHERE ClubName = ?";
+        Connection connection = DatabaseManager.connect();
 
-        try (Connection connection = DatabaseManager.connect();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DETAILS_QUERY)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SEARCH_QUERY)) {
+            preparedStatement.setString(1, clubName);
 
-            // Set parameters for the query
-            preparedStatement.setString(1, userID);
-            preparedStatement.setString(passwordColumnNo, password);
-
-            // Execute the query
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    // Retrieve the details column value
-                    userDetails = resultSet.getString("details");
-                    System.out.println(userDetails);
+                    // Retrieve the ClubID if a matching record is found
+                    clubId = resultSet.getInt("ClubID");
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return userDetails;
-    }
 
+        return clubId;
+    }
 }
