@@ -5,23 +5,23 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="frontPane" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SACMS_package_system_2601_group13.MainController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="backgroundColor" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SACMS_package_system_2601_group13.MainController">
     <children>
-        <Button layoutX="363.0" layoutY="151.0" mnemonicParsing="false" onAction="#signInOnActionButton" prefHeight="36.0" prefWidth="140.0" styleClass="mainButtons" stylesheets="@StyleSheet.css" text="Sign in">
+        <Button layoutX="363.0" layoutY="151.0" mnemonicParsing="false" onAction="#signInOnActionButton" prefHeight="36.0" prefWidth="140.0" styleClass="button" stylesheets="@StyleSheet.css" text="Sign in">
             <font>
                 <Font size="14.0" />
             </font></Button>
-        <Button layoutX="366.0" layoutY="240.0" mnemonicParsing="false" onAction="#signUpStudentOnActionButton" prefHeight="36.0" prefWidth="134.0" styleClass="mainButtons" stylesheets="@StyleSheet.css" text="Sign up">
+        <Button layoutX="366.0" layoutY="240.0" mnemonicParsing="false" onAction="#signUpStudentOnActionButton" prefHeight="36.0" prefWidth="134.0" styleClass="button" stylesheets="@StyleSheet.css" text="Sign up">
             <font>
                 <Font size="14.0" />
             </font></Button>
-        <Button layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#exitOnActionButton" prefHeight="25.0" prefWidth="50.0" styleClass="mainButtons" stylesheets="@StyleSheet.css" text="Exit" textFill="RED" />
+        <Button layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#exitOnActionButton" prefHeight="25.0" prefWidth="50.0" styleClass="button" stylesheets="@StyleSheet.css" text="Exit" textFill="RED" />
         <ImageView fitHeight="83.0" fitWidth="134.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
             <Image url="@Images/SACMS_logo.png" />
         </ImageView>
         <ImageView fitHeight="224.0" fitWidth="208.0" layoutX="109.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
             <Image url="@Images/student-preview.png" />
         </ImageView>
-        <Button layoutX="536.0" layoutY="361.0" mnemonicParsing="false" onAction="#backOnActionButton" prefHeight="25.0" prefWidth="50.0" styleClass="mainButtons" stylesheets="@StyleSheet.css" text="Back" />
+        <Button layoutX="536.0" layoutY="361.0" mnemonicParsing="false" onAction="#backOnActionButton" prefHeight="25.0" prefWidth="50.0" styleClass="button" stylesheets="@StyleSheet.css" text="Back" />
     </children>
 </Pane>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="backgroundColor" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SACMS_package_system_2601_group13.Student.StudentPersonalDetailsEdit">
+   <children>
+      <ImageView fitHeight="69.0" fitWidth="107.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/SACMS_logo.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="137.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Student Profile" textAlignment="CENTER" wrappingWidth="325.13671875">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Button layoutX="24.0" layoutY="361.0" mnemonicParsing="false" onAction="#backOnActionButton" styleClass="button" stylesheets="@StyleSheet.css" text="Back" />
+      <Button layoutX="523.0" layoutY="361.0" mnemonicParsing="false" onAction="#signOutOnActionButton" styleClass="button" stylesheets="@StyleSheet.css" text="SignOut" textFill="RED" />
+      <Button layoutX="272.0" layoutY="367.0" mnemonicParsing="false" onAction="#updateOnActionButton" styleClass="button" stylesheets="@StyleSheet.css" text="Update" textFill="#01835c" />
+      <Text layoutX="151.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name" />
+      <Text layoutX="408.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
+      <Text layoutX="155.0" layoutY="284.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
+      <Text layoutX="394.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name" />
+      <Text layoutX="164.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Grade" />
+      <TextField fx:id="firstNameTextField" layoutX="112.0" layoutY="152.0" prefHeight="25.0" prefWidth="135.0" styleClass="textField" stylesheets="@StyleSheet.css" />
+      <TextField fx:id="lastNameTextField" layoutX="355.0" layoutY="152.0" prefHeight="25.0" prefWidth="135.0" styleClass="textField" stylesheets="@StyleSheet.css" />
+      <TextField fx:id="gradeTextField" layoutX="131.0" layoutY="218.0" prefHeight="25.0" prefWidth="97.0" styleClass="textField" stylesheets="@StyleSheet.css" />
+      <Text layoutX="384.0" layoutY="284.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Re - Password" />
+      <TextField fx:id="emailTextField" layoutX="324.0" layoutY="218.0" prefHeight="25.0" prefWidth="196.0" styleClass="textField" stylesheets="@StyleSheet.css" />
+      <TextField fx:id="passwordTextField" layoutX="112.0" layoutY="288.0" prefHeight="25.0" prefWidth="135.0" styleClass="textField" stylesheets="@StyleSheet.css" />
+      <TextField fx:id="rePasswordTextField" layoutX="355.0" layoutY="288.0" prefHeight="25.0" prefWidth="135.0" styleClass="textField" stylesheets="@StyleSheet.css" />
+      <Text layoutX="168.0" layoutY="357.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To Update Details Please Press the Update Button" />
+      <Label fx:id="firstNameErrorLabel" layoutX="105.0" layoutY="173.0" prefHeight="17.0" prefWidth="150.0" textAlignment="CENTER" />
+      <Label fx:id="lastNameErrorLabel" layoutX="347.0" layoutY="173.0" prefHeight="17.0" prefWidth="150.0" textAlignment="CENTER" />
+      <Label fx:id="gradeErrorLabel" layoutX="105.0" layoutY="243.0" prefHeight="17.0" prefWidth="150.0" textAlignment="CENTER" />
+      <Label fx:id="emailErrorLabel" layoutX="319.0" layoutY="243.0" prefHeight="17.0" prefWidth="206.0" textAlignment="CENTER" />
+      <Label fx:id="passwordErrorLabel" layoutX="105.0" layoutY="313.0" prefHeight="17.0" prefWidth="150.0" textAlignment="CENTER" />
+      <Label fx:id="rePasswordErrorLabel" layoutX="348.0" layoutY="313.0" prefHeight="17.0" prefWidth="150.0" textAlignment="CENTER" />
+      <Label fx:id="UserIDLabel" layoutX="461.0" layoutY="14.0" prefHeight="25.0" prefWidth="122.0" />
+      <Label fx:id="passwordMismatchErrorLabel" layoutX="186.0" layoutY="330.0" prefHeight="17.0" prefWidth="222.0" textAlignment="CENTER" />
+   </children>
+</AnchorPane>
