@@ -7,10 +7,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
-public class SignUp extends UserValidation {
+public class SignUp extends Validation {
     @FXML
-    private TextField firstNameTextArea, lastNameTextArea, staffIDTextArea, studentIDTextArea, gradeTextArea,
-    emailTextArea, passwordTextArea, rePasswordTextArea;
+    private TextField firstNameTextField, lastNameTextField, staffIDTextField, studentIDTextField, gradeTextField,
+            emailTextField, passwordTextField, rePasswordTextField;
 
     @FXML
     private Label firstNameErrorLabel, lastNameErrorLabel, staffIDErrorLabel, studentIDErrorLabel, gradeErrorLabel,
@@ -23,32 +23,32 @@ public class SignUp extends UserValidation {
         // Getting validation in terms of boolean from the UserValidator class
         commonValidationChecker = false;
         // first name validation
-        setName(firstNameTextArea.getText());
-        boolean isValidFirstName = nameValidator(firstNameErrorLabel, firstNameTextArea);
+        setName(firstNameTextField.getText());
+        boolean isValidFirstName = nameValidator(firstNameErrorLabel, firstNameTextField);
         // last name validation
-        setName(lastNameTextArea.getText());
-        boolean isValidLastName = nameValidator(lastNameErrorLabel, lastNameTextArea);
+        setName(lastNameTextField.getText());
+        boolean isValidLastName = nameValidator(lastNameErrorLabel, lastNameTextField);
         // email validation
-        setEmail(emailTextArea.getText());
-        boolean isValidEmail = emailValidator(emailErrorLabel, emailTextArea);
+        setEmail(emailTextField.getText());
+        boolean isValidEmail = emailValidator(emailErrorLabel, emailTextField);
         // password validation
-        setPassword(passwordTextArea.getText());
-        boolean isValidPassword = passwordValidator(passwordErrorLabel, passwordTextArea);
+        setPassword(passwordTextField.getText());
+        boolean isValidPassword = passwordValidator(passwordErrorLabel, passwordTextField);
         // rePassword validation
-        setPassword(rePasswordTextArea.getText());
-        boolean isValidRePassword = passwordValidator(rePasswordErrorLabel, rePasswordTextArea);
+        setPassword(rePasswordTextField.getText());
+        boolean isValidRePassword = passwordValidator(rePasswordErrorLabel, rePasswordTextField);
 
         // Checking whether if both passwords are same
         boolean isBothPasswordSame = false;
-        if (passwordTextArea.getText().equals(rePasswordTextArea.getText())) {
+        if (passwordTextField.getText().equals(rePasswordTextField.getText())) {
             isBothPasswordSame = true;
             passwordMismatchErrorLabel.setTextFill(Color.GREEN);
             passwordMismatchErrorLabel.setText("Password Matches");
         } else {
             passwordMismatchErrorLabel.setTextFill(Color.RED);
             passwordMismatchErrorLabel.setText("Both Password Doesn't Matches");
-            passwordTextArea.clear();
-            rePasswordTextArea.clear();
+            passwordTextField.clear();
+            rePasswordTextField.clear();
         }
         if (isValidFirstName && isValidLastName  && isValidEmail && isValidPassword && isValidRePassword && isBothPasswordSame) {
             commonValidationChecker = true;
@@ -62,14 +62,14 @@ public class SignUp extends UserValidation {
         commonValidationChecker();
 
         // validation for the staff ID
-        setStaffID(staffIDTextArea.getText());
-        boolean isValidStaffID = IDValidator(staffIDErrorLabel, staffIDTextArea, getStaffID());
+        setStaffID(staffIDTextField.getText());
+        boolean isValidStaffID = IDValidator(staffIDErrorLabel, staffIDTextField, getStaffID());
 
         // Check if the primary key exists in the database in the club advisor table
-        String primaryKey = staffIDTextArea.getText();
+        String primaryKey = staffIDTextField.getText();
         FindRecords findRecords = new FindRecords();
         boolean clubAdvisorPrimaryKeyExists = findRecords.isPrimaryKeyValid
-                (primaryKey, "club_advisor", "StaffID", staffIDErrorLabel, staffIDTextArea);
+                (primaryKey, "club_advisor", "StaffID", staffIDErrorLabel, staffIDTextField);
 
         System.out.print("end of club valid");
         // check if all the criteria are valid to signup
@@ -79,8 +79,8 @@ public class SignUp extends UserValidation {
 
             System.out.println("validation success");
             // Add details and update the database
-            InsertRecords insertRecords = new InsertRecords(staffIDTextArea.getText(), firstNameTextArea.getText(),
-                    lastNameTextArea.getText(), emailTextArea.getText(), passwordTextArea.getText());
+            InsertRecords insertRecords = new InsertRecords(staffIDTextField.getText(), firstNameTextField.getText(),
+                    lastNameTextField.getText(), emailTextField.getText(), passwordTextField.getText());
 
             System.out.print("added success");
 
@@ -97,27 +97,27 @@ public class SignUp extends UserValidation {
         commonValidationChecker();
 
         // validation for the student ID
-        setStudentID(studentIDTextArea.getText());
-        boolean isValidStudentID = IDValidator(studentIDErrorLabel, studentIDTextArea, getStudentID());
+        setStudentID(studentIDTextField.getText());
+        boolean isValidStudentID = IDValidator(studentIDErrorLabel, studentIDTextField, getStudentID());
 
         // grade validation
-        setGrade(gradeTextArea.getText());
-        boolean isValidGrade = gradeValidator(gradeErrorLabel, gradeTextArea);
+        setGrade(gradeTextField.getText());
+        boolean isValidGrade = gradeValidator(gradeErrorLabel, gradeTextField);
 
         // Check if the primary key exists in the database in the student table
-        String primaryKey = studentIDTextArea.getText();
+        String primaryKey = studentIDTextField.getText();
         FindRecords findRecords = new FindRecords();
         boolean studentPrimaryKeyExists = findRecords.isPrimaryKeyValid
-                (primaryKey, "student", "StudentID", studentIDErrorLabel, studentIDTextArea);
+                (primaryKey, "student", "StudentID", studentIDErrorLabel, studentIDTextField);
 
         if (commonValidationChecker && isValidStudentID && isValidGrade && studentPrimaryKeyExists) {
             // Add an alert box here...
 
 
             // Add details and update the database
-            InsertRecords insertRecords = new InsertRecords(studentIDTextArea.getText(), firstNameTextArea.getText(),
-                    lastNameTextArea.getText(), gradeTextArea.getText(),emailTextArea.getText(),
-                    passwordTextArea.getText());
+            InsertRecords insertRecords = new InsertRecords(studentIDTextField.getText(), firstNameTextField.getText(),
+                    lastNameTextField.getText(), gradeTextField.getText(), emailTextField.getText(),
+                    passwordTextField.getText());
 
 
             // if all the entered details are correct it will navigate to the signIn Page to log to the profile
