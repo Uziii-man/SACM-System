@@ -9,8 +9,7 @@ import java.util.ArrayList;
 
 public class InsertRecords {
     // Method to insert data to database
-    public InsertRecords(ArrayList<Object> userDetailsArrayList, String insertQuery)
-            throws SQLException {
+    public InsertRecords(ArrayList<Object> userDetailsArrayList, String insertQuery) throws SQLException {
 
         // Connecting to the database via DatabaseManager Class
         Connection connection = DatabaseManager.connect();

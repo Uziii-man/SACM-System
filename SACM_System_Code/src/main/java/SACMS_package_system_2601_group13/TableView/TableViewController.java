@@ -15,21 +15,47 @@ import java.util.ArrayList;
 
 public class TableViewController {
 
-    public ObservableList<TableViewEncapsulation> fetchDataFromDatabase() {
+//    public ObservableList<TableViewEncapsulation> fetchDataFromDatabase() {
+//
+//        ObservableList<TableViewEncapsulation> data = FXCollections.observableArrayList();
+//
+//        // SQL query to retrieve data
+//        String query = "SELECT ClubID, ClubName, ClubDescription FROM club";
+//        Connection connection = DatabaseManager.connect();
+//        try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
+//             ResultSet resultSet = preparedStatement.executeQuery();
+//            System.out.println("in fetchDataFromDatabase");
+//            while (resultSet.next()) {
+//                String clubID = resultSet.getString("ClubID");
+//                String clubName = resultSet.getString("ClubName");
+//                String clubDescription = resultSet.getString("ClubDescription");
+//
+//                data.add(new TableViewEncapsulation(clubID, clubName, clubDescription));
+//            }
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return data;
+//    }
 
+    public ObservableList<TableViewEncapsulation> fetchDataFromDatabase() {
         ObservableList<TableViewEncapsulation> data = FXCollections.observableArrayList();
 
         // SQL query to retrieve data
-        String query = "SELECT ClubID, ClubName, ClubDescription FROM your_table_name";
-        Connection connection = DatabaseManager.connect();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
-             ResultSet resultSet = preparedStatement.executeQuery();
+        String query = "SELECT ClubID, ClubName, ClubDescription FROM club";
+
+        try (Connection connection = DatabaseManager.connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
             System.out.println("in fetchDataFromDatabase");
+
             while (resultSet.next()) {
                 String clubID = resultSet.getString("ClubID");
                 String clubName = resultSet.getString("ClubName");
                 String clubDescription = resultSet.getString("ClubDescription");
-//                String clubAdvisor = resultSet.getString("ClubAdvisor");
 
                 data.add(new TableViewEncapsulation(clubID, clubName, clubDescription));
             }
@@ -41,20 +67,56 @@ public class TableViewController {
         return data;
     }
 
+
+//    public void viewTable(TableView<TableViewEncapsulation> viewClubsTable,
+//                          TableColumn<TableViewEncapsulation, String> clubIDColumn,
+//                          TableColumn<TableViewEncapsulation, String> clubNameColumn,
+//                          TableColumn<TableViewEncapsulation, String> clubDescriptionColumn
+//                         ) {
+//        ObservableList<TableViewEncapsulation> clubDetailsObservableList = fetchDataFromDatabase();
+//        System.out.println("in view clubs");
+//        System.out.println("Printing ObservableList:");
+//        for (TableViewEncapsulation club : clubDetailsObservableList) {
+//            System.out.println("Club ID: " + club.getClubID());
+//            System.out.println("Club Name: " + club.getClubName());
+//            System.out.println("Club Description: " + club.getClubDescription());
+//            // Add more print statements for additional properties if needed
+//            System.out.println("------------------------");
+//        }
+//        clubIDColumn.setCellValueFactory(new PropertyValueFactory<>("clubID"));
+//        clubNameColumn.setCellValueFactory(new PropertyValueFactory<>("clubName"));
+//        clubDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("clubDescription"));
+//
+//        viewClubsTable.setItems(clubDetailsObservableList);
+//    }
+
+
     public void viewTable(TableView<TableViewEncapsulation> viewClubsTable,
                           TableColumn<TableViewEncapsulation, String> clubIDColumn,
                           TableColumn<TableViewEncapsulation, String> clubNameColumn,
-                          TableColumn<TableViewEncapsulation, String> clubDescriptionColumn
-                         ) {
-//        ,TableColumn<TableViewEncapsulation, String> clubAdvisorColumn
+                          TableColumn<TableViewEncapsulation, String> clubDescriptionColumn) {
+
         ObservableList<TableViewEncapsulation> clubDetailsObservableList = fetchDataFromDatabase();
         System.out.println("in view clubs");
-        clubIDColumn.setCellValueFactory(new PropertyValueFactory<>("clubID"));
-        clubNameColumn.setCellValueFactory(new PropertyValueFactory<>("clubName"));
-        clubDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("clubDescription"));
-//        clubAdvisorColumn.setCellValueFactory(new PropertyValueFactory<>("clubAdvisor"));
+        System.out.println("Printing ObservableList:");
+        for (TableViewEncapsulation club : clubDetailsObservableList) {
+            System.out.println("Club ID: " + club.getClubID());
+            System.out.println("Club Name: " + club.getClubName());
+            System.out.println("Club Description: " + club.getClubDescription());
+            // Add more print statements for additional properties if needed
+            System.out.println("------------------------");
+        }
 
-        viewClubsTable.setItems(clubDetailsObservableList);
+        if (clubIDColumn != null && clubNameColumn != null && clubDescriptionColumn != null) {
+            clubIDColumn.setCellValueFactory(new PropertyValueFactory<>("clubID"));
+            clubNameColumn.setCellValueFactory(new PropertyValueFactory<>("clubName"));
+            clubDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("clubDescription"));
+
+            viewClubsTable.setItems(clubDetailsObservableList);
+        } else {
+            System.out.println("One or more TableColumn is null. Check your FXML file.");
+        }
     }
+
 
 }

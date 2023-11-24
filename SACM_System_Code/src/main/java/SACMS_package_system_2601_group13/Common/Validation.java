@@ -14,7 +14,6 @@ public class Validation {
 
     public void setUserID(String userID) {
         this.userID = userID;
-        // Pattern for the staffID: starts with "stf" followed by exactly 4 digits
     }
     public String getUserID() {
         return userID;

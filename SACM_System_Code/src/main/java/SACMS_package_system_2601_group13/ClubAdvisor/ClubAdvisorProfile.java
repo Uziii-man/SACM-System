@@ -10,7 +10,7 @@ import javafx.scene.control.TableView;
 
 public class ClubAdvisorProfile {
     @FXML
-    private TableView<TableViewEncapsulation>  viewClubsTable;
+    private TableView<TableViewEncapsulation> viewClubsTable;
     @FXML
     private TableColumn<TableViewEncapsulation, String> clubIDColumn;
     @FXML
@@ -22,24 +22,28 @@ public class ClubAdvisorProfile {
 
     Runnable viewClub = () -> tableViewController.viewTable(viewClubsTable, clubIDColumn, clubNameColumn, clubDescriptionColumn);
 
+    // If the club advisor wants to view all the available club and details in a table
+    @FXML
+    protected void viewClubsOnActionButton(ActionEvent actionEvent) throws Exception {
+        mainController.navigateFunction(actionEvent, "ViewSelectClubs.fxml", "SACM System");
+        System.out.println("panel loaded jigi jigi");
+        viewClub.run();
+        System.out.println("in runnable");
+    }
+
     // If the club advisor wants to create a club
     @FXML
     protected void createClubProfileOnActionButton(ActionEvent actionEvent) throws Exception {
         mainController.navigateFunction(actionEvent, "Create_Club.fxml", "Club Creation");
     }
+
     // Redirect to the main selection page
     @FXML
     protected void clubManageOnActionButton(ActionEvent actionEvent) throws Exception {
 
     }
 
-    // If the club advisor wants to view all the available club and details in a table
-    @FXML
-    protected void viewClubsOnActionButton(ActionEvent actionEvent) throws Exception {
-        mainController.navigateFunction(actionEvent, "View&SelectClubs.fxml", "SACM System");
-        viewClub.run();
-        System.out.println("in runnable");
-    }
+
 
     // If the club advisor wants to join a club
     @FXML

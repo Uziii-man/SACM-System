@@ -67,8 +67,6 @@ public class ClubManagement {
             // Query for club and club advisor relation table to insert data
             String club_and_advisorDataInsertQuery = "INSERT INTO club_and_club_advisor (ClubID, StaffID, JoinDate) VALUES (?, ?, ?)";
 
-            System.out.println(signIn.getLoginUserID());
-
             ArrayList<Object> club_clubAdvisorDetailsArrayList = new ArrayList<>(Arrays.asList(
                     findRecords.getClubIdByClubName(validation.getName()),
                     signIn.getLoginUserID(),

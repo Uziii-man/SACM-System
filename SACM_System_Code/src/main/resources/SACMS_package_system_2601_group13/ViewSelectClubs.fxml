@@ -11,11 +11,11 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="backgroundColor" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SACMS_package_system_2601_group13.ClubAdvisor.ClubAdvisorProfile">
    <children>
-      <TableView fx:id="viewClubsTable" layoutX="24.0" layoutY="99.0" prefHeight="247.0" prefWidth="552.0">
+      <TableView fx:id="viewClubsTable" layoutX="24.0" layoutY="99.0" prefHeight="246.0" prefWidth="552.0">
         <columns>
           <TableColumn fx:id="clubIDColumn" maxWidth="75.0" prefWidth="62.0" resizable="false" text="Club ID" />
           <TableColumn fx:id="clubNameColumn" maxWidth="201.0" minWidth="0.0" prefWidth="201.0" resizable="false" text="Name" />
-            <TableColumn fx:id="clubDescriptionColumn" maxWidth="326.0" minWidth="0.0" prefWidth="287.0" resizable="false" text="Description" />
+          <TableColumn fx:id="clubDescriptionColumn" maxWidth="326.0" minWidth="0.0" prefWidth="287.0" resizable="false" text="Description" />
         </columns>
       </TableView>
       <ImageView fitHeight="66.0" fitWidth="103.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
@@ -29,7 +29,7 @@
          </font>
       </Text>
       <Button layoutX="14.0" layoutY="363.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="47.0" styleClass="button" stylesheets="@StyleSheet.css" text="Back" />
-      <Button layoutX="523.0" layoutY="363.0" mnemonicParsing="false" styleClass="button" stylesheets="@StyleSheet.css" text="Sign Out" textFill="RED" />
+      <Button layoutX="523.0" layoutY="363.0" mnemonicParsing="false" onAction="#signOutOnActionButton" styleClass="button" stylesheets="@StyleSheet.css" text="Sign Out" textFill="RED" />
       <Button layoutX="213.0" layoutY="363.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" text="Join Club" />
    </children>
 </AnchorPane>
