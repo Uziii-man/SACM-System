@@ -5,8 +5,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class SignIn {
     @FXML
@@ -22,15 +24,56 @@ public class SignIn {
     }
 
     // Getters and setters for the user password
-    private static String userPassword;
-    public String getUserPassword() {return userPassword;}
+    private static String loginUserPassword;
+    public String getUserPassword() {return loginUserPassword;}
     public void setUserPassword(String userPassword) {
-        SignIn.userPassword = userPassword;
+        SignIn.loginUserPassword = userPassword;
     }
 
     // Building new constructor methods for existing classes
     MainController mainController = new MainController();
-    FindRecords findRecords = new FindRecords();
+    ManageData manageData = new ManageData();
+
+    // To check login credentials
+    private boolean validLogin(String querySearch, Label IDErrorLabel, Label passwordErrorLabel, TextField IDTextField,
+                               TextField passwordTextField){
+        // To store the login details that comes from the database
+        ArrayList<ArrayList<Object>> loginDetails = manageData.get2DArrayData(querySearch);
+        boolean validPassword = false;
+        boolean validUser = false;
+        // To check if the user ID exists
+        for (ArrayList<Object> loginDetail : loginDetails) {
+            if (loginDetail.get(0).equals(loginUserID)) {
+                // If the user ID exists
+                validUser = true;
+                if (loginDetail.get(1).equals(loginUserPassword)) {
+                    // Password is correct
+                    validPassword = true;
+                }
+                // To break the loop if the user ID is found cause there is no point of checking the rest
+                break;
+            }
+        }
+        // To display the error messages
+        if (validUser) {
+            // If the login is valid
+            IDErrorLabel.setTextFill(Color.GREEN);
+            IDErrorLabel.setText("ID Correct");
+        }else{
+            // If the login is invalid
+            IDErrorLabel.setTextFill(Color.RED);
+            IDErrorLabel.setText("ID does not Exist");
+            IDTextField.clear();
+        }
+        if (!validPassword) {
+            // If the password is invalid
+            passwordErrorLabel.setTextFill(Color.RED);
+            passwordErrorLabel.setText("Incorrect Password");
+            passwordTextField.clear();
+        }
+        // Return the boolean value if the login is valid or not
+        return validPassword;
+    }
 
     // If the user clicks login button
     @FXML
@@ -42,22 +85,25 @@ public class SignIn {
         // To check if the user is a club advisor or student
         // If the user has selected club advisor previously
         if (mainController.getUserProfileClubAdvisor()) {
-            // Validate the username and password
-            if(findRecords.validateLogin(getLoginUserID(), getUserPassword(), "club_advisor", "StaffID",
-                    5, IDErrorLabel, passwordErrorLabel)){
+            // Query to search for the userID and Password in the database
+             String queryClubAdvisorSearch = "SELECT StaffID, Password FROM club_advisor";
+
+            // Validate the username and password of the club advisor
+            if(validLogin(queryClubAdvisorSearch, IDErrorLabel, passwordErrorLabel, IDTextField, passwordTextField)) {
                 System.out.println("Club advisor login correct");
 
+                // Direct to club advisor profile after successful login
                 mainController.navigateFunction(actionEvent, "Club_Advisor_Profile.fxml",
-                    "Club Advisor Profile");
+                        "Club Advisor Profile");
             }
         }
         // If the user has selected student previously
         else {
-            if (findRecords.validateLogin(getLoginUserID(), getUserPassword(), "student", "StudentID",
-                    6, IDErrorLabel, passwordErrorLabel)) {
+            String queryStudentSearch = "SELECT StudentID, Password FROM student";
+            if(validLogin(queryStudentSearch, IDErrorLabel, passwordErrorLabel, IDTextField, passwordTextField)) {
                 System.out.println("Student login correct");
 
-                // direct to student profile after successful login
+                // Direct to student profile after successful login
                 mainController.navigateFunction(actionEvent, "Student_Profile.fxml", "Student Profile");
             }
         }

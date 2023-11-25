@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SignUp extends Validation {
+public class SignUp extends UserValidation {
     @FXML
     private TextField firstNameTextField, lastNameTextField, staffIDTextField, studentIDTextField, gradeTextField,
             emailTextField, passwordTextField, rePasswordTextField;
@@ -19,8 +19,10 @@ public class SignUp extends Validation {
     private Label firstNameErrorLabel, lastNameErrorLabel, staffIDErrorLabel, studentIDErrorLabel, gradeErrorLabel,
             emailErrorLabel, passwordErrorLabel, rePasswordErrorLabel, passwordMismatchErrorLabel;
 
+    // Building new constructor methods for existing classes
     MainController mainController = new MainController();
     DatabaseManager databaseManager= new DatabaseManager();
+    ManageData manageData = new ManageData();
 
     boolean commonValidationChecker;
     private void commonValidationChecker(){
@@ -54,6 +56,7 @@ public class SignUp extends Validation {
             passwordTextField.clear();
             rePasswordTextField.clear();
         }
+        // If all the details added are correct in the common validator
         if (isValidFirstName && isValidLastName  && isValidEmail && isValidPassword && isValidRePassword && isBothPasswordSame) {
             commonValidationChecker = true;
         }
@@ -87,7 +90,7 @@ public class SignUp extends Validation {
                     passwordTextField.getText()));
 
             // Add details and update the database
-            InsertRecords insertClubAdvisorRecords = new InsertRecords(clubAdvisorDetailsArrayList, insertQuery);
+            manageData.insertData(clubAdvisorDetailsArrayList, insertQuery);
 
             // Alert box
             databaseManager.userCreateAlertFunctionBox(clubAdvisorHeader, clubAdvisorDetailsArrayList,
@@ -131,7 +134,7 @@ public class SignUp extends Validation {
                     passwordTextField.getText()));
 
             // Add details and update the database
-            InsertRecords insertStudentRecords = new InsertRecords(studentDetailsArrayList , insertQuery);
+            manageData.insertData(studentDetailsArrayList , insertQuery);
 
             // Alert box
             databaseManager.userCreateAlertFunctionBox(studentHeader, studentDetailsArrayList,

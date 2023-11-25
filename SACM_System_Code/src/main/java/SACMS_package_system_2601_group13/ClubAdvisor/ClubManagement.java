@@ -23,9 +23,11 @@ public class ClubManagement {
 
     // Building a new constructor
     MainController mainController = new MainController();
-    Validation validation = new Validation();
+    UserValidation validation = new UserValidation();
     FindRecords findRecords = new FindRecords();
     DatabaseManager databaseManager = new DatabaseManager();
+    ManageData manageData = new ManageData();
+    ClubValidation clubValidation = new ClubValidation();
     SignIn signIn = new SignIn();
 
     // If the club advisor wants to create a club after navigating to club creation page
@@ -35,12 +37,12 @@ public class ClubManagement {
         validation.setName(clubNameTextField.getText());
         boolean isValidClubName = validation.nameValidator(clubNameErrorLabel, clubNameTextField, 10, 25);
 
-        validation.setClubAbbreviation(clubAbbreviationTextField.getText());
-        boolean isValidClubAbbreviation = validation.clubAbbreviationValidator(clubAbbreviationErrorLabel,
+        clubValidation.setClubAbbreviation(clubAbbreviationTextField.getText());
+        boolean isValidClubAbbreviation = clubValidation.clubAbbreviationValidator(clubAbbreviationErrorLabel,
                 clubAbbreviationTextField);
 
-        validation.setClubDescription(clubDescriptionTextArea.getText());
-        boolean isValidClubDescription = validation.clubDescriptionValidator(clubDescriptionErrorLabel, clubDescriptionTextArea);
+        clubValidation.setClubDescription(clubDescriptionTextArea.getText());
+        boolean isValidClubDescription = clubValidation.clubDescriptionValidator(clubDescriptionErrorLabel, clubDescriptionTextArea);
 
         // If all the details added are correct
         if(isValidClubName && isValidClubAbbreviation && isValidClubDescription){
@@ -61,7 +63,7 @@ public class ClubManagement {
                     clubDescriptionTextArea.getText()));
 
             // Add details and update the database of the club table
-            InsertRecords insertClubRecords = new InsertRecords(clubDetailsArrayList, clubDataInsertQuery);
+            manageData.insertData(clubDetailsArrayList, clubDataInsertQuery);
 
             // For the club and club advisor relation table
             // Query for club and club advisor relation table to insert data
@@ -73,7 +75,7 @@ public class ClubManagement {
                     ClubOriginDate));
 
             // Add details into the club and club advisor relationship table
-            InsertRecords insertClubAndAdvisorRecords = new InsertRecords(club_clubAdvisorDetailsArrayList, club_and_advisorDataInsertQuery);
+            manageData.insertData(club_clubAdvisorDetailsArrayList, club_and_advisorDataInsertQuery);
 
             // Alert box
             // if all the details are valid it will display an alert box showing all the details

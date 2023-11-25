@@ -5,9 +5,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
-public class Validation {
+public class UserValidation {
     boolean isValidData;
     FindRecords findRecords = new FindRecords();
+    ManageData manageData = new ManageData();
 
     // For ID validation
     private String userID;
@@ -22,7 +23,6 @@ public class Validation {
     // ID validation common for both club advisor and student accept for the parameters in validation
     public boolean IDValidator(Label labelID, TextField textFieldID, String IDPattern, int requiredLength, String tableName, String columName) {
         isValidData = false;
-
         // Length validation
         if (userID.length() != requiredLength) {
             labelID.setTextFill(Color.RED);
@@ -36,15 +36,16 @@ public class Validation {
                 textFieldID.clear();
             } else {
                 // Check if ID exists in the database
-                if (findRecords.isPrimaryKeyValid(userID, tableName, columName)) {
+                if(manageData.get1DArrayData("SELECT " + columName + " FROM " + tableName).contains(userID)){
+                    // ID already exists in the database
+                    labelID.setTextFill(Color.RED);
+                    labelID.setText("ID Exists");
+                    textFieldID.clear();
+                } else {
                     // ID available
                     labelID.setTextFill(Color.GREEN);
                     labelID.setText("ID Valid");
                     isValidData = true;
-                } else {
-                    // ID already exists in the database
-                    labelID.setTextFill(Color.RED);
-                    labelID.setText("ID Exists");
                 }
             }
         }
@@ -67,7 +68,7 @@ public class Validation {
         // Length validation
         if (getName().length() < minLength || getName().length() > maxLength) {
             labelName.setTextFill(Color.RED);
-            labelName.setText("Name must be between " + minLength + " and " + maxLength + " characters");
+            labelName.setText("Name length " + minLength + " to " + maxLength + " characters");
             textFieldName.clear();
         } else {
             // Character validation
@@ -193,80 +194,6 @@ public class Validation {
             labelGrade.setTextFill(Color.RED);
             labelGrade.setText("Enter a valid numeric grade");
             textFieldGrade.clear();
-        }
-        return isValidData;
-    }
-
-
-    // Validation for Club Abbreviation
-    private String clubAbbreviation;
-
-    public String getClubAbbreviation() {
-        return clubAbbreviation;
-    }
-
-    public void setClubAbbreviation(String clubAbbreviation) {
-        this.clubAbbreviation = clubAbbreviation;
-    }
-
-    public boolean clubAbbreviationValidator(Label labelAbbreviation, TextField textFieldAbbreviation) {
-        isValidData = false;
-        int maxLength = 5;
-        // Length validation
-        if (getClubAbbreviation().length() > maxLength) {
-            labelAbbreviation.setTextFill(Color.RED);
-            labelAbbreviation.setText("Abbreviation must be at most " + maxLength + " characters");
-            textFieldAbbreviation.clear();
-        } else {
-            // Character case validation
-            if (!getClubAbbreviation().matches("[A-Z]+")) {
-                labelAbbreviation.setTextFill(Color.RED);
-                labelAbbreviation.setText("Abbreviation must contain only uppercase letters");
-                textFieldAbbreviation.clear();
-            } else {
-                // Valid abbreviation
-                labelAbbreviation.setTextFill(Color.GREEN);
-                labelAbbreviation.setText("Abbreviation is Valid");
-                isValidData = true;
-            }
-        }
-        return isValidData;
-    }
-
-
-    // Validation for club description
-    private String clubDescription;
-
-    public String getClubDescription() {
-        return clubDescription;
-    }
-    public void setClubDescription(String clubDescription) {
-        this.clubDescription = clubDescription;
-    }
-
-    public boolean clubDescriptionValidator(Label labelDescription, TextArea textAreaDescription) {
-        isValidData = false;
-        int minLength = 10;
-        int maxLength = 50;
-
-        // Length validation
-        int descriptionLength = getClubDescription().length();
-        if (descriptionLength < minLength || descriptionLength > maxLength) {
-            labelDescription.setTextFill(Color.RED);
-            labelDescription.setText("Description must be between " + minLength + " and " + maxLength + " characters");
-            textAreaDescription.clear();
-        } else {
-            // Character validation
-            if (!getClubDescription().matches("[a-zA-Z0-9 ]+")) {
-                labelDescription.setTextFill(Color.RED);
-                labelDescription.setText("Description must contain only numbers and alphabets");
-                textAreaDescription.clear();
-            } else {
-                // Valid description
-                labelDescription.setTextFill(Color.GREEN);
-                labelDescription.setText("Description is Valid");
-                isValidData = true;
-            }
         }
         return isValidData;
     }

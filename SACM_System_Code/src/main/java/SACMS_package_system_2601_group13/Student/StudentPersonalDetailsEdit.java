@@ -1,14 +1,14 @@
 package SACMS_package_system_2601_group13.Student;
 
 import SACMS_package_system_2601_group13.Common.SignUp;
-import SACMS_package_system_2601_group13.Common.Validation;
+import SACMS_package_system_2601_group13.Common.UserValidation;
 import SACMS_package_system_2601_group13.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class StudentPersonalDetailsEdit extends Validation {
+public class StudentPersonalDetailsEdit extends UserValidation {
 
     @FXML
     private TextField firstNameTextField, lastNameTextField, gradeTextField, emailTextField, passwordTextField,
