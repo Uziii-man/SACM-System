@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SignUp extends UserValidation {
+public class SignUp extends Validation {
     @FXML
     private TextField firstNameTextField, lastNameTextField, staffIDTextField, studentIDTextField, gradeTextField,
             emailTextField, passwordTextField, rePasswordTextField;
@@ -24,16 +24,57 @@ public class SignUp extends UserValidation {
     DatabaseManager databaseManager= new DatabaseManager();
     ManageData manageData = new ManageData();
 
+    // Getters and Setters for the variable name
+    private String name;
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // Name validation for both club advisor and student
+    @Override
+    public boolean nameValidator(Label labelName, TextField textFieldName) {
+        isValidData = false;
+        // Length validation
+        if (name.length() < 3 || name.length() > 10) {
+            labelName.setTextFill(Color.RED);
+            labelName.setText("Name length 3 to 10 characters");
+            textFieldName.clear();
+        } else {
+            // Character validation
+            if (!name.matches("[a-zA-Z]+")) {
+                labelName.setTextFill(Color.RED);
+                labelName.setText("Name must contain only alphabets");
+                textFieldName.clear();
+            } else {
+                // Space/special character validation
+                if (name.contains(" ")) {
+                    labelName.setTextFill(Color.RED);
+                    labelName.setText("Name must not contain spaces");
+                    textFieldName.clear();
+                } else {
+                    // Valid name
+                    labelName.setTextFill(Color.GREEN);
+                    labelName.setText("Name is Valid");
+                    isValidData = true;
+                }
+            }
+        }
+        return isValidData;
+    }
+
     boolean commonValidationChecker;
     private void commonValidationChecker(){
         // Getting validation in terms of boolean from the UserValidator class
         commonValidationChecker = false;
         // first name validation
         setName(firstNameTextField.getText());
-        boolean isValidFirstName = nameValidator(firstNameErrorLabel, firstNameTextField, 3, 10);
+        boolean isValidFirstName = nameValidator(firstNameErrorLabel, firstNameTextField);
         // last name validation
         setName(lastNameTextField.getText());
-        boolean isValidLastName = nameValidator(lastNameErrorLabel, lastNameTextField, 3, 10);
+        boolean isValidLastName = nameValidator(lastNameErrorLabel, lastNameTextField);
         // email validation
         setEmail(emailTextField.getText());
         boolean isValidEmail = emailValidator(emailErrorLabel, emailTextField);

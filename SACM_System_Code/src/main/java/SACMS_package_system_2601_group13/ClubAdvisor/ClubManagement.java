@@ -2,18 +2,21 @@ package SACMS_package_system_2601_group13.ClubAdvisor;
 
 import SACMS_package_system_2601_group13.Common.*;
 import SACMS_package_system_2601_group13.MainController;
+import SACMS_package_system_2601_group13.TableView.TableViewEncapsulation;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ClubManagement {
+public class ClubManagement extends Validation {
+
+    // Club creation panel variables
     @FXML
     private TextField clubNameTextField, clubAbbreviationTextField;
     @FXML
@@ -21,28 +24,110 @@ public class ClubManagement {
     @FXML
     private Label clubNameErrorLabel,clubAbbreviationErrorLabel, clubDescriptionErrorLabel;
 
+    // Club Management panel variables
+    @FXML
+    private TableView <TableViewEncapsulation> clubManagementTable;
+    @FXML
+    private TableColumn <TableViewEncapsulation , String> clubIDColumn;
+    @FXML
+    private TableColumn <TableViewEncapsulation , String> clubNameColumn;
+    @FXML
+    private TableColumn <TableViewEncapsulation , String> clubAbbreviationColumn;
+    @FXML
+    private TableColumn <TableViewEncapsulation , String> clubDescriptionColumn;
+
+
     // Building a new constructor
     MainController mainController = new MainController();
-    UserValidation validation = new UserValidation();
-    FindRecords findRecords = new FindRecords();
+
+    // Creating constructor objects for the classes
     DatabaseManager databaseManager = new DatabaseManager();
     ManageData manageData = new ManageData();
-    ClubValidation clubValidation = new ClubValidation();
     SignIn signIn = new SignIn();
+
+    boolean isValidData;
+    ArrayList<Object> clubIDArray;
+    String querySearch;
+
+    // club name validation
+    private String clubName;
+    public String getClubName() {
+        return clubName;
+    }
+    public void setClubName(String clubName) {
+        this.clubName = clubName;
+    }
+
+    // club name validation function
+    @Override
+    public boolean nameValidator(Label labelName, TextField textFieldName) {
+        isValidData = false;
+        // Query for club table to search for club name
+        querySearch = "SELECT ClubName FROM club";
+        // Length validation
+        if (clubName.length() < 10 || clubName.length() > 25) {
+            labelName.setTextFill(Color.RED);
+            labelName.setText("Club Name characters between 10 and 25");
+            textFieldName.clear();
+        } else {
+            // Character validation alphabets only and spaces allowed
+            if (!clubName.matches("[a-zA-Z ]+")) {
+                labelName.setTextFill(Color.RED);
+                labelName.setText("Name must contain only alphabets");
+                textFieldName.clear();
+            } else {
+                if(manageData.get1DArrayData(querySearch).contains(clubName)){
+                    // Club name already exists in the database
+                    labelName.setTextFill(Color.RED);
+                    labelName.setText("Club Name Exists");
+                    textFieldName.clear();
+                } else {
+                    if(clubAdvisorInOtherClubValidator()){
+                        // Club Advisor can create a club
+                        labelName.setTextFill(Color.GREEN);
+                        labelName.setText("Club Name is Valid");
+                        isValidData = true;
+                    } else {
+                        // Club advisor cannot create a club
+                        labelName.setTextFill(Color.RED);
+                        labelName.setText("Club Advisor reach maximum create clubs");
+                        textFieldName.clear();
+                    }
+                }
+            }
+        }
+        return isValidData;
+    }
+
+    // check if the club advisor has already in other clubs when creating a new club (club advisor can only be in maximum of club)
+    public boolean clubAdvisorInOtherClubValidator() {
+        isValidData = false;
+        // Query for club and club advisor relation table if the club advisor is in other clubs
+        querySearch = "SELECT ClubID FROM club_and_club_advisor WHERE StaffID = '" + signIn.getLoginUserID() + "'";
+
+        // Get arraylist of club IDs that the club advisor is in
+        clubIDArray = new ArrayList<>(manageData.get1DArrayData(querySearch));
+        // Check if the club advisor in less than 3 clubs
+        if(!(clubIDArray.size() >= 3)){
+            isValidData = true;
+        }
+
+        return isValidData;
+    }
 
     // If the club advisor wants to create a club after navigating to club creation page
     @FXML
     protected void createClubOnActionButton(ActionEvent actionEvent) throws Exception {
         // setting up the club details using getters in the validation class
-        validation.setName(clubNameTextField.getText());
-        boolean isValidClubName = validation.nameValidator(clubNameErrorLabel, clubNameTextField, 10, 25);
+        setClubName(clubNameTextField.getText());
+        boolean isValidClubName = nameValidator(clubNameErrorLabel, clubNameTextField);
 
-        clubValidation.setClubAbbreviation(clubAbbreviationTextField.getText());
-        boolean isValidClubAbbreviation = clubValidation.clubAbbreviationValidator(clubAbbreviationErrorLabel,
+        setClubAbbreviation(clubAbbreviationTextField.getText());
+        boolean isValidClubAbbreviation = clubAbbreviationValidator(clubAbbreviationErrorLabel,
                 clubAbbreviationTextField);
 
-        clubValidation.setClubDescription(clubDescriptionTextArea.getText());
-        boolean isValidClubDescription = clubValidation.clubDescriptionValidator(clubDescriptionErrorLabel, clubDescriptionTextArea);
+        setClubDescription(clubDescriptionTextArea.getText());
+        boolean isValidClubDescription = clubDescriptionValidator(clubDescriptionErrorLabel, clubDescriptionTextArea);
 
         // If all the details added are correct
         if(isValidClubName && isValidClubAbbreviation && isValidClubDescription){
@@ -69,8 +154,14 @@ public class ClubManagement {
             // Query for club and club advisor relation table to insert data
             String club_and_advisorDataInsertQuery = "INSERT INTO club_and_club_advisor (ClubID, StaffID, JoinDate) VALUES (?, ?, ?)";
 
+            // Getting club ID to add to the club and club advisor relation table
+            // There can be only one club ID with only same name
+            clubIDArray = new ArrayList<>(manageData.get1DArrayData("SELECT ClubID FROM club WHERE ClubName = '" + clubName + "'"));
+            int clubID = (int) clubIDArray.get(0);
+
+            // Adding club and club advisor relation details into an arraylist
             ArrayList<Object> club_clubAdvisorDetailsArrayList = new ArrayList<>(Arrays.asList(
-                    findRecords.getClubIdByClubName(validation.getName()),
+                    clubID,
                     signIn.getLoginUserID(),
                     ClubOriginDate));
 
@@ -89,7 +180,40 @@ public class ClubManagement {
         }
     }
 
-    // If the club advisor wants to go back from the system
+
+    // If the club advisor wants to update the club details
+    @FXML
+    protected void updateClubDetailsOnActionButton(ActionEvent actionEvent) throws Exception {
+
+    }
+
+    // If the club advisor wants to delete the club
+    @FXML
+    protected void deleteClubDetailsOnActionButton(ActionEvent actionEvent) throws Exception {
+        TableView.TableViewSelectionModel selectionModel = clubManagementTable.getSelectionModel();
+        if(selectionModel.isEmpty()){
+            System.out.println("No row selected");
+        }
+
+        ObservableList<Integer> list = selectionModel.getSelectedIndices();
+        Integer[] selectedIndices = new Integer[list.size()];
+        selectedIndices = list.toArray(selectedIndices);
+
+        Arrays.sort(selectedIndices);
+
+        for(int i = selectedIndices.length - 1; i >= 0; i--){
+            selectionModel.clearSelection(selectedIndices[i].intValue());
+            clubManagementTable.getItems().remove(selectedIndices[i].intValue());
+        }
+    }
+
+    // If the club advisor wants to leave the club
+    @FXML
+    protected void leaveClubAdvisorClubOnActionButton(ActionEvent actionEvent) throws Exception {
+
+    }
+
+    // If the club advisor wants to go back to club advisor profile
     @FXML
     protected void backOnActionButton(ActionEvent actionEvent) throws Exception {
         mainController.navigateFunction(actionEvent, "Club_Advisor_Profile.fxml", "Club Advisor");
@@ -101,5 +225,6 @@ public class ClubManagement {
     protected void signOutOnActionButton(ActionEvent actionEvent) throws Exception {
         mainController.navigateFunction(actionEvent, "Main_User_Selection_Page.fxml", "SACM System");
     }
+
 
 }

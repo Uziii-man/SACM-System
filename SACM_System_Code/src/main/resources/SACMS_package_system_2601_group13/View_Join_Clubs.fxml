@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="backgroundColor" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SACMS_package_system_2601_group13.ClubAdvisor.ViewClubs">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="backgroundColor" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SACMS_package_system_2601_group13.ClubAdvisor.ClubAdvisorProfile">
    <children>
       <TableView fx:id="viewClubsTable" layoutX="24.0" layoutY="99.0" prefHeight="246.0" prefWidth="552.0">
         <columns>
@@ -28,8 +28,8 @@
             <Font size="36.0" />
          </font>
       </Text>
-      <Button layoutX="14.0" layoutY="363.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="47.0" styleClass="button" stylesheets="@StyleSheet.css" text="Back" />
-      <Button layoutX="523.0" layoutY="363.0" mnemonicParsing="false" onAction="#signOutOnActionButton" styleClass="button" stylesheets="@StyleSheet.css" text="Sign Out" textFill="RED" />
-      <Button layoutX="213.0" layoutY="363.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" text="Join Club" />
+      <Button layoutX="14.0" layoutY="363.0" mnemonicParsing="false" onAction="#backOnActionButton" prefHeight="25.0" prefWidth="62.0" styleClass="button" stylesheets="@StyleSheet.css" text="Back" />
+      <Button layoutX="519.0" layoutY="363.0" mnemonicParsing="false" onAction="#loadTableOnActionButton" prefHeight="25.0" prefWidth="62.0" styleClass="button" stylesheets="@StyleSheet.css" text="Load" />
+      <Button layoutX="213.0" layoutY="363.0" mnemonicParsing="false" onAction="#joinClubOnActionButton" prefHeight="25.0" prefWidth="155.0" text="Join Club" />
    </children>
 </AnchorPane>

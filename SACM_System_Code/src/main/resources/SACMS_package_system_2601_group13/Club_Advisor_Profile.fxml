@@ -9,7 +9,6 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="backgroundColor" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SACMS_package_system_2601_group13.ClubAdvisor.ClubAdvisorProfile">
    <children>
-      <Button layoutX="224.0" layoutY="284.0" mnemonicParsing="false" onAction="#joinAsAClubAdvisorOnActionButton" prefHeight="91.0" prefWidth="91.0" styleClass="button" stylesheets="@StyleSheet.css" text="Join to a Club as an Advisor" textAlignment="CENTER" wrapText="true" />
       <Button layoutX="450.0" layoutY="179.0" mnemonicParsing="false" onAction="#clubManageOnActionButton" prefHeight="91.0" prefWidth="91.0" styleClass="button" stylesheets="@StyleSheet.css" text="Club Management" textAlignment="CENTER" wrapText="true" />
       <Button layoutX="201.0" layoutY="179.0" mnemonicParsing="false" onAction="#viewClubsOnActionButton" prefHeight="91.0" prefWidth="91.0" styleClass="button" stylesheets="@StyleSheet.css" text="View Clubs" textAlignment="CENTER" />
       <Button layoutX="524.0" layoutY="362.0" mnemonicParsing="false" onAction="#signOutOnActionButton" styleClass="button" stylesheets="@StyleSheet.css" text="Sign Out" />
@@ -26,8 +25,5 @@
          </image>
       </ImageView>
       <Button layoutX="70.0" layoutY="179.0" mnemonicParsing="false" onAction="#createClubProfileOnActionButton" prefHeight="91.0" prefWidth="91.0" styleClass="button" stylesheets="@StyleSheet.css" text="Create Club" textAlignment="CENTER" />
-      <Button layoutX="307.0" layoutY="284.0" mnemonicParsing="false" onAction="#joinAsAClubAdvisorOnActionButton" prefHeight="91.0" prefWidth="91.0" styleClass="button" stylesheets="@StyleSheet.css" text="Leave a club" textAlignment="CENTER" wrapText="true" />
-      <Button layoutX="510.0" layoutY="74.0" mnemonicParsing="false" onAction="#joinAsAClubAdvisorOnActionButton" prefHeight="91.0" prefWidth="91.0" styleClass="button" stylesheets="@StyleSheet.css" text="Delete Club" textAlignment="CENTER" wrapText="true" />
-      <Button layoutX="510.0" layoutY="270.0" mnemonicParsing="false" onAction="#joinAsAClubAdvisorOnActionButton" prefHeight="91.0" prefWidth="91.0" styleClass="button" stylesheets="@StyleSheet.css" text="Edit a club" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>

@@ -16,16 +16,18 @@ public class DatabaseManager {
 
     // Establish the database connection
     public static Connection connect() {
-        if (connection == null) {
-            try {
+        try {
+            // If connection is null or closed, reopen it
+            if (connection == null || connection.isClosed()) {
                 connection = DriverManager.getConnection(url, username, password);
                 System.out.println("Database connection established.");
-            } catch (SQLException e) {
-                System.err.println("Error establishing database connection: " + e.getMessage());
             }
+        } catch (SQLException e) {
+            System.err.println("Error establishing/reopening database connection: " + e.getMessage());
         }
         return connection;
     }
+
 
     // Close the database connection
     public static void closeConnection() {

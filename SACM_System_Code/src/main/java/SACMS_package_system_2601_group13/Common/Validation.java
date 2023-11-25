@@ -5,10 +5,14 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
-public class UserValidation {
+public abstract class Validation {
     boolean isValidData;
-    FindRecords findRecords = new FindRecords();
+    String querySearch;
+    // Made an object of ManageData class to use the methods in it
     ManageData manageData = new ManageData();
+
+    // For name validation as an abstract method
+    public abstract boolean nameValidator(Label labelName, TextField textFieldName);
 
     // For ID validation
     private String userID;
@@ -45,47 +49,6 @@ public class UserValidation {
                     // ID available
                     labelID.setTextFill(Color.GREEN);
                     labelID.setText("ID Valid");
-                    isValidData = true;
-                }
-            }
-        }
-        return isValidData;
-    }
-
-    // first name and last name validation will be same in validation and parameters (assumption)
-    // name validation
-    private String name;
-
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean nameValidator(Label labelName, TextField textFieldName, int minLength, int maxLength) {
-        isValidData = false;
-        // Length validation
-        if (getName().length() < minLength || getName().length() > maxLength) {
-            labelName.setTextFill(Color.RED);
-            labelName.setText("Name length " + minLength + " to " + maxLength + " characters");
-            textFieldName.clear();
-        } else {
-            // Character validation
-            if (!getName().matches("[a-zA-Z]+")) {
-                labelName.setTextFill(Color.RED);
-                labelName.setText("Name must contain only alphabets");
-                textFieldName.clear();
-            } else {
-                // Space/special character validation
-                if (getName().contains(" ")) {
-                    labelName.setTextFill(Color.RED);
-                    labelName.setText("Name must not contain spaces");
-                    textFieldName.clear();
-                } else {
-                    // Valid name
-                    labelName.setTextFill(Color.GREEN);
-                    labelName.setText("Name is Valid");
                     isValidData = true;
                 }
             }
@@ -194,6 +157,91 @@ public class UserValidation {
             labelGrade.setTextFill(Color.RED);
             labelGrade.setText("Enter a valid numeric grade");
             textFieldGrade.clear();
+        }
+        return isValidData;
+    }
+
+
+    // Setting up the getter and setter for club abbreviation
+    private String clubAbbreviation;
+    public String getClubAbbreviation() {
+        return clubAbbreviation;
+    }
+    public void setClubAbbreviation(String clubAbbreviation) {
+        this.clubAbbreviation = clubAbbreviation;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // For Club Validation
+    // Validation for club abbreviation
+    public boolean clubAbbreviationValidator(Label labelAbbreviation, TextField textFieldAbbreviation) {
+        isValidData = false;
+        int maxLength = 5;
+        // Query for club table to search for club abbreviation
+        querySearch = "SELECT ClubAbbreviation FROM club";
+        // Length validation
+        if (getClubAbbreviation().length() > maxLength) {
+            labelAbbreviation.setTextFill(Color.RED);
+            labelAbbreviation.setText("Abbreviation exceeds limit of " + maxLength + " characters");
+            textFieldAbbreviation.clear();
+        } else {
+            // Character case validation
+            if (!getClubAbbreviation().matches("[A-Z]+")) {
+                labelAbbreviation.setTextFill(Color.RED);
+                labelAbbreviation.setText("Abbreviation must contain only uppercase letters");
+                textFieldAbbreviation.clear();
+            } else {
+                // Assumption that same club can have the same abbreviation
+                // Check if club abbreviation exists in the database
+                if(manageData.get1DArrayData(querySearch).contains(clubAbbreviation)){
+                    // Club abbreviation already exists in the database
+                    labelAbbreviation.setTextFill(Color.RED);
+                    labelAbbreviation.setText("Club Abbreviation Exists");
+                    textFieldAbbreviation.clear();
+                } else {
+                    // Club abbreviation available
+                    labelAbbreviation.setTextFill(Color.GREEN);
+                    labelAbbreviation.setText("Club Abbreviation is Valid");
+                    isValidData = true;
+                }
+                return isValidData;
+            }
+        }
+        return isValidData;
+    }
+
+    private String clubDescription;
+
+    public String getClubDescription() {
+        return clubDescription;
+    }
+    public void setClubDescription(String clubDescription) {
+        this.clubDescription = clubDescription;
+    }
+
+    public boolean clubDescriptionValidator(Label labelDescription, TextArea textAreaDescription) {
+        isValidData = false;
+        int minLength = 10;
+        int maxLength = 50;
+
+        // Length validation
+        int descriptionLength = getClubDescription().length();
+        if (descriptionLength < minLength || descriptionLength > maxLength) {
+            labelDescription.setTextFill(Color.RED);
+            labelDescription.setText("Description must be between " + minLength + " and " + maxLength + " characters");
+            textAreaDescription.clear();
+        } else {
+            // Character validation
+            if (!getClubDescription().matches("[a-zA-Z0-9 ]+")) {
+                labelDescription.setTextFill(Color.RED);
+                labelDescription.setText("Description must contain only numbers and alphabets");
+                textAreaDescription.clear();
+            } else {
+                // Valid description
+                labelDescription.setTextFill(Color.GREEN);
+                labelDescription.setText("Description is Valid");
+                isValidData = true;
+            }
         }
         return isValidData;
     }
