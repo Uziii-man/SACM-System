@@ -1,7 +1,6 @@
 package SACMS_package_system_2601_group13.Common;
 
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
@@ -12,7 +11,7 @@ public abstract class Validation {
     ManageData manageData = new ManageData();
 
     // For name validation as an abstract method
-    public abstract boolean nameValidator(Label labelName, TextField textFieldName);
+    public abstract boolean nameValidator(Label labelName);
 
     // For ID validation
     private String userID;
@@ -174,7 +173,7 @@ public abstract class Validation {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // For Club Validation
     // Validation for club abbreviation
-    public boolean clubAbbreviationValidator(Label labelAbbreviation, TextField textFieldAbbreviation) {
+    public boolean clubAbbreviationValidator(Label labelAbbreviation) {
         isValidData = false;
         int maxLength = 5;
         // Query for club table to search for club abbreviation
@@ -183,13 +182,11 @@ public abstract class Validation {
         if (getClubAbbreviation().length() > maxLength) {
             labelAbbreviation.setTextFill(Color.RED);
             labelAbbreviation.setText("Abbreviation exceeds limit of " + maxLength + " characters");
-            textFieldAbbreviation.clear();
         } else {
             // Character case validation
             if (!getClubAbbreviation().matches("[A-Z]+")) {
                 labelAbbreviation.setTextFill(Color.RED);
                 labelAbbreviation.setText("Abbreviation must contain only uppercase letters");
-                textFieldAbbreviation.clear();
             } else {
                 // Assumption that same club can have the same abbreviation
                 // Check if club abbreviation exists in the database
@@ -197,7 +194,6 @@ public abstract class Validation {
                     // Club abbreviation already exists in the database
                     labelAbbreviation.setTextFill(Color.RED);
                     labelAbbreviation.setText("Club Abbreviation Exists");
-                    textFieldAbbreviation.clear();
                 } else {
                     // Club abbreviation available
                     labelAbbreviation.setTextFill(Color.GREEN);
@@ -219,7 +215,7 @@ public abstract class Validation {
         this.clubDescription = clubDescription;
     }
 
-    public boolean clubDescriptionValidator(Label labelDescription, TextArea textAreaDescription) {
+    public boolean clubDescriptionValidator(Label labelDescription) {
         isValidData = false;
         int minLength = 10;
         int maxLength = 50;
@@ -229,13 +225,11 @@ public abstract class Validation {
         if (descriptionLength < minLength || descriptionLength > maxLength) {
             labelDescription.setTextFill(Color.RED);
             labelDescription.setText("Description must be between " + minLength + " and " + maxLength + " characters");
-            textAreaDescription.clear();
         } else {
             // Character validation
             if (!getClubDescription().matches("[a-zA-Z0-9 ]+")) {
                 labelDescription.setTextFill(Color.RED);
                 labelDescription.setText("Description must contain only numbers and alphabets");
-                textAreaDescription.clear();
             } else {
                 // Valid description
                 labelDescription.setTextFill(Color.GREEN);

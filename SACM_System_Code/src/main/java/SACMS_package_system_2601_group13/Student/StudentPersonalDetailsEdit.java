@@ -51,7 +51,7 @@ public class StudentPersonalDetailsEdit extends Validation {
     }
 
     @Override
-    public boolean nameValidator(Label labelName, TextField textFieldName) {
+    public boolean nameValidator(Label labelName) {
         return false;
     }
 }

@@ -35,25 +35,22 @@ public class SignUp extends Validation {
 
     // Name validation for both club advisor and student
     @Override
-    public boolean nameValidator(Label labelName, TextField textFieldName) {
+    public boolean nameValidator(Label labelName) {
         isValidData = false;
         // Length validation
         if (name.length() < 3 || name.length() > 10) {
             labelName.setTextFill(Color.RED);
             labelName.setText("Name length 3 to 10 characters");
-            textFieldName.clear();
         } else {
             // Character validation
             if (!name.matches("[a-zA-Z]+")) {
                 labelName.setTextFill(Color.RED);
                 labelName.setText("Name must contain only alphabets");
-                textFieldName.clear();
             } else {
                 // Space/special character validation
                 if (name.contains(" ")) {
                     labelName.setTextFill(Color.RED);
                     labelName.setText("Name must not contain spaces");
-                    textFieldName.clear();
                 } else {
                     // Valid name
                     labelName.setTextFill(Color.GREEN);
@@ -71,10 +68,17 @@ public class SignUp extends Validation {
         commonValidationChecker = false;
         // first name validation
         setName(firstNameTextField.getText());
-        boolean isValidFirstName = nameValidator(firstNameErrorLabel, firstNameTextField);
+        boolean isValidFirstName = nameValidator(firstNameErrorLabel);
+        if(!isValidFirstName){
+            firstNameTextField.clear();
+        }
         // last name validation
         setName(lastNameTextField.getText());
-        boolean isValidLastName = nameValidator(lastNameErrorLabel, lastNameTextField);
+        boolean isValidLastName = nameValidator(lastNameErrorLabel);
+        if(!isValidLastName){
+            lastNameTextField.clear();
+        }
+
         // email validation
         setEmail(emailTextField.getText());
         boolean isValidEmail = emailValidator(emailErrorLabel, emailTextField);

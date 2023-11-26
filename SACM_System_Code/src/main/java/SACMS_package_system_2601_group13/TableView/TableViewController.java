@@ -1,6 +1,7 @@
 package SACMS_package_system_2601_group13.TableView;
 
 import SACMS_package_system_2601_group13.Common.ManageData;
+import SACMS_package_system_2601_group13.Common.SignIn;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
@@ -12,7 +13,9 @@ import java.util.ArrayList;
 public class TableViewController {
 
     ManageData manageData = new ManageData();
+    SignIn signIn = new SignIn();
 
+    /// Table View for the club advisor and student to view all the clubs
     public void viewTable(TableView<TableViewEncapsulation> tableName,
                           TableColumn<TableViewEncapsulation, String> clubIDColumn,
                           TableColumn<TableViewEncapsulation, String> clubNameColumn,
@@ -35,10 +38,10 @@ public class TableViewController {
         clubNameColumn.setCellValueFactory(new PropertyValueFactory<>("clubName"));
         clubDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("clubDescription"));
 
-        System.out.println("hello");
         tableName.setItems(clubDetailsObservableList);
     }
 
+    // Table View for Manage Club Page only for club advisor
     public void viewTable(TableView<TableViewEncapsulation> tableName,
                           TableColumn<TableViewEncapsulation, String> clubIDColumn,
                           TableColumn<TableViewEncapsulation, String> clubNameColumn,
@@ -53,9 +56,16 @@ public class TableViewController {
         // ObservableList is a list that enables listeners to track changes when they occur
         ObservableList<TableViewEncapsulation> clubDetailsObservableList = FXCollections.observableArrayList();
 
+        // This done to show the clubs that the club advisor is managing
+        String clubIDQuery = "SELECT clubID FROM club_and_club_advisor WHERE StaffID = '" + signIn.getLoginUserID() + "'";
+        ArrayList<Object> clubIDList = manageData.get1DArrayData(clubIDQuery);
+
+        // To add the clubs to the observable list that the club advisor is managing
         for (ArrayList<Object> row : clubDetailsList) {
+            if (clubIDList.contains(row.get(0))) {
             // Create a TableViewEncapsulation object directly
             clubDetailsObservableList.add(new TableViewEncapsulation(String.valueOf(row.get(0)), String.valueOf(row.get(1)), String.valueOf(row.get(2)), String.valueOf(row.get(4))));
+            }
         }
 
         clubIDColumn.setCellValueFactory(new PropertyValueFactory<>("clubID"));

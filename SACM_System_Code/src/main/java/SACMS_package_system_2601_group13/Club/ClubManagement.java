@@ -1,10 +1,9 @@
-package SACMS_package_system_2601_group13.ClubAdvisor;
+package SACMS_package_system_2601_group13.Club;
 
 import SACMS_package_system_2601_group13.Common.*;
 import SACMS_package_system_2601_group13.MainController;
 import SACMS_package_system_2601_group13.TableView.TableViewController;
 import SACMS_package_system_2601_group13.TableView.TableViewEncapsulation;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -54,14 +53,25 @@ public class ClubManagement extends Validation {
     TableViewEncapsulation tableViewEncapsulation = new TableViewEncapsulation();
 
     // Initializing variables
-    boolean isValidData;
-    ArrayList<Object> clubIDArray;
-    String querySearch;
+    private boolean isValidData;
+    private ArrayList<Object> clubIDArray;
+    private String querySearch;
 
     // Lambda expression to view the table in the club management page
     Runnable viewClubManagementTable = () -> tableViewController.viewTable(clubManagementTable, clubIDColumn, clubNameColumn,
             clubAbbreviationColumn, clubDescriptionColumn);
 
+    // Getting the userID from the signIn class
+    private String userID = signIn.getLoginUserID();
+
+    // Setting Up getters and setters clubID
+    private static String clubID;
+    public String getClubID() {
+        return clubID;
+    }
+    public void setClubID(String clubID) {
+        this.clubID = clubID;
+    }
 
     // club name validation
     private String clubName;
@@ -74,7 +84,7 @@ public class ClubManagement extends Validation {
 
     // club name validation function
     @Override
-    public boolean nameValidator(Label labelName, TextField textFieldName) {
+    public boolean nameValidator(Label labelName) {
         isValidData = false;
         // Query for club table to search for club name
         querySearch = "SELECT ClubName FROM club";
@@ -82,19 +92,16 @@ public class ClubManagement extends Validation {
         if (clubName.length() < 10 || clubName.length() > 25) {
             labelName.setTextFill(Color.RED);
             labelName.setText("Club Name characters between 10 and 25");
-            textFieldName.clear();
         } else {
             // Character validation alphabets only and spaces allowed
             if (!clubName.matches("[a-zA-Z ]+")) {
                 labelName.setTextFill(Color.RED);
                 labelName.setText("Name must contain only alphabets");
-                textFieldName.clear();
             } else {
                 if(manageData.get1DArrayData(querySearch).contains(clubName)){
                     // Club name already exists in the database
                     labelName.setTextFill(Color.RED);
                     labelName.setText("Club Name Exists");
-                    textFieldName.clear();
                 } else {
                     if(clubAdvisorInOtherClubValidator()){
                         // Club Advisor can create a club
@@ -105,7 +112,6 @@ public class ClubManagement extends Validation {
                         // Club advisor cannot create a club
                         labelName.setTextFill(Color.RED);
                         labelName.setText("Club Advisor reach maximum create clubs");
-                        textFieldName.clear();
                     }
                 }
             }
@@ -117,7 +123,7 @@ public class ClubManagement extends Validation {
     public boolean clubAdvisorInOtherClubValidator() {
         isValidData = false;
         // Query for club and club advisor relation table if the club advisor is in other clubs
-        querySearch = "SELECT ClubID FROM club_and_club_advisor WHERE StaffID = '" + signIn.getLoginUserID() + "'";
+        querySearch = "SELECT ClubID FROM club_and_club_advisor WHERE StaffID = '" + userID + "'";
 
         // Get arraylist of club IDs that the club advisor is in
         clubIDArray = new ArrayList<>(manageData.get1DArrayData(querySearch));
@@ -132,18 +138,28 @@ public class ClubManagement extends Validation {
     // If the club advisor wants to create a club after navigating to club creation page
     @FXML
     protected void createClubOnActionButton(ActionEvent actionEvent) throws Exception {
-        // setting up the club details using getters in the validation class
+        // validation for club name
         setClubName(clubNameTextField.getText());
-        boolean isValidClubName = nameValidator(clubNameErrorLabel, clubNameTextField);
+        boolean isValidClubName = nameValidator(clubNameErrorLabel);
+        if(!isValidClubName){
+            clubNameTextField.clear();
+        }
 
+        // validation for club abbreviation
         setClubAbbreviation(clubAbbreviationTextField.getText());
-        boolean isValidClubAbbreviation = clubAbbreviationValidator(clubAbbreviationErrorLabel,
-                clubAbbreviationTextField);
+        boolean isValidClubAbbreviation = clubAbbreviationValidator(clubAbbreviationErrorLabel);
+        if(!isValidClubAbbreviation){
+            clubAbbreviationTextField.clear();
+        }
 
+        // validation for club description
         setClubDescription(clubDescriptionTextArea.getText());
-        boolean isValidClubDescription = clubDescriptionValidator(clubDescriptionErrorLabel, clubDescriptionTextArea);
+        boolean isValidClubDescription = clubDescriptionValidator(clubDescriptionErrorLabel);
+        if(!isValidClubDescription){
+            clubDescriptionTextArea.clear();
+        }
 
-        // If all the details added are correct
+        // To check if all the details are correct
         if(isValidClubName && isValidClubAbbreviation && isValidClubDescription){
             // Get the current date in the local desktop's time zone
             LocalDate currentDate = LocalDate.now();
@@ -176,7 +192,7 @@ public class ClubManagement extends Validation {
             // Adding club and club advisor relation details into an arraylist
             ArrayList<Object> club_clubAdvisorDetailsArrayList = new ArrayList<>(Arrays.asList(
                     clubID,
-                    signIn.getLoginUserID(),
+                    userID,
                     ClubOriginDate));
 
             // Add details into the club and club advisor relationship table
@@ -196,38 +212,71 @@ public class ClubManagement extends Validation {
 
     // Button to load the club management table
     @FXML
-    protected void loadTableOnActionButton() throws Exception {
+    protected void loadTableOnActionButton(){
         viewClubManagementTable.run();
-    }
-
-    // If the club advisor wants to update the club details
-    @FXML
-    protected void updateClubDetailsOnActionButton(ActionEvent actionEvent) throws Exception {
-        // Club ID column cannot be edited because it is the primary key in the database
         // To edit club name column
         clubNameColumn.setCellFactory(TextFieldTableCell.<TableViewEncapsulation>forTableColumn());
+        clubAbbreviationColumn.setCellFactory(TextFieldTableCell.<TableViewEncapsulation>forTableColumn());
+        clubDescriptionColumn.setCellFactory(TextFieldTableCell.<TableViewEncapsulation>forTableColumn());
+        updateTable();
+    }
+
+
+    // Edit and Update the Table View and Club Table in the Database
+    private void updateTable(){
+        // Setting the error label to show the user to select a row to edit
+        clubManagementErrorLabel.setText("Please select a row to edit");
+
+        // Club ID column cannot be edited because it is the primary key in the database
+        // To edit club name colum
         clubNameColumn.setOnEditCommit(event -> {
+            //
             TableViewEncapsulation tableViewEncapsulation = event.getTableView().getItems().get(event.getTablePosition().getRow());
-            tableViewEncapsulation.setClubName(event.getNewValue());
-            System.out.println("Club Name: " + tableViewEncapsulation.getClubName() + event.getNewValue() );
+
+            setClubName(event.getNewValue());
+            // To check if the club name is valid
+            boolean validName = nameValidator(clubManagementErrorLabel);
+            if (validName) {
+                tableViewEncapsulation.setClubAbbreviation(event.getNewValue());
+                querySearch = "UPDATE club SET ClubName = '" + event.getNewValue() + "' WHERE ClubID = '" + tableViewEncapsulation.getClubID() + "'";
+                manageData.modifyData(querySearch);
+                clubManagementErrorLabel.setTextFill(Color.GREEN);
+                clubManagementErrorLabel.setText("Club Name is Updated");
+            }
         });
 
         // To edit club abbreviation column
-        clubAbbreviationColumn.setCellFactory(TextFieldTableCell.<TableViewEncapsulation>forTableColumn());
         clubAbbreviationColumn.setOnEditCommit(event -> {
             TableViewEncapsulation tableViewEncapsulation = event.getTableView().getItems().get(event.getTablePosition().getRow());
-            tableViewEncapsulation.setClubAbbreviation(event.getNewValue());
-            System.out.println("Club Abbreviation: " + tableViewEncapsulation.getClubAbbreviation() + event.getNewValue() );
+            setClubAbbreviation(event.getNewValue());
+            // Validation for club abbreviation
+            boolean validAbbreviation = clubAbbreviationValidator(clubManagementErrorLabel);
+            // To check if the club abbreviation is valid
+            if (validAbbreviation) {
+                // To update the club abbreviation in the table
+                querySearch = "UPDATE club SET ClubAbbreviation = '" + event.getNewValue() + "' WHERE ClubID = '" + tableViewEncapsulation.getClubID() + "'";
+                manageData.modifyData(querySearch);
+                // To display the club abbreviation is updated
+                clubManagementErrorLabel.setTextFill(Color.GREEN);
+                clubManagementErrorLabel.setText("Club Abbreviation is Updated");
+            }
         });
 
         // To edit club description column
-        clubDescriptionColumn.setCellFactory(TextFieldTableCell.<TableViewEncapsulation>forTableColumn());
         clubDescriptionColumn.setOnEditCommit(event -> {
             TableViewEncapsulation tableViewEncapsulation = event.getTableView().getItems().get(event.getTablePosition().getRow());
-            tableViewEncapsulation.setClubDescription(event.getNewValue());
-            System.out.println("Club Description: " + tableViewEncapsulation.getClubDescription() + event.getNewValue() );
+            setClubDescription(event.getNewValue());
+            boolean validDescription = clubDescriptionValidator(clubManagementErrorLabel);
+            // To check if the club description is valid
+            if (validDescription) {
+                querySearch = "UPDATE club SET ClubDescription = '" + event.getNewValue() + "' WHERE ClubID = '" + tableViewEncapsulation.getClubID() + "'";
+                manageData.modifyData(querySearch);
+                clubManagementErrorLabel.setTextFill(Color.GREEN);
+                clubManagementErrorLabel.setText("Club Description is Updated");
+            }
         });
     }
+
 
     // If the club advisor wants to delete the club
     @FXML
@@ -238,50 +287,64 @@ public class ClubManagement extends Validation {
             clubManagementErrorLabel.setTextFill(Color.RED);
             clubManagementErrorLabel.setText("Select a row to delete");
         }else {
-            // To get the selected row and delete it
-            // Code Reference: https://github.com/kensoftphDOTcom/JavaFX-TableView/blob/master/src/main/java/com/kensoftph/tableview/TableViewController.java#L12
-            // Code Line: 61 - 78
-            ObservableList<Integer> list = selectionModel.getSelectedIndices();
-            Integer[] selectedIndices = new Integer[list.size()];
-            selectedIndices = list.toArray(selectedIndices);
+            TableViewEncapsulation selectedClub = clubManagementTable.getSelectionModel().getSelectedItem();
+            String clubID = selectedClub.getClubID();
+            // Query for club and club advisor relation table to delete data
+            String clubAndClubAdvisorDataDeleteQuery = "DELETE FROM club_and_club_advisor WHERE ClubID = '" +  clubID + "'";
+            manageData.modifyData(clubAndClubAdvisorDataDeleteQuery);
+            // Query for club table to delete data
+            String clubDataDeleteQuery = "DELETE FROM club WHERE ClubID = '" +  clubID + "'";
+            manageData.modifyData(clubDataDeleteQuery);
 
-
-            // To get the selected and deleted row
-            TableViewEncapsulation selectedPerson = clubManagementTable.getSelectionModel().getSelectedItem();
-            if (selectedPerson != null) {
-                String clubID = selectedPerson.getClubID();
-                System.out.println("Club ID: " + clubID);
-                // Query for club and club advisor relation table to delete data
-                String clubAndClubAdvisorDataDeleteQuery = "DELETE FROM club_and_club_advisor WHERE ClubID = '" +  clubID + "'";
-                manageData.deleteData(clubAndClubAdvisorDataDeleteQuery);
-                // Query for club table to delete data
-                String clubDataDeleteQuery = "DELETE FROM club WHERE ClubID = '" +  clubID + "'";
-                manageData.deleteData(clubDataDeleteQuery); } else {
-                System.out.println("No item selected.");
-            }
-
-            // Sort the array
-            Arrays.sort(selectedIndices);
-            System.out.println(Arrays.toString(selectedIndices));
-
-            for (int i = selectedIndices.length - 1; i >= 0; i--) {
-                // Get the index of the selected row
-                int index = selectedIndices[i].intValue();
-                // Clear the selection for the selected row
-                selectionModel.clearSelection(selectedIndices[i].intValue());
-                // Remove the item from the table and get the removed item
-                clubManagementTable.getItems().remove(selectedIndices[i].intValue());
-            }
-            ObservableList<TableViewEncapsulation> tablViewData = clubManagementTable.getItems();
-            System.out.println("TableView Data:");
-
+            // Refresh the table
+            viewClubManagementTable.run();
         }
     }
 
     // If the club advisor wants to leave the club
     @FXML
-    protected void leaveClubAdvisorClubOnActionButton(ActionEvent actionEvent) throws Exception {
+    protected void leaveClubAdvisorClubOnActionButton(ActionEvent actionEvent){
+        TableView.TableViewSelectionModel<TableViewEncapsulation> selectionModel = clubManagementTable.getSelectionModel();
+        if(selectionModel.isEmpty()){
+            // The club advisor doesn't select a row to delete
+            clubManagementErrorLabel.setTextFill(Color.RED);
+            clubManagementErrorLabel.setText("Select a row to Leave");
+        }
+        else {
+            // To get the selected and deleted row
+            TableViewEncapsulation selectedClub = clubManagementTable.getSelectionModel().getSelectedItem();
+            // Get the club ID from the selected row
+            String clubID = selectedClub.getClubID();
+            // Query for club and club advisor relation table to delete data
+            String clubAndClubAdvisorDataDeleteQuery = "DELETE FROM club_and_club_advisor WHERE StaffID = '" + userID + "' AND ClubID = '" + clubID + "'";
+            manageData.modifyData(clubAndClubAdvisorDataDeleteQuery);
 
+            // To display you have left the club successfully
+            clubManagementErrorLabel.setTextFill(Color.GREEN);
+            clubManagementErrorLabel.setText("You have left the club successfully");
+
+            // To refresh the table
+            viewClubManagementTable.run();
+        }
+    }
+
+    // If the club advisor wants to manage events
+    @FXML
+    protected void eventManageClubOnActionButton(ActionEvent actionEvent) throws Exception {
+        TableView.TableViewSelectionModel<TableViewEncapsulation> selectionModel = clubManagementTable.getSelectionModel();
+        if (selectionModel.isEmpty()) {
+            // The club advisor doesn't select a row to delete
+            clubManagementErrorLabel.setTextFill(Color.RED);
+            clubManagementErrorLabel.setText("Select a row to Handle Events");
+        } else {
+            // To get the selected and deleted row
+            TableViewEncapsulation selectedClub = clubManagementTable.getSelectionModel().getSelectedItem();
+            // Get the club ID from the selected row
+            String clubID = selectedClub.getClubID();
+
+            // Navigate to the event management page
+            mainController.navigateFunction(actionEvent, "Event Manager.fxml", "Event Management");
+        }
     }
 
     // If the club advisor wants to go back to club advisor profile

@@ -37,6 +37,7 @@ public class TableViewEncapsulation {
     public void setClubAbbreviation(String clubAbbreviation) {
         this.clubAbbreviation = clubAbbreviation;
     }
+
     public void setClubDescription(String clubDescription) {
         this.clubDescription = clubDescription;
     }
@@ -56,8 +57,5 @@ public class TableViewEncapsulation {
     public String getClubDescription() {
         return clubDescription;
     }
-
-
-
 
 }

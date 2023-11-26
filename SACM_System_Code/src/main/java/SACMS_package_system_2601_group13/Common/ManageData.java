@@ -16,13 +16,8 @@ public class ManageData {
                 preparedStatement.setString(i + 1, String.valueOf((Object) details1DArrayList.get(i)));
             }
             // Execute the insert statement
-            int rowsAffected = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
 
-            if (rowsAffected > 0) {
-                System.out.println("Staff information added successfully.");
-            } else {
-                System.out.println("Failed to add staff information.");
-            }
             // Closing the database connection via DatabaseManager Class
             DatabaseManager.closeConnection();
         } catch (SQLException e) {
@@ -33,37 +28,6 @@ public class ManageData {
         }
     }
 
-    // Method to get data in a 2D ArrayList from the database
-    public ArrayList<ArrayList<Object>> get2DArrayData(String getQueryStatement) {
-        // 2D ArrayList to store the data
-        ArrayList<ArrayList<Object>> table2DRecords = new ArrayList<>();
-
-        try (Connection connection = DatabaseManager.connect();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(getQueryStatement)) {
-
-            // Get column count
-            ResultSetMetaData metaData = resultSet.getMetaData();
-            int columnCount = metaData.getColumnCount();
-
-            // Process the result set
-            while (resultSet.next()) {
-                ArrayList<Object> row = new ArrayList<>();
-                for (int i = 1; i <= columnCount; i++) {
-                    row.add(resultSet.getObject(i));
-                }
-                table2DRecords.add(row);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // Closing the database connection via DatabaseManager Class
-            DatabaseManager.closeConnection();
-        }
-
-        return table2DRecords;
-    }
 
     // Method to get details in a 1D ArrayList from the database
     public ArrayList<Object> get1DArrayData(String getQueryStatement) {
@@ -95,51 +59,79 @@ public class ManageData {
     }
 
 
-    public void deleteData(String deleteQueryStatement) throws SQLException {
+    // Method to get data in a 2D ArrayList from the database
+    public ArrayList<ArrayList<Object>> get2DArrayData(String getQueryStatement) {
+        // 2D ArrayList to store the data
+        ArrayList<ArrayList<Object>> table2DRecords = new ArrayList<>();
 
+        try (Connection connection = DatabaseManager.connect();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(getQueryStatement)) {
+
+            // Get column count
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            // Process the result set into 2D ArrayList
+            while (resultSet.next()) {
+                ArrayList<Object> row = new ArrayList<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    row.add(resultSet.getObject(i));
+                }
+                table2DRecords.add(row);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Closing the database connection via DatabaseManager Class
+            DatabaseManager.closeConnection();
+        }
+        return table2DRecords;
+    }
+
+
+    // To delete data from the database from a given query statement
+    public void modifyData(String queryStatement){
         // Connecting to the database via DatabaseManager Class
         Connection connection = DatabaseManager.connect();
 
         // Creating a statement object to execute the query statement
-        try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQueryStatement)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(queryStatement)) {
             // Execute the insert statement
-            int rowsAffected = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
 
-            if (rowsAffected > 0) {
-                System.out.println("Staff information deleted successfully.");
-            } else {
-                System.out.println("Failed to update staff information.");
-            }
-            // Closing the database connection via DatabaseManager Class
-            DatabaseManager.closeConnection();
         } catch (SQLException e) {
             System.err.println("Error updating staff information: " + e.getMessage());
-        }
-    }
-
-    public void deleteData(ArrayList<Object> userDetailsArrayList, String deleteQueryStatement) throws SQLException {
-
-        // Connecting to the database via DatabaseManager Class
-        Connection connection = DatabaseManager.connect();
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQueryStatement)) {
-            // Assuming the order of details in the ArrayList corresponds to the column order
-            for (int i = 0; i < userDetailsArrayList.size(); i++) {
-                preparedStatement.setString(i + 1, String.valueOf((Object) userDetailsArrayList.get(i)));
-            }
-            // Execute the insert statement
-            int rowsAffected = preparedStatement.executeUpdate();
-
-            if (rowsAffected > 0) {
-                System.out.println("Staff information deleted successfully.");
-            } else {
-                System.out.println("Failed to delete staff information.");
-            }
+        } finally {
             // Closing the database connection via DatabaseManager Class
             DatabaseManager.closeConnection();
-        } catch (SQLException e) {
-            System.err.println("Error deleting staff information: " + e.getMessage());
         }
     }
+
+//    public void modifyData(ArrayList<Object> userDetailsArrayList, String deleteQueryStatement) throws SQLException {
+//
+//        // Connecting to the database via DatabaseManager Class
+//        Connection connection = DatabaseManager.connect();
+//
+//        try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQueryStatement)) {
+//            // Assuming the order of details in the ArrayList corresponds to the column order
+//            for (int i = 0; i < userDetailsArrayList.size(); i++) {
+//                preparedStatement.setString(i + 1, String.valueOf((Object) userDetailsArrayList.get(i)));
+//            }
+//            // Execute the insert statement
+//            int rowsAffected = preparedStatement.executeUpdate();
+//
+//            if (rowsAffected > 0) {
+//                System.out.println("Staff information deleted successfully.");
+//            } else {
+//                System.out.println("Failed to delete staff information.");
+//            }
+//            // Closing the database connection via DatabaseManager Class
+//            DatabaseManager.closeConnection();
+//        } catch (SQLException e) {
+//            System.err.println("Error deleting staff information: " + e.getMessage());
+//        }
+//    }
 
 }
