@@ -5,15 +5,15 @@ import java.util.ArrayList;
 
 public class ManageData {
     // Method to insert data to database
-    public void insertData(ArrayList<Object> userDetailsArrayList, String insertQueryStatement) throws SQLException {
+    public void insertData(ArrayList<Object> details1DArrayList, String queryStatement) throws SQLException {
 
         // Connecting to the database via DatabaseManager Class
         Connection connection = DatabaseManager.connect();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(insertQueryStatement)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(queryStatement)) {
             // Assuming the order of details in the ArrayList corresponds to the column order
-            for (int i = 0; i < userDetailsArrayList.size(); i++) {
-                preparedStatement.setString(i + 1, String.valueOf((Object) userDetailsArrayList.get(i)));
+            for (int i = 0; i < details1DArrayList.size(); i++) {
+                preparedStatement.setString(i + 1, String.valueOf((Object) details1DArrayList.get(i)));
             }
             // Execute the insert statement
             int rowsAffected = preparedStatement.executeUpdate();
@@ -95,21 +95,18 @@ public class ManageData {
     }
 
 
-    public void updateData(ArrayList<Object> userDetailsArrayList, String updateQueryStatement) throws SQLException {
+    public void deleteData(String deleteQueryStatement) throws SQLException {
 
         // Connecting to the database via DatabaseManager Class
         Connection connection = DatabaseManager.connect();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(updateQueryStatement)) {
-            // Assuming the order of details in the ArrayList corresponds to the column order
-            for (int i = 0; i < userDetailsArrayList.size(); i++) {
-                preparedStatement.setString(i + 1, String.valueOf((Object) userDetailsArrayList.get(i)));
-            }
+        // Creating a statement object to execute the query statement
+        try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQueryStatement)) {
             // Execute the insert statement
             int rowsAffected = preparedStatement.executeUpdate();
 
             if (rowsAffected > 0) {
-                System.out.println("Staff information updated successfully.");
+                System.out.println("Staff information deleted successfully.");
             } else {
                 System.out.println("Failed to update staff information.");
             }

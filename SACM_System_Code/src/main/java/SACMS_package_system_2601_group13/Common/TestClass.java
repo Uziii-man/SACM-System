@@ -1,8 +1,16 @@
 package SACMS_package_system_2601_group13.Common;
 
+import SACMS_package_system_2601_group13.TableView.TableViewEncapsulation;
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 
 public class TestClass {
+
+//    ObservableList<TableViewEncapsulation> tablViewData = clubManagementTable.getItems();
+//        System.out.println("TableView Data:");
+//        for (TableViewEncapsulation person : tablViewData) {
+//        System.out.println("Name: " + person.getClubID() + ", Age: " + person.getClubName());
 
     public static void main(String[] args) {
         TestClass testClass = new TestClass();

@@ -57,10 +57,10 @@ public class ClubAdvisorProfile {
         mainController.navigateFunction(actionEvent, "Create_Club.fxml", "Club Creation");
     }
 
-    // Redirect to the main selection page
+    // If the club advisor wants to manage a clubs
     @FXML
     protected void clubManageOnActionButton(ActionEvent actionEvent) throws Exception {
-
+        mainController.navigateFunction(actionEvent, "Club_Management.fxml", "Club Management");
     }
 
 
