@@ -4,6 +4,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
+import java.time.LocalDate;
+import java.sql.Date;
+
 public abstract class Validation {
     boolean isValidData;
     String querySearch;
@@ -206,28 +209,28 @@ public abstract class Validation {
         return isValidData;
     }
 
-    private String clubDescription;
+    private String description;
 
-    public String getClubDescription() {
-        return clubDescription;
+    public String getDescription() {
+        return description;
     }
-    public void setClubDescription(String clubDescription) {
-        this.clubDescription = clubDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public boolean clubDescriptionValidator(Label labelDescription) {
+    public boolean descriptionValidator(Label labelDescription) {
         isValidData = false;
         int minLength = 10;
         int maxLength = 50;
 
         // Length validation
-        int descriptionLength = getClubDescription().length();
+        int descriptionLength = getDescription().length();
         if (descriptionLength < minLength || descriptionLength > maxLength) {
             labelDescription.setTextFill(Color.RED);
             labelDescription.setText("Description must be between " + minLength + " and " + maxLength + " characters");
         } else {
             // Character validation
-            if (!getClubDescription().matches("[a-zA-Z0-9 ]+")) {
+            if (!getDescription().matches("[a-zA-Z0-9 ]+")) {
                 labelDescription.setTextFill(Color.RED);
                 labelDescription.setText("Description must contain only numbers and alphabets");
             } else {
@@ -239,4 +242,35 @@ public abstract class Validation {
         }
         return isValidData;
     }
+
+    // Date validation for event creation
+    private Date eventDate;
+
+    public Date getEventDate() {
+        return eventDate;
+    }
+    public void setEventDate(Date eventDate) {
+        this.eventDate = eventDate;
+    }
+
+    // In here SQL date validation is done
+    public boolean dateValidator(Label labelName) {
+        isValidData = false;
+
+        // Get the current date in the local desktop's time zone
+        LocalDate currentDate = LocalDate.now();
+        // Convert to java.sql.Date for insertion into the database
+        Date presentDate = java.sql.Date.valueOf(currentDate);
+        if (eventDate.after(presentDate)) {
+            labelName.setTextFill(Color.GREEN);
+            labelName.setText("Date is valid");
+            isValidData = true;
+        } else {
+            labelName.setTextFill(Color.RED);
+            labelName.setText("Pick a future date");
+        }
+        return isValidData;
+    }
+
+
 }

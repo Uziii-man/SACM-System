@@ -9,29 +9,29 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="backgroundColor" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SACMS_package_system_2601_group13.Common.SignIn">
+<AnchorPane prefHeight="450.0" prefWidth="650.0" styleClass="backgroundColor" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SACMS_package_system_2601_group13.Common.SignIn">
    <children>
-      <Text layoutX="138.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login Page" textAlignment="CENTER" wrappingWidth="324.2265625">
+      <Text layoutX="163.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login Page" textAlignment="CENTER" wrappingWidth="324.2265625">
          <font>
-            <Font size="52.0" />
+            <Font size="36.0" />
          </font>
       </Text>
-      <TextField fx:id="IDTextField" layoutX="237.0" layoutY="200.0" prefHeight="25.0" prefWidth="202.0" promptText="  Enter School ID" styleClass="textField" stylesheets="@StyleSheet.css" />
-      <TextField fx:id="passwordTextField" layoutX="237.0" layoutY="251.0" prefHeight="25.0" prefWidth="202.0" promptText="  Enter Password" styleClass="textField" stylesheets="@StyleSheet.css" />
-      <Text layoutX="205.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID">
+      <TextField fx:id="IDTextField" layoutX="225.0" layoutY="201.0" prefHeight="25.0" prefWidth="202.0" promptText="  Enter ID" styleClass="textField" stylesheets="@StyleSheet.css" />
+      <TextField fx:id="passwordTextField" layoutX="225.0" layoutY="265.0" prefHeight="25.0" prefWidth="202.0" promptText="  Enter Password" styleClass="textField" stylesheets="@StyleSheet.css" />
+      <Text layoutX="201.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID">
          <font>
             <Font size="14.0" />
          </font></Text>
-      <Text layoutX="161.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+      <Text layoutX="156.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
          <font>
             <Font size="14.0" />
          </font></Text>
-      <Button layoutX="271.0" layoutY="314.0" mnemonicParsing="false" onAction="#loginOnActionButton" prefHeight="25.0" prefWidth="58.0" styleClass="button" stylesheets="@StyleSheet.css" text="Login" />
-      <Button layoutX="540.0" layoutY="365.0" mnemonicParsing="false" onAction="#backOnActionButton" prefHeight="25.0" prefWidth="46.0" styleClass="button" stylesheets="@StyleSheet.css" text="Back" />
-      <Button layoutX="14.0" layoutY="365.0" mnemonicParsing="false" onAction="#exitOnActionButton" prefHeight="25.0" prefWidth="46.0" styleClass="button" stylesheets="@StyleSheet.css" text="Exit" textFill="RED" />
-      <Label fx:id="IDErrorLabel" layoutX="237.0" layoutY="225.0" prefHeight="17.0" prefWidth="202.0" textAlignment="CENTER" />
-      <Label fx:id="passwordErrorLabel" layoutX="237.0" layoutY="276.0" prefHeight="17.0" prefWidth="202.0" textAlignment="CENTER" />
-      <ImageView fitHeight="75.0" fitWidth="118.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <Button layoutX="280.0" layoutY="338.0" mnemonicParsing="false" onAction="#loginOnActionButton" prefHeight="37.0" prefWidth="91.0" styleClass="button" stylesheets="@StyleSheet.css" text="Login" />
+      <Button layoutX="564.0" layoutY="411.0" mnemonicParsing="false" onAction="#backOnActionButton" prefHeight="25.0" prefWidth="66.0" styleClass="button" stylesheets="@StyleSheet.css" text="Back" />
+      <Button layoutX="14.0" layoutY="411.0" mnemonicParsing="false" onAction="#exitOnActionButton" prefHeight="25.0" prefWidth="66.0" styleClass="button" stylesheets="@StyleSheet.css" text="Exit" textFill="RED" />
+      <Label fx:id="IDErrorLabel" layoutX="225.0" layoutY="226.0" prefHeight="17.0" prefWidth="202.0" textAlignment="CENTER" />
+      <Label fx:id="passwordErrorLabel" layoutX="224.0" layoutY="290.0" prefHeight="17.0" prefWidth="202.0" textAlignment="CENTER" />
+      <ImageView fitHeight="79.0" fitWidth="118.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/SACMS_logo.png" />
          </image>

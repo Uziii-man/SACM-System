@@ -153,8 +153,8 @@ public class ClubManagement extends Validation {
         }
 
         // validation for club description
-        setClubDescription(clubDescriptionTextArea.getText());
-        boolean isValidClubDescription = clubDescriptionValidator(clubDescriptionErrorLabel);
+        setDescription(clubDescriptionTextArea.getText());
+        boolean isValidClubDescription = descriptionValidator(clubDescriptionErrorLabel);
         if(!isValidClubDescription){
             clubDescriptionTextArea.clear();
         }
@@ -218,12 +218,12 @@ public class ClubManagement extends Validation {
         clubNameColumn.setCellFactory(TextFieldTableCell.<TableViewEncapsulation>forTableColumn());
         clubAbbreviationColumn.setCellFactory(TextFieldTableCell.<TableViewEncapsulation>forTableColumn());
         clubDescriptionColumn.setCellFactory(TextFieldTableCell.<TableViewEncapsulation>forTableColumn());
-        updateTable();
+        updateClubTable();
     }
 
 
     // Edit and Update the Table View and Club Table in the Database
-    private void updateTable(){
+    private void updateClubTable(){
         // Setting the error label to show the user to select a row to edit
         clubManagementErrorLabel.setText("Please select a row to edit");
 
@@ -265,8 +265,8 @@ public class ClubManagement extends Validation {
         // To edit club description column
         clubDescriptionColumn.setOnEditCommit(event -> {
             TableViewEncapsulation tableViewEncapsulation = event.getTableView().getItems().get(event.getTablePosition().getRow());
-            setClubDescription(event.getNewValue());
-            boolean validDescription = clubDescriptionValidator(clubManagementErrorLabel);
+            setDescription(event.getNewValue());
+            boolean validDescription = descriptionValidator(clubManagementErrorLabel);
             // To check if the club description is valid
             if (validDescription) {
                 querySearch = "UPDATE club SET ClubDescription = '" + event.getNewValue() + "' WHERE ClubID = '" + tableViewEncapsulation.getClubID() + "'";
@@ -339,11 +339,12 @@ public class ClubManagement extends Validation {
         } else {
             // To get the selected and deleted row
             TableViewEncapsulation selectedClub = clubManagementTable.getSelectionModel().getSelectedItem();
-            // Get the club ID from the selected row
+            // Get the club ID from the selected row and set it
             String clubID = selectedClub.getClubID();
+            setClubID(clubID);
 
             // Navigate to the event management page
-            mainController.navigateFunction(actionEvent, "Event Manager.fxml", "Event Management");
+            mainController.navigateFunction(actionEvent, "Event_Management.fxml", "Event Management");
         }
     }
 

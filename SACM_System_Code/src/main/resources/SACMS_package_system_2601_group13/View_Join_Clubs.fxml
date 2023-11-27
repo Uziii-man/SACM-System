@@ -10,28 +10,28 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="backgroundColor" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SACMS_package_system_2601_group13.ClubAdvisor.ClubAdvisorProfile">
+<AnchorPane prefHeight="450.0" prefWidth="650.0" styleClass="backgroundColor" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SACMS_package_system_2601_group13.ClubAdvisor.ClubAdvisorProfile">
    <children>
-      <TableView fx:id="viewClubsTable" layoutX="24.0" layoutY="99.0" prefHeight="234.0" prefWidth="552.0">
+      <TableView fx:id="viewClubsTable" layoutX="49.0" layoutY="124.0" prefHeight="234.0" prefWidth="552.0">
         <columns>
           <TableColumn fx:id="clubIDColumn" editable="false" maxWidth="75.0" prefWidth="62.0" sortable="false" text="Club ID" />
-          <TableColumn fx:id="clubNameColumn" editable="false" maxWidth="201.0" minWidth="0.0" prefWidth="201.0" sortable="false" text="Name" />
-          <TableColumn fx:id="clubDescriptionColumn" editable="false" maxWidth="326.0" minWidth="0.0" prefWidth="287.0" sortable="false" text="Description" />
+          <TableColumn fx:id="clubNameColumn" editable="false" maxWidth="201.0" minWidth="0.0" prefWidth="194.0" sortable="false" text="Name" />
+          <TableColumn fx:id="clubDescriptionColumn" editable="false" maxWidth="326.0" minWidth="0.0" prefWidth="294.0" sortable="false" text="Description" />
         </columns>
       </TableView>
-      <ImageView fitHeight="66.0" fitWidth="103.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="71.0" fitWidth="107.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/SACMS_logo.png" />
          </image>
       </ImageView>
-      <Text layoutX="213.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="View Clubs">
+      <Text layoutX="238.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="View Clubs">
          <font>
             <Font size="36.0" />
          </font>
       </Text>
-      <Button layoutX="14.0" layoutY="363.0" mnemonicParsing="false" onAction="#backOnActionButton" prefHeight="25.0" prefWidth="62.0" styleClass="button" stylesheets="@StyleSheet.css" text="Back" />
-      <Button layoutX="519.0" layoutY="363.0" mnemonicParsing="false" onAction="#loadTableOnActionButton" prefHeight="25.0" prefWidth="62.0" styleClass="button" stylesheets="@StyleSheet.css" text="Load" />
-      <Button layoutX="213.0" layoutY="363.0" mnemonicParsing="false" onAction="#joinClubOnActionButton" prefHeight="25.0" prefWidth="155.0" text="Join Club" textFill="#008a65" />
-      <Label fx:id="viewClubErrorLabel" layoutX="179.0" layoutY="333.0" prefHeight="17.0" prefWidth="219.0" textAlignment="CENTER" wrapText="true" />
+      <Button layoutX="14.0" layoutY="411.0" mnemonicParsing="false" onAction="#backOnActionButton" prefHeight="25.0" prefWidth="62.0" styleClass="button" stylesheets="@StyleSheet.css" text="Back" />
+      <Button layoutX="574.0" layoutY="411.0" mnemonicParsing="false" onAction="#loadTableOnActionButton" prefHeight="25.0" prefWidth="62.0" styleClass="button" stylesheets="@StyleSheet.css" text="Load" />
+      <Button layoutX="223.0" layoutY="411.0" mnemonicParsing="false" onAction="#joinClubOnActionButton" prefHeight="25.0" prefWidth="155.0" text="Join Club" textFill="#008a65" />
+      <Label fx:id="viewClubErrorLabel" layoutX="190.0" layoutY="385.0" prefHeight="17.0" prefWidth="219.0" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>

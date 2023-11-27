@@ -6,14 +6,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="backgroundColor" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SACMS_package_system_2601_group13.MainController">
+<AnchorPane prefHeight="450.0" prefWidth="650.0" styleClass="backgroundColor" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SACMS_package_system_2601_group13.MainController">
    <children>
-      <Button layoutX="14.0" layoutY="362.0" mnemonicParsing="false" onAction="#exitOnActionButton" prefHeight="25.0" prefWidth="47.0" styleClass="button" stylesheets="@StyleSheet.css" text="Exit" textFill="RED" />
-      <Button layoutX="520.0" layoutY="362.0" mnemonicParsing="false" onAction="#aboutUsOnActionButton" styleClass="button" stylesheets="@StyleSheet.css" text="About Us" />
-      <Button layoutX="77.0" layoutY="135.0" mnemonicParsing="false" onAction="#studentProfileOnActionClickButton" prefHeight="190.0" prefWidth="193.0" styleClass="button" stylesheets="@StyleSheet.css" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS">
+      <Button layoutX="14.0" layoutY="411.0" mnemonicParsing="false" onAction="#exitOnActionButton" prefHeight="25.0" prefWidth="60.0" styleClass="button" stylesheets="@StyleSheet.css" text="Exit" textFill="RED" />
+      <Button layoutX="74.0" layoutY="174.0" mnemonicParsing="false" onAction="#studentProfileOnActionClickButton" prefHeight="190.0" prefWidth="193.0" styleClass="button" stylesheets="@StyleSheet.css" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS">
          <font>
             <Font size="36.0" />
          </font>
@@ -25,7 +22,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="340.0" layoutY="135.0" mnemonicParsing="false" onAction="#clubAdvisorProfileOnActionClickButton" prefHeight="190.0" prefWidth="193.0" styleClass="button" stylesheets="@StyleSheet.css" textAlignment="JUSTIFY">
+      <Button layoutX="381.0" layoutY="174.0" mnemonicParsing="false" onAction="#clubAdvisorProfileOnActionClickButton" prefHeight="190.0" prefWidth="193.0" styleClass="button" stylesheets="@StyleSheet.css" textAlignment="JUSTIFY">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -34,13 +31,8 @@
             </ImageView>
          </graphic>
       </Button>
-      <Line endX="-6.0" endY="188.0" layoutX="311.0" layoutY="108.0" startX="-6.0" startY="56.0" />
-      <Text layoutX="233.0" layoutY="357.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select the profile">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Text>
-      <ImageView fitHeight="114.0" fitWidth="548.0" layoutX="26.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+      <Line endX="-6.0" endY="188.0" layoutX="330.0" layoutY="180.0" startX="-6.0" startY="-11.0" />
+      <ImageView fitHeight="114.0" fitWidth="548.0" layoutX="50.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Images/SACMS_logo-preview.png" />
          </image>

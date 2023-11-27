@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class ManageData {
     // Method to insert data to database
-    public void insertData(ArrayList<Object> details1DArrayList, String queryStatement) throws SQLException {
+    public void insertData(ArrayList<Object> details1DArrayList, String queryStatement){
 
         // Connecting to the database via DatabaseManager Class
         Connection connection = DatabaseManager.connect();
