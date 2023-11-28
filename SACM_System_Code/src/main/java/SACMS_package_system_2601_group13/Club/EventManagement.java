@@ -12,7 +12,6 @@ import javafx.scene.paint.Color;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDate;
 
 public class EventManagement {
 
@@ -38,14 +37,14 @@ public class EventManagement {
     MainController mainController = new MainController();
     TableViewController tableViewController = new TableViewController();
 
-    // To store the eventID
-    private int eventID;
-    public int getEventID() {
-        return eventID;
-    }
-    public void setEventID(int eventID) {
-        this.eventID = eventID;
-    }
+//    // To store the eventID
+//    private int eventID;
+//    public int getEventID() {
+//        return eventID;
+//    }
+//    public void setEventID(int eventID) {
+//        this.eventID = eventID;
+//    }
 
 
     // Creating runnable object to execute the object frequently and assigned using lambda
@@ -62,7 +61,7 @@ public class EventManagement {
     // To load the event management table
     @FXML
     protected void loadTableOnActionButton() {
-
+        // To load the event management table
         viewEvent.run();
     }
 
@@ -97,8 +96,15 @@ public class EventManagement {
             // To get the selected and insert row
             TableViewEncapsulation selectedEvent = eventManagementTable.getSelectionModel().getSelectedItem();
             // Getting the clubID from the selected row
-            eventID = selectedEvent.getEventID();
-            setEventID(eventID);
+            int eventID = selectedEvent.getEventID();
+            tableViewController.setEventID(eventID);
+
+            String eventName = selectedEvent.getEventName();
+            tableViewController.setEventName(eventName);
+
+            Date eventDate = selectedEvent.getEventDate();
+            tableViewController.setEventDate(String.valueOf(eventDate));
+
 
             // Directing to the event attendance page
             mainController.navigateFunction(actionEvent, "Event_Attendance.fxml", "Event Attendance");

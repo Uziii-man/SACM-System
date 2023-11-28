@@ -38,7 +38,6 @@ public class EventCreation extends Validation {
     // Creating new constructor methods for existing classes
     MainController mainController = new MainController();
     ManageData manageData = new ManageData();
-    DatabaseManager databaseManager = new DatabaseManager();
     ClubManagement clubManagement = new ClubManagement();
 
     // Setting up getters and setters for the event date
@@ -48,7 +47,7 @@ public class EventCreation extends Validation {
     }
     public void setEventName(String eventName) {
         this.eventName = eventName;
-        eventNameTextField.setText(eventName);
+//        eventNameTextField.setText(eventName);
     }
 
 
@@ -71,8 +70,17 @@ public class EventCreation extends Validation {
             if (!eventName.matches("^[a-zA-Z0-9 ]+")) {
                 setLabelProperties(labelName ,Color.RED, "Invalid Event Name");
             } else {
-                setLabelProperties(labelName ,Color.GREEN, "Valid Event Name");
-                isValidData = true;
+                // To check if the event name is already in the database
+                String query = "SELECT EventName FROM event WHERE EventName = '" + eventName + "'";
+                ArrayList<Object> eventNameList = manageData.get1DArrayData(query);
+                if (!eventNameList.isEmpty()) {
+                    setLabelProperties(labelName ,Color.RED, "Event Name Already Exists");
+                } else {
+                    setLabelProperties(labelName ,Color.GREEN, "Valid Event Name");
+                    isValidData = true;
+                }
+//                setLabelProperties(labelName ,Color.GREEN, "Valid Event Name");
+//                isValidData = true;
             }
         }
         return isValidData;
@@ -120,19 +128,26 @@ public class EventCreation extends Validation {
     }
 
 
-    // To create an event
-    @FXML
-    protected void createEventOnActionButton(ActionEvent actionEvent){
+    // To check if all the details are valid
+    boolean isValidAllDetails;
+
+    Time sqlStartTime = null;
+    Time sqlEndTimes = null;
+    Date datePicked = null;
+
+    private boolean isValidAllEventDetails() {
+        isValidAllDetails = false;
+
         // To check if the event name is valid
         setEventName(eventNameTextField.getText());
         boolean isValidEventName = nameValidator(eventNameErrorLabel);
-        if(!isValidEventName){
+        if (!isValidEventName) {
             eventNameTextField.clear();
         }
 
         // To check if the date is selected or not
         boolean isValidDate = false;
-        Date datePicked = null;
+//        Date datePicked = null;
         if (datePicker.getValue() != null) {
             // To convert the date picker value to sql date
             datePicked = java.sql.Date.valueOf(datePicker.getValue());
@@ -141,27 +156,26 @@ public class EventCreation extends Validation {
             isValidDate = dateValidator(dateErrorLabel);
         } else {
             // Handle the case where no date is selected
-            setLabelProperties(dateErrorLabel ,Color.RED, "Pick a Date");
+            setLabelProperties(dateErrorLabel, Color.RED, "Pick a Date");
         }
 
         // To check if the description is valid
         setDescription(eventDescriptionTextArea.getText());
         boolean isValidDescription = descriptionValidator(eventErrorDescriptionLabel);
-        if(!isValidDescription){
+        if (!isValidDescription) {
             eventDescriptionTextArea.clear();
         }
 
         // To check if the time is valid
         boolean isValidTime = timeValidator();
-        Time sqlStartTime = null;
-        Time sqlEndTimes = null;
-        if(!isValidTime){
+//        Time sqlStartTime = null;
+//        Time sqlEndTimes = null;
+        if (!isValidTime) {
             eventStartTimeHourTextField.clear();
             eventStartTimeMinuteTextField.clear();
             eventEndTimeHourTextField.clear();
             eventEndTimeMinuteTextField.clear();
-        }
-        else {
+        } else {
             // Combine hours and minutes to form a time
             String startTime = eventStartTimeHourTextField.getText() + ":" + eventStartTimeMinuteTextField.getText();
             String endTime = eventEndTimeHourTextField.getText() + ":" + eventEndTimeMinuteTextField.getText();
@@ -177,7 +191,19 @@ public class EventCreation extends Validation {
 
 
         // To check if the event name, date, description and time is valid
-        if(isValidEventName && isValidDescription && isValidDate && isValidTime){
+        if (isValidEventName && isValidDescription && isValidDate && isValidTime) {
+            isValidAllDetails = true;
+
+        }
+    return isValidAllDetails;
+    }
+
+    // To create an event
+    @FXML
+    protected void createEventOnActionButton(ActionEvent actionEvent) throws Exception{
+        // To check if the event name is valid
+
+        if(isValidAllEventDetails()){
             // Adding the event details into an array list
             ArrayList<Object> eventDetails = new ArrayList<>(Arrays.asList(
                     clubManagement.getClubID(),
@@ -202,18 +228,22 @@ public class EventCreation extends Validation {
             ArrayList<Object> studentIDList = manageData.get1DArrayData(getStudentIDQuery);
 
             // To add the eventID and studentID to the attendance table
+            // Automatically attendance table with event details will be created when the event is created
             for(Object studentID : studentIDList){
                 ArrayList<Object> attendanceDetails = new ArrayList<>(Arrays.asList(
                         eventID,
-                        studentID));
-                String insertAttendanceQuery = "INSERT INTO attendance (EventID, StudentID) VALUES (?, ?)";
+                        studentID,
+                        0));
+                String insertAttendanceQuery = "INSERT INTO attendance (EventID, StudentID, Attendance) VALUES (?, ?, ?)";
                 manageData.insertData(attendanceDetails, insertAttendanceQuery);
             }
 
-
             // Alert box to show the event is created successfully
             String[] eventHeader = {"Club ID", "Event Name", "Event Description", "Date", "Start Time", "End Time"};
-            databaseManager.userCreateAlertFunctionBox(eventHeader, eventDetails, "Event Creation", "Event Created Successfully");
+            manageData.userCreateAlertFunctionBox(eventHeader, eventDetails, "Event Creation", "Event Created Successfully");
+
+            // After the event is created, the user is navigated to the event management page
+            mainController.navigateFunction(actionEvent, "Event_Management.fxml", "Event Management");
         }
     }
 

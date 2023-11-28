@@ -21,7 +21,6 @@ public class SignUp extends Validation {
 
     // Building new constructor methods for existing classes
     MainController mainController = new MainController();
-    DatabaseManager databaseManager= new DatabaseManager();
     ManageData manageData = new ManageData();
 
     // Getters and Setters for the variable name
@@ -138,7 +137,7 @@ public class SignUp extends Validation {
             manageData.insertData(clubAdvisorDetailsArrayList, insertQuery);
 
             // Alert box
-            databaseManager.userCreateAlertFunctionBox(clubAdvisorHeader, clubAdvisorDetailsArrayList,
+            manageData.userCreateAlertFunctionBox(clubAdvisorHeader, clubAdvisorDetailsArrayList,
                     "ClubAdvisor SignUp ", "You have SignUp as Club Advisor Successfully");
 
             // No need to reset all the text area and label cause ones it moves to another pane it automatically resets.
@@ -182,7 +181,7 @@ public class SignUp extends Validation {
             manageData.insertData(studentDetailsArrayList , insertQuery);
 
             // Alert box
-            databaseManager.userCreateAlertFunctionBox(studentHeader, studentDetailsArrayList,
+            manageData.userCreateAlertFunctionBox(studentHeader, studentDetailsArrayList,
                     "Club Advisor SignUp Alert Box", "You have SignUp as Student Successfully");
 
             // if all the entered details are correct it will navigate to the signIn Page to log to the profile

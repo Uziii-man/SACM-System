@@ -12,7 +12,7 @@
 
 <AnchorPane prefHeight="450.0" prefWidth="650.0" styleClass="backgroundColor" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SACMS_package_system_2601_group13.Common.ViewAndJoinClubs">
    <children>
-      <TableView fx:id="viewClubsTable" layoutX="49.0" layoutY="124.0" prefHeight="234.0" prefWidth="552.0">
+      <TableView fx:id="viewClubsTable" layoutX="49.0" layoutY="140.0" prefHeight="234.0" prefWidth="552.0">
         <columns>
           <TableColumn fx:id="clubIDColumn" editable="false" maxWidth="75.0" prefWidth="62.0" sortable="false" text="Club ID" />
           <TableColumn fx:id="clubNameColumn" editable="false" maxWidth="201.0" minWidth="0.0" prefWidth="194.0" sortable="false" text="Name" />
@@ -24,14 +24,14 @@
             <Image url="@Images/SACMS_logo.png" />
          </image>
       </ImageView>
-      <Text layoutX="238.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="View Clubs">
+      <Text layoutX="182.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="View &amp; Join Clubs">
          <font>
             <Font size="36.0" />
          </font>
       </Text>
-      <Button layoutX="14.0" layoutY="411.0" mnemonicParsing="false" onAction="#backOnActionButton" prefHeight="25.0" prefWidth="62.0" styleClass="button" stylesheets="@StyleSheet.css" text="Back" />
-      <Button layoutX="574.0" layoutY="411.0" mnemonicParsing="false" onAction="#loadTableOnActionButton" prefHeight="25.0" prefWidth="62.0" styleClass="button" stylesheets="@StyleSheet.css" text="Load" />
+      <Button layoutX="14.0" layoutY="411.0" mnemonicParsing="false" onAction="#backOnActionButton" prefHeight="25.0" prefWidth="78.0" styleClass="button" stylesheets="@StyleSheet.css" text="Back" />
+      <Button layoutX="558.0" layoutY="411.0" mnemonicParsing="false" onAction="#signOutOnActionButton" prefHeight="25.0" prefWidth="78.0" styleClass="button" stylesheets="@StyleSheet.css" text="Sign Out" textFill="RED" />
       <Button layoutX="247.0" layoutY="411.0" mnemonicParsing="false" onAction="#joinClubOnActionButton" prefHeight="25.0" prefWidth="155.0" text="Join Club" textFill="#008a65" />
-      <Label fx:id="viewClubErrorLabel" layoutX="190.0" layoutY="385.0" prefHeight="17.0" prefWidth="219.0" textAlignment="CENTER" wrapText="true" />
+      <Label fx:id="viewClubErrorLabel" layoutX="215.0" layoutY="374.0" prefHeight="17.0" prefWidth="219.0" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>

@@ -1,10 +1,12 @@
 package SACMS_package_system_2601_group13.Common;
 
+import javafx.scene.control.Alert;
+
 import java.sql.*;
 import java.util.ArrayList;
 
 public class ManageData {
-    DatabaseManager databaseManager = new DatabaseManager();
+//    DatabaseManager databaseManager = new DatabaseManager();
     // Method to insert data to database
     public void insertData(ArrayList<Object> details1DArrayList, String queryStatement){
 
@@ -13,7 +15,7 @@ public class ManageData {
             PreparedStatement preparedStatement = connection.prepareStatement(queryStatement)) {
             // Assuming the order of details in the ArrayList corresponds to the column order
             for (int i = 0; i < details1DArrayList.size(); i++) {
-                preparedStatement.setString(i + 1, String.valueOf((Object) details1DArrayList.get(i)));
+                preparedStatement.setString(i + 1, String.valueOf(details1DArrayList.get(i)));
             }
             // Execute the insert statement
             preparedStatement.executeUpdate();
@@ -22,10 +24,8 @@ public class ManageData {
             DatabaseManager.closeConnection();
         } catch (SQLException e) {
             // Displaying the error message in a error alert box
-            databaseManager.alertFunctionBox("Data Insertion", "Error in Adding Data",
+            alertFunctionBox("Data Insertion", "Error in Adding Data",
                     "Please check the database connectivity and try again.");
-
-            System.err.println("Error adding staff information: " + e.getMessage());
         } finally {
             // Closing the database connection via DatabaseManager Class
             DatabaseManager.closeConnection();
@@ -52,9 +52,9 @@ public class ManageData {
                     table1DRecords.add(resultSet.getObject(i));
                 }
             }
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            alertFunctionBox("Data Retrieving", "Error in Gathering 1D Data",
+                    "Please check the database connectivity and try again.");
         }finally {
             // Closing the database connection via DatabaseManager Class
             DatabaseManager.closeConnection();
@@ -84,9 +84,9 @@ public class ManageData {
                 }
                 table2DRecords.add(row);
             }
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            alertFunctionBox("Data Retrieving", "Error in Gathering 2D Data",
+                    "Please check the database connectivity and try again.");
         } finally {
             // Closing the database connection via DatabaseManager Class
             DatabaseManager.closeConnection();
@@ -104,6 +104,8 @@ public class ManageData {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
+            alertFunctionBox("Data Modify", "Error in Modifying Data",
+                    "Please check the database connectivity and try again.");
             System.err.println("Error updating staff information: " + e.getMessage());
         } finally {
             // Closing the database connection via DatabaseManager Class
@@ -111,29 +113,30 @@ public class ManageData {
         }
     }
 
-//    public void modifyData(ArrayList<Object> userDetailsArrayList, String deleteQueryStatement) throws SQLException {
-//
-//        // Connecting to the database via DatabaseManager Class
-//        Connection connection = DatabaseManager.connect();
-//
-//        try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQueryStatement)) {
-//            // Assuming the order of details in the ArrayList corresponds to the column order
-//            for (int i = 0; i < userDetailsArrayList.size(); i++) {
-//                preparedStatement.setString(i + 1, String.valueOf((Object) userDetailsArrayList.get(i)));
-//            }
-//            // Execute the insert statement
-//            int rowsAffected = preparedStatement.executeUpdate();
-//
-//            if (rowsAffected > 0) {
-//                System.out.println("Staff information deleted successfully.");
-//            } else {
-//                System.out.println("Failed to delete staff information.");
-//            }
-//            // Closing the database connection via DatabaseManager Class
-//            DatabaseManager.closeConnection();
-//        } catch (SQLException e) {
-//            System.err.println("Error deleting staff information: " + e.getMessage());
-//        }
-//    }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Alert Boxes
+    public void alertFunctionBox(String alertTitle, String headerText, String alertText){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(alertTitle);
+        alert.setHeaderText(headerText);
+        alert.setContentText(alertText);
+        alert.showAndWait();
+    }
+
+    // Alert Boxes to successful show the details of created users, clubs, events, etc.
+    public void userCreateAlertFunctionBox(String[] userHeader, ArrayList<Object> userDetailsArray, String alertTitle, String headerText){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(alertTitle);
+        alert.setHeaderText(headerText);
+
+        // To provides a mutable sequence of characters for the user details to be displayed
+        StringBuilder message = new StringBuilder();
+        // To show the driver details in each line
+        for (int i = 0; i < userHeader.length; i++) {
+            message.append(userHeader[i]).append(" : ").append(userDetailsArray.get(i)).append("\n");
+        }
+        alert.setContentText(message.toString());
+        alert.showAndWait();
+    }
 }

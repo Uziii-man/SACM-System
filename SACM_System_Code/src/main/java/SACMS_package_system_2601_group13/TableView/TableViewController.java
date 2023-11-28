@@ -19,15 +19,6 @@ public class TableViewController {
     ManageData manageData = new ManageData();
     SignIn signIn = new SignIn();
 
-    // Getters and setters for the club table view
-    private static int clubID;
-    public void setClubID(int clubID) {
-        this.clubID = clubID;
-    }
-    public int getClubID() {
-        return clubID;
-    }
-
 
     /// Table View for the club advisor and student to view all the clubs
     public void viewTable(TableView<TableViewEncapsulation> tableName,
@@ -79,7 +70,11 @@ public class TableViewController {
         for (ArrayList<Object> row : clubDetailsList) {
             if (clubIDList.contains(row.get(0))) {
             // Create a TableViewEncapsulation object directly
-            clubDetailsObservableList.add(new TableViewEncapsulation((Integer) row.get(0), String.valueOf(row.get(1)), String.valueOf(row.get(2)), String.valueOf(row.get(4))));
+            clubDetailsObservableList.add(new TableViewEncapsulation(
+                    (Integer) row.get(0),
+                    (String) row.get(1),
+                    (String) row.get(2),
+                    (String) row.get(4)));
             }
         }
 
@@ -133,6 +128,15 @@ public class TableViewController {
 //
 
     // Table view to manage events
+    // Getters and setters for the club table view
+    private static int clubID;
+    public void setClubID(int clubID) {
+        this.clubID = clubID;
+    }
+    public int getClubID() {
+        return clubID;
+    }
+
     public void viewTable(TableView<TableViewEncapsulation> tableName,
                           TableColumn<TableViewEncapsulation, Integer> eventIDColumn,
                           TableColumn<TableViewEncapsulation, String> eventNameColumn,
@@ -154,7 +158,12 @@ public class TableViewController {
         for (ArrayList<Object> eventRow : eventDetailsList) {
             if (eventRow.get(1).equals(clubID)) {
                 // Create a TableViewEncapsulation object directly
-                eventDetailsObservableList.add(new TableViewEncapsulation((Integer) eventRow.get(0), (String) eventRow.get(2), (Date) eventRow.get(3), (Time) eventRow.get(4), (Time) eventRow.get(5), (String) eventRow.get(6)));
+                eventDetailsObservableList.add(new TableViewEncapsulation(
+                        (Integer) eventRow.get(0), (String) eventRow.get(2),
+                        (Date) eventRow.get(3),
+                        (Time) eventRow.get(4),
+                        (Time) eventRow.get(5),
+                        (String) eventRow.get(6)));
             }
         }
 
@@ -171,56 +180,94 @@ public class TableViewController {
     }
 
 
-//    // Table view to manage attendance
-//    private CheckBox createCheckBox(boolean isSelected) {
-//        CheckBox checkBox = new CheckBox();
-//        checkBox.setSelected(isSelected);
-//        return checkBox;
-//    }
-//
-//    public void viewTables(TableView<TableViewEncapsulation> tableName,
-//                          TableColumn<TableViewEncapsulation, String> studentIDColumn,
-//                          TableColumn<TableViewEncapsulation, String> studentFirstNameColumn,
-//                          TableColumn<TableViewEncapsulation, String> studentLastNameColumn,
-//                          TableColumn<TableViewEncapsulation, CheckBox> attendanceCheckboxColumn) {
-//
-//        // Query the database and get the data -> clubDetailsList
-//        String query = "SELECT * FROM club_and_student";
-//
-//        // Get the attendance data from the database
-//        ArrayList<ArrayList<Object>> attendanceDetailsList = manageData.get2DArrayData(query);
-//        // ObservableList is a list that enables listeners to track changes when they occur
-//        ObservableList<TableViewEncapsulation> attendaceDetailsObservableList = FXCollections.observableArrayList();
-//
-//        // Get the student details from the database
-//        String studentDetailsQuery = "SELECT * FROM student";
-//        ArrayList<ArrayList<Object>> studentDetailsList = manageData.get2DArrayData(studentDetailsQuery);
-//
-//
-//
-//        // To add the attendance to the observable list that the attendance table
-//
-//        for (ArrayList<Object> attendanceRow : attendanceDetailsList) {
-//            for (ArrayList<Object> studentRow : studentDetailsList) {
-//                if (attendanceRow.get(1).equals(studentRow.get(0))) {
-//                    // Create a TableViewEncapsulation object directly
-//                    System.out.println("Attendance: " + attendanceRow.get(3));
-//                    attendaceDetailsObservableList.add(new TableViewEncapsulation((String) attendanceRow.get(1),
-//                            (String) studentRow.get(1),
-//                            (String) studentRow.get(2),
-//                            createCheckBox((boolean) attendanceRow.get(3))));
-//                    break;
-//                }
-//            }
-//        }
-//
-//        // To set the table view columns
-//        studentIDColumn.setCellValueFactory(new PropertyValueFactory<>("studentID"));
-//        studentFirstNameColumn.setCellValueFactory(new PropertyValueFactory<>("studentFirstName"));
-//        studentLastNameColumn.setCellValueFactory(new PropertyValueFactory<>("studentLastName"));
-//        attendanceCheckboxColumn.setCellValueFactory(new PropertyValueFactory<>("attendanceCheckbox"));
-//
-//        // To set the table view
-//        tableName.setItems(attendaceDetailsObservableList);
-//    }
+    // Table view to manage attendance
+    // Getters and setters for the event table view
+    // For event ID
+    private static int eventID;
+    public void setEventID(int eventID) {
+        this.eventID = eventID;
+    }
+    public int getEventID() {
+        return eventID;
+    }
+
+    // For event name
+    private static String eventName;
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+    public String getEventName() {
+        return eventName;
+    }
+
+    // For event date
+    private static String eventDate;
+    public void setEventDate(String eventDate) {
+        this.eventDate = eventDate;
+    }
+    public String getEventDate() {
+        return eventDate;
+    }
+
+
+
+    private CheckBox createCheckBox(boolean isSelected) {
+        CheckBox checkBox = new CheckBox();
+        checkBox.setSelected(isSelected);
+        return checkBox;
+    }
+
+    public void viewTables(TableView<TableViewEncapsulation> tableName,
+                          TableColumn<TableViewEncapsulation, String> studentIDColumn,
+                          TableColumn<TableViewEncapsulation, String> studentFirstNameColumn,
+                          TableColumn<TableViewEncapsulation, String> studentLastNameColumn,
+                          TableColumn<TableViewEncapsulation, CheckBox> attendanceCheckboxColumn) {
+
+        // Get the attendance data from the database
+        String attendanceDtailsQuery = "SELECT * FROM attendance";
+        ArrayList<ArrayList<Object>> attendanceDetailsList = manageData.get2DArrayData(attendanceDtailsQuery);
+
+        // ObservableList is a list that enables listeners to track changes when they occur
+        ObservableList<TableViewEncapsulation> attendaceDetailsObservableList = FXCollections.observableArrayList();
+
+        // Get the student details from the database
+        String studentDetailsQuery = "SELECT * FROM student";
+        ArrayList<ArrayList<Object>> studentDetailsList = manageData.get2DArrayData(studentDetailsQuery);
+
+
+
+        // To add the attendance to the observable list that the attendance table
+
+        for (ArrayList<Object> attendanceRow : attendanceDetailsList) {
+            System.out.println("\nEvent ID: " + attendanceRow.get(0));
+            for (ArrayList<Object> studentRow : studentDetailsList) {
+                System.out.println("Student ID: " + studentRow.get(0));
+                System.out.println("Event ID " + attendanceRow.get(0));
+                System.out.println("Event " + eventID);
+                if (attendanceRow.get(0).equals(eventID)) {
+                    System.out.println("\n First IF \n" );
+                    if (attendanceRow.get(1).equals(studentRow.get(0))) {
+                        System.out.println("\n Seconds IF \n");
+                                // Create a TableViewEncapsulation object directly
+                        System.out.println("Attendance: " + attendanceRow.get(2));
+                        attendaceDetailsObservableList.add(new TableViewEncapsulation(
+                                (String) attendanceRow.get(1),
+                                (String) studentRow.get(1),
+                                (String) studentRow.get(2),
+                                createCheckBox((boolean) attendanceRow.get(2))));
+                        break;
+                    }
+                }
+            }
+        }
+
+        // To set the table view columns
+        studentIDColumn.setCellValueFactory(new PropertyValueFactory<>("studentID"));
+        studentFirstNameColumn.setCellValueFactory(new PropertyValueFactory<>("studentFirstName"));
+        studentLastNameColumn.setCellValueFactory(new PropertyValueFactory<>("studentLastName"));
+        attendanceCheckboxColumn.setCellValueFactory(new PropertyValueFactory<>("attendanceCheckbox"));
+
+        // To set the table view
+        tableName.setItems(attendaceDetailsObservableList);
+    }
 }

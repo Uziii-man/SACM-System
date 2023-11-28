@@ -8,14 +8,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="450.0" prefWidth="650.0" styleClass="backgroundColor" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SACMS_package_system_2601_group13.Student.StudentProfile">
+<AnchorPane prefHeight="450.0" prefWidth="650.0" styleClass="backgroundColor" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SACMS_package_system_2601_group13.User.Student">
     <children>
         <Button layoutX="88.0" layoutY="204.0" mnemonicParsing="false" onAction="#viewClubsOnActionButton" prefHeight="105.0" prefWidth="105.0" styleClass="button" stylesheets="@StyleSheet.css" text="View &amp; Join Clubs" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="14.0" />
          </font></Button>
         <Button layoutX="13.0" layoutY="411.0" mnemonicParsing="false" onAction="#signOutOnActionButton" prefHeight="25.0" prefWidth="74.0" styleClass="button" stylesheets="@StyleSheet.css" text="Sign Out" textFill="RED" />
-        <Text layoutX="140.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student Profile" textAlignment="CENTER" wrappingWidth="370.1416015625">
+        <Text layoutX="140.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student Profile" textAlignment="CENTER" wrappingWidth="370.1416015625">
             <font>
                 <Font size="40.0" />
             </font>
@@ -25,7 +25,10 @@
                 <Image url="@Images/SACMS_logo.png" />
             </image>
         </ImageView>
-      <Label fx:id="userIDLabelView" layoutX="487.0" layoutY="14.0" prefHeight="17.0" prefWidth="96.0" />
+      <Label fx:id="userIDLabelProfileView" layoutX="486.0" layoutY="28.0" prefHeight="27.0" prefWidth="129.0">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
       <Button layoutX="457.0" layoutY="204.0" mnemonicParsing="false" onAction="#studentProfileManagementOnActionButton" prefHeight="105.0" prefWidth="105.0" styleClass="button" stylesheets="@StyleSheet.css" text="Profile Management" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="14.0" />

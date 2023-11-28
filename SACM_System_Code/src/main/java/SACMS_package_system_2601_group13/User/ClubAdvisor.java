@@ -1,26 +1,17 @@
-package SACMS_package_system_2601_group13.ClubAdvisor;
+package SACMS_package_system_2601_group13.User;
 
-import SACMS_package_system_2601_group13.Common.ManageData;
-import SACMS_package_system_2601_group13.Common.SignIn;
 import SACMS_package_system_2601_group13.MainController;
-import SACMS_package_system_2601_group13.TableView.TableViewController;
-import SACMS_package_system_2601_group13.TableView.TableViewEncapsulation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.paint.Color;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-public class ClubAdvisorProfile {
+public class ClubAdvisor extends Person {
 
     // Building new constructor methods for existing classes
     MainController mainController = new MainController();
+
+    public ClubAdvisor(String userID, String password, String firstName, String lastName) {
+        super(userID, password, firstName, lastName);
+    }
 
     // If the club advisor wants to view all the available club and details in a table
     @FXML

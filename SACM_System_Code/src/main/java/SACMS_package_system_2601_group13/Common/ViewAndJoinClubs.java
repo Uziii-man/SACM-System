@@ -43,15 +43,12 @@ public class ViewAndJoinClubs {
     // To store the join date
     Date joinDate;
 
-    // If the club advisor wants to view all the available club and details in a table before joining
-    // Creating a Runnable object to execute the object frequently and assigned using lambda
-    // Instead of creating a new object of Runnable interface, we can use lambda expression to reduce the code
-    Runnable viewClub = () -> tableViewController.viewTable(viewClubsTable, clubIDColumn, clubNameColumn, clubDescriptionColumn);
 
-    // Button to load the table data in the view club page in View_Join_Clubs.fxml
+    // To view the table when it loads using initialize method
     @FXML
-    protected void loadTableOnActionButton(){
-        viewClub.run();}
+    private void initialize() {
+        tableViewController.viewTable(viewClubsTable, clubIDColumn, clubNameColumn, clubDescriptionColumn);
+    }
 
 
     // To check if the user has already joined the club and the number of clubs the user has joined
@@ -188,6 +185,11 @@ public class ViewAndJoinClubs {
         }
     }
 
+    // If the club advisor wants to signOut from the system
+    @FXML
+    protected void signOutOnActionButton(ActionEvent actionEvent) throws Exception {
+        mainController.navigateFunction(actionEvent, "Main_User_Selection_Page.fxml", "SACM System");
+    }
 
     // If the user wants to move back to the previous page
     @FXML

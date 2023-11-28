@@ -23,10 +23,10 @@ public class TableViewEncapsulation {
     private Time eventEndTime;
 
     // Declaring variables for the attendance table view
-//    private String studentID;
-//    private String studentFirstName;
-//    private String studentLastName;
-//    private CheckBox attendanceCheckbox;
+    private String studentID;
+    private String studentFirstName;
+    private String studentLastName;
+    private CheckBox attendanceCheckbox;
 
 
     // Method to construct the table view encapsulation object
@@ -58,12 +58,13 @@ public class TableViewEncapsulation {
         this.eventDescription = eventDescription;
     }
 
-//    public TableViewEncapsulation(String studentID, String studentFirstName, String studentLastName, CheckBox attendanceCheckbox) {
-//        this.studentID = studentID;
-//        this.studentFirstName = studentFirstName;
-//        this.studentLastName = studentLastName;
-//        this.attendanceCheckbox = attendanceCheckbox;
-//    }
+    // Setters for table view used in attendance management page
+    public TableViewEncapsulation(String studentID, String studentFirstName, String studentLastName, CheckBox attendanceCheckbox) {
+        this.studentID = studentID;
+        this.studentFirstName = studentFirstName;
+        this.studentLastName = studentLastName;
+        this.attendanceCheckbox = attendanceCheckbox;
+    }
 
 //    public TableViewEncapsulation(int e, String s, String s1, String s2, String s3) {
 //    }
@@ -166,33 +167,33 @@ public class TableViewEncapsulation {
 
 
     // Getter and setter for above declared variables for attendance table view
-//    public void setStudentFirstName(String studentFirstName) {
-//        this.studentFirstName = studentFirstName;
-//    }
-//
-//    public void setStudentLastName(String studentLastName) {
-//        this.studentLastName = studentLastName;
-//    }
-//
-//    public void setAttendanceCheckbox(CheckBox attendanceCheckbox) {
-//        this.attendanceCheckbox = attendanceCheckbox;
-//    }
-//
-//    public void setStudentID(String studentID) {
-//        this.studentID = studentID;
-//    }
-//    public String getStudentID() {
-//        return studentID;
-//    }
-//
-//    public String getStudentFirstName() {
-//        return studentFirstName;
-//    }
-//    public String getStudentLastName() {
-//        return studentLastName;
-//    }
-//
-//    public CheckBox getAttendanceCheckbox() {
-//        return attendanceCheckbox;
-//    }
+    public void setStudentFirstName(String studentFirstName) {
+        this.studentFirstName = studentFirstName;
+    }
+
+    public void setStudentLastName(String studentLastName) {
+        this.studentLastName = studentLastName;
+    }
+
+    public void setAttendanceCheckbox(CheckBox attendanceCheckbox) {
+        this.attendanceCheckbox = attendanceCheckbox;
+    }
+
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
+    }
+    public String getStudentID() {
+        return studentID;
+    }
+
+    public String getStudentFirstName() {
+        return studentFirstName;
+    }
+    public String getStudentLastName() {
+        return studentLastName;
+    }
+
+    public CheckBox getAttendanceCheckbox() {
+        return attendanceCheckbox;
+    }
 }

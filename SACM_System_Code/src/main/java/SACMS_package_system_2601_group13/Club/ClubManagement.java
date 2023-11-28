@@ -45,7 +45,6 @@ public class ClubManagement extends Validation {
 
     // Building new constructor objects for the classes
     MainController mainController = new MainController();
-    DatabaseManager databaseManager = new DatabaseManager();
     ManageData manageData = new ManageData();
     SignIn signIn = new SignIn();
     TableViewController tableViewController = new TableViewController();
@@ -210,7 +209,7 @@ public class ClubManagement extends Validation {
             // if all the details are valid it will display an alert box showing all the details
             String[] clubHeader = {"Club Name" ,"Club Abbreviation", "Club Origin Date", "Club Description"};
 
-            databaseManager.userCreateAlertFunctionBox(clubHeader, clubDetailsArrayList,
+            manageData.userCreateAlertFunctionBox(clubHeader, clubDetailsArrayList,
                     "Club Creation", "You have created a club successfully");
 
             // Then navigate to the club advisor profile
