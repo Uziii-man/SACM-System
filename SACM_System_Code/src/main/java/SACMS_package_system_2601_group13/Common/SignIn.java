@@ -83,8 +83,6 @@ public class SignIn {
 
             // Validate the username and password of the club advisor
             if(validLogin(queryClubAdvisorSearch, IDErrorLabel, passwordErrorLabel, IDTextField, passwordTextField)) {
-                System.out.println("Club advisor login correct");
-
                 // Direct to club advisor profile after successful login
                 mainController.navigateFunction(actionEvent, "Club_Advisor_Profile.fxml",
                         "Club Advisor Profile");
@@ -94,8 +92,6 @@ public class SignIn {
         else {
             String queryStudentSearch = "SELECT StudentID, Password FROM student WHERE StudentID = '" + loginUserID + "'";
             if(validLogin(queryStudentSearch, IDErrorLabel, passwordErrorLabel, IDTextField, passwordTextField)) {
-                System.out.println("Student login correct");
-
                 // Direct to student profile after successful login
                 mainController.navigateFunction(actionEvent, "Student_Profile.fxml", "Student Profile");
             }

@@ -18,19 +18,19 @@ public class StudentProfile {
     // if the student wants view all the available club
     @FXML
     protected void viewClubsOnActionButton(ActionEvent actionEvent) throws Exception {
-
+        mainController.navigateFunction(actionEvent, "View_Join_Clubs.fxml", "View and Join Clubs");
     }
 
 
-    // if the student wants join a club
+    // if the student wants to view upcoming events
     @FXML
-    protected void studentJoinClubOnActionButton(ActionEvent actionEvent) throws Exception {
+    protected void studentViewEventsOnActionButton(ActionEvent actionEvent) throws Exception {
 
     }
 
     // if the student wants to edit his or her profile
     @FXML
-    protected void studentEditProfileOnActionButton(ActionEvent actionEvent) throws Exception {
+    protected void studentProfileManagementOnActionButton(ActionEvent actionEvent) throws Exception {
 
     }
 

@@ -29,7 +29,7 @@ public class MainController {
         // Opening a new stage
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlName)));
-        stage.setScene(new Scene(root,600,400));
+        stage.setScene(new Scene(root,650,450));
         stage.setTitle(panelName);
         stage.setResizable(false);
         stage.show();
@@ -72,11 +72,6 @@ public class MainController {
     protected void backOnActionButton(ActionEvent actionEvent) throws Exception{
         navigateFunction(actionEvent, "Main_User_Selection_Page.fxml", "SACM System");}
 
-
-    // To show about the Program
-    @FXML
-    protected void aboutUsOnActionButton() {
-    }
 
     // To exit the Program
     @FXML

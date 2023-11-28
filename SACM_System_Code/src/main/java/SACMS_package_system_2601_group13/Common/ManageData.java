@@ -4,13 +4,13 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class ManageData {
+    DatabaseManager databaseManager = new DatabaseManager();
     // Method to insert data to database
     public void insertData(ArrayList<Object> details1DArrayList, String queryStatement){
 
         // Connecting to the database via DatabaseManager Class
-        Connection connection = DatabaseManager.connect();
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(queryStatement)) {
+        try (Connection connection = DatabaseManager.connect();
+            PreparedStatement preparedStatement = connection.prepareStatement(queryStatement)) {
             // Assuming the order of details in the ArrayList corresponds to the column order
             for (int i = 0; i < details1DArrayList.size(); i++) {
                 preparedStatement.setString(i + 1, String.valueOf((Object) details1DArrayList.get(i)));
@@ -21,6 +21,10 @@ public class ManageData {
             // Closing the database connection via DatabaseManager Class
             DatabaseManager.closeConnection();
         } catch (SQLException e) {
+            // Displaying the error message in a error alert box
+            databaseManager.alertFunctionBox("Data Insertion", "Error in Adding Data",
+                    "Please check the database connectivity and try again.");
+
             System.err.println("Error adding staff information: " + e.getMessage());
         } finally {
             // Closing the database connection via DatabaseManager Class
@@ -91,13 +95,11 @@ public class ManageData {
     }
 
 
-    // To delete data from the database from a given query statement
+    // To delete and update data from the database from a given query statement
     public void modifyData(String queryStatement){
         // Connecting to the database via DatabaseManager Class
-        Connection connection = DatabaseManager.connect();
-
-        // Creating a statement object to execute the query statement
-        try (PreparedStatement preparedStatement = connection.prepareStatement(queryStatement)) {
+        try (Connection connection = DatabaseManager.connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(queryStatement)) {
             // Execute the insert statement
             preparedStatement.executeUpdate();
 

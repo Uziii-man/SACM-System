@@ -14,7 +14,7 @@
          <font>
             <Font size="14.0" />
          </font></Button>
-      <Button layoutX="185.0" layoutY="306.0" mnemonicParsing="false" onAction="#viewClubsOnActionButton" prefHeight="105.0" prefWidth="105.0" styleClass="button" stylesheets="@StyleSheet.css" text="View Clubs" textAlignment="CENTER">
+      <Button layoutX="185.0" layoutY="306.0" mnemonicParsing="false" onAction="#viewClubsOnActionButton" prefHeight="105.0" prefWidth="105.0" styleClass="button" stylesheets="@StyleSheet.css" text="View &amp; Join Clubs" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="14.0" />
          </font></Button>

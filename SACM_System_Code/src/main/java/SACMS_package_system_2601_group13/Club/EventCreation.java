@@ -52,22 +52,26 @@ public class EventCreation extends Validation {
     }
 
 
+    // Method to set label colors and texts
+    private void setLabelProperties(Label label, Color color, String text) {
+        label.setTextFill(color);
+        label.setText(text);
+    }
+
+
     // For the event name validation
     @Override
     public boolean nameValidator(Label labelName) {
         isValidData = false;
         // To check if the event name is valid character length
         if (eventName.length() < 5 || eventName.length() > 20) {
-            labelName.setText("Invalid Event Name");
-            labelName.setTextFill(Color.RED);
+            setLabelProperties(labelName ,Color.RED, "Invalid Event Name");
         } else {
             // To check if the event name contains only letters and numbers
             if (!eventName.matches("^[a-zA-Z0-9 ]+")) {
-                labelName.setTextFill(Color.RED);
-                labelName.setText("Invalid Event Name");
+                setLabelProperties(labelName ,Color.RED, "Invalid Event Name");
             } else {
-                labelName.setTextFill(Color.GREEN);
-                labelName.setText("Valid Event Name");
+                setLabelProperties(labelName ,Color.GREEN, "Valid Event Name");
                 isValidData = true;
             }
         }
@@ -87,43 +91,38 @@ public class EventCreation extends Validation {
 
             if(startTimeHour < 0 || startTimeHour > 23 || startTimeMinute < 0 || startTimeMinute > 59 ||
                     endTimeHour < 0 || endTimeHour > 23 || endTimeMinute < 0 || endTimeMinute > 59){
-                setLabelProperties(Color.RED, "Invalid Time");
+                setLabelProperties(eventTimeErrorLabel, Color.RED, "Invalid Time");
             }else{
                 // To check if the start time is greater than the end time
                 if(startTimeHour > endTimeHour){
-                    setLabelProperties(Color.RED, "Invalid Time");
+                    setLabelProperties(eventTimeErrorLabel, Color.RED, "Invalid Time");
                 }else{
                     // To check if the start time and end time is the same
                     if(startTimeHour == endTimeHour){
                         // If they are same, check the minutes of the start time and end time
                         if(startTimeMinute > endTimeMinute){
-                            setLabelProperties(Color.RED, "Invalid Time");
+                            setLabelProperties(eventTimeErrorLabel, Color.RED, "Invalid Time");
                         }else{
-                            setLabelProperties(Color.GREEN, "Valid Time");
+                            setLabelProperties(eventTimeErrorLabel ,Color.GREEN, "Valid Time");
                             isValidData = true;
                         }
                     }else{
-                        setLabelProperties(Color.GREEN, "Valid Time");
+                        setLabelProperties(eventTimeErrorLabel ,Color.GREEN, "Valid Time");
                         isValidData = true;
                     }
                 }
             }
         }
         catch (NumberFormatException e){
-            setLabelProperties(Color.RED, "Invalid Time");
+            setLabelProperties(eventTimeErrorLabel ,Color.RED, "Invalid Time");
         }
         return isValidData;
     }
 
-    // Method to set label colors and texts
-    private void setLabelProperties(Color color, String text) {
-        eventTimeErrorLabel.setTextFill(color);
-        eventTimeErrorLabel.setText(text);
-    }
 
     // To create an event
     @FXML
-    private void createEventOnActionButton(ActionEvent actionEvent){
+    protected void createEventOnActionButton(ActionEvent actionEvent){
         // To check if the event name is valid
         setEventName(eventNameTextField.getText());
         boolean isValidEventName = nameValidator(eventNameErrorLabel);
@@ -131,19 +130,18 @@ public class EventCreation extends Validation {
             eventNameTextField.clear();
         }
 
-        // To check if the date is empty or not
+        // To check if the date is selected or not
         boolean isValidDate = false;
         Date datePicked = null;
         if (datePicker.getValue() != null) {
-            System.out.println("\nDate Picked");
+            // To convert the date picker value to sql date
             datePicked = java.sql.Date.valueOf(datePicker.getValue());
             // To check if the date is valid
             setEventDate(datePicked);
             isValidDate = dateValidator(dateErrorLabel);
         } else {
             // Handle the case where no date is selected
-            dateErrorLabel.setTextFill(Color.RED);
-            dateErrorLabel.setText("Pick a Date");
+            setLabelProperties(dateErrorLabel ,Color.RED, "Pick a Date");
         }
 
         // To check if the description is valid
@@ -166,9 +164,7 @@ public class EventCreation extends Validation {
         else {
             // Combine hours and minutes to form a time
             String startTime = eventStartTimeHourTextField.getText() + ":" + eventStartTimeMinuteTextField.getText();
-            System.out.println(startTime);
             String endTime = eventEndTimeHourTextField.getText() + ":" + eventEndTimeMinuteTextField.getText();
-            System.out.println(endTime);
 
             // Parse the combined time string to LocalTime
             LocalTime combinedStartTime = LocalTime.parse(startTime, DateTimeFormatter.ofPattern("H:m"));
@@ -195,25 +191,42 @@ public class EventCreation extends Validation {
             String insertEventQuery = "INSERT INTO event (ClubID ,EventName, EventDescription, EventDate, EventStartTime, EventEndTime) VALUES (?, ?, ?, ?, ?, ?)";
             manageData.insertData(eventDetails, insertEventQuery);
 
+            // After the event is created, attendance is created for the event
+            // Get the eventID from the database
+            String getEventIDQuery = "SELECT EventID FROM event WHERE EventName = '" + eventName + "'";
+            ArrayList<Object> eventIDList = manageData.get1DArrayData(getEventIDQuery);
+            int eventID = (int) eventIDList.get(0);
+
+            // Get the studentID from the database to create attendance for the event who are in the club
+            String getStudentIDQuery = "SELECT StudentID FROM club_and_student WHERE ClubID = '" + clubManagement.getClubID() + "'";
+            ArrayList<Object> studentIDList = manageData.get1DArrayData(getStudentIDQuery);
+
+            // To add the eventID and studentID to the attendance table
+            for(Object studentID : studentIDList){
+                ArrayList<Object> attendanceDetails = new ArrayList<>(Arrays.asList(
+                        eventID,
+                        studentID));
+                String insertAttendanceQuery = "INSERT INTO attendance (EventID, StudentID) VALUES (?, ?)";
+                manageData.insertData(attendanceDetails, insertAttendanceQuery);
+            }
+
+
             // Alert box to show the event is created successfully
             String[] eventHeader = {"Club ID", "Event Name", "Event Description", "Date", "Start Time", "End Time"};
             databaseManager.userCreateAlertFunctionBox(eventHeader, eventDetails, "Event Creation", "Event Created Successfully");
-
-            // Displaying the error message in a error alert box
-            databaseManager.alertFunctionBox("Event Creation", "Event Creation Failed", "Unable to create event");
         }
     }
 
     // To move back to the event management page
     @FXML
-    void backOnActionButton(ActionEvent actionEvent) throws Exception {
+    protected void backOnActionButton(ActionEvent actionEvent) throws Exception {
         mainController.navigateFunction(actionEvent, "Event_Management.fxml", "Event Management");
     }
 
 
     // To sign out from the system
     @FXML
-    void signOutOnActionButton(ActionEvent actionEvent) throws Exception {
+    protected void signOutOnActionButton(ActionEvent actionEvent) throws Exception {
         mainController.navigateFunction(actionEvent, "Main_User_Selection_Page.fxml", "SACM System");
     }
 }

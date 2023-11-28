@@ -26,11 +26,11 @@
             </image>
         </ImageView>
       <Label fx:id="userIDLabelView" layoutX="487.0" layoutY="14.0" prefHeight="17.0" prefWidth="96.0" />
-      <Button layoutX="457.0" layoutY="204.0" mnemonicParsing="false" onAction="#studentprofileManagementOnActionButton" prefHeight="105.0" prefWidth="105.0" styleClass="button" stylesheets="@StyleSheet.css" text="Profile Management" textAlignment="CENTER" wrapText="true">
+      <Button layoutX="457.0" layoutY="204.0" mnemonicParsing="false" onAction="#studentProfileManagementOnActionButton" prefHeight="105.0" prefWidth="105.0" styleClass="button" stylesheets="@StyleSheet.css" text="Profile Management" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="14.0" />
          </font></Button>
-      <Button layoutX="273.0" layoutY="204.0" mnemonicParsing="false" onAction="#studentprofileManagementOnActionButton" prefHeight="105.0" prefWidth="105.0" styleClass="button" stylesheets="@StyleSheet.css" text="View Events" textAlignment="CENTER" wrapText="true">
+      <Button layoutX="273.0" layoutY="204.0" mnemonicParsing="false" onAction="#studentViewEventsOnActionButton" prefHeight="105.0" prefWidth="105.0" styleClass="button" stylesheets="@StyleSheet.css" text="View Events" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="14.0" />
          </font>

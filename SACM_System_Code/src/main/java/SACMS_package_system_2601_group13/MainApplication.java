@@ -11,7 +11,7 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Main_User_Selection_Page.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        Scene scene = new Scene(fxmlLoader.load(), 650, 450);
         primaryStage.setTitle("SACM System");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);

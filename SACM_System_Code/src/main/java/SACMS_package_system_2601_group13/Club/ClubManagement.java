@@ -33,7 +33,7 @@ public class ClubManagement extends Validation {
     @FXML
     private TableView <TableViewEncapsulation> clubManagementTable;
     @FXML
-    private TableColumn <TableViewEncapsulation , String> clubIDColumn;
+    private TableColumn <TableViewEncapsulation , Integer> clubIDColumn;
     @FXML
     private TableColumn <TableViewEncapsulation , String> clubNameColumn;
     @FXML
@@ -50,28 +50,31 @@ public class ClubManagement extends Validation {
     SignIn signIn = new SignIn();
     TableViewController tableViewController = new TableViewController();
 
-    TableViewEncapsulation tableViewEncapsulation = new TableViewEncapsulation();
 
     // Initializing variables
     private boolean isValidData;
     private ArrayList<Object> clubIDArray;
     private String querySearch;
 
+
     // Lambda expression to view the table in the club management page
     Runnable viewClubManagementTable = () -> tableViewController.viewTable(clubManagementTable, clubIDColumn, clubNameColumn,
             clubAbbreviationColumn, clubDescriptionColumn);
 
+
     // Getting the userID from the signIn class
     private String userID = signIn.getLoginUserID();
 
+
     // Setting Up getters and setters clubID
-    private static String clubID;
-    public String getClubID() {
+    private static int clubID;
+    public int getClubID() {
         return clubID;
     }
-    public void setClubID(String clubID) {
+    public void setClubID(int clubID) {
         this.clubID = clubID;
     }
+
 
     // club name validation
     private String clubName;
@@ -82,6 +85,14 @@ public class ClubManagement extends Validation {
         this.clubName = clubName;
     }
 
+
+    // Method to set label colors and texts
+    private void setLabelProperties(Label label, Color color, String text) {
+        label.setTextFill(color);
+        label.setText(text);
+    }
+
+
     // club name validation function
     @Override
     public boolean nameValidator(Label labelName) {
@@ -90,34 +101,30 @@ public class ClubManagement extends Validation {
         querySearch = "SELECT ClubName FROM club";
         // Length validation
         if (clubName.length() < 10 || clubName.length() > 25) {
-            labelName.setTextFill(Color.RED);
-            labelName.setText("Club Name characters between 10 and 25");
+            setLabelProperties(labelName, Color.RED, "Club Name characters between 10 and 25");
         } else {
             // Character validation alphabets only and spaces allowed
             if (!clubName.matches("[a-zA-Z ]+")) {
-                labelName.setTextFill(Color.RED);
-                labelName.setText("Name must contain only alphabets");
+                setLabelProperties(labelName, Color.RED, "Name must contain only alphabets");
             } else {
                 if(manageData.get1DArrayData(querySearch).contains(clubName)){
                     // Club name already exists in the database
-                    labelName.setTextFill(Color.RED);
-                    labelName.setText("Club Name Exists");
+                    setLabelProperties(labelName, Color.RED, "Club Name Exists");
                 } else {
                     if(clubAdvisorInOtherClubValidator()){
                         // Club Advisor can create a club
-                        labelName.setTextFill(Color.GREEN);
-                        labelName.setText("Club Name is Valid");
+                        setLabelProperties(labelName, Color.GREEN, "Club Name is Valid");
                         isValidData = true;
                     } else {
                         // Club advisor cannot create a club
-                        labelName.setTextFill(Color.RED);
-                        labelName.setText("Club Advisor reach maximum create clubs");
+                        setLabelProperties(labelName, Color.RED, "Club Advisor reach maximum create clubs");
                     }
                 }
             }
         }
         return isValidData;
     }
+
 
     // check if the club advisor has already in other clubs when creating a new club (club advisor can only be in maximum of club)
     public boolean clubAdvisorInOtherClubValidator() {
@@ -134,6 +141,7 @@ public class ClubManagement extends Validation {
 
         return isValidData;
     }
+
 
     // If the club advisor wants to create a club after navigating to club creation page
     @FXML
@@ -210,6 +218,7 @@ public class ClubManagement extends Validation {
         }
     }
 
+
     // Button to load the club management table
     @FXML
     protected void loadTableOnActionButton(){
@@ -225,23 +234,23 @@ public class ClubManagement extends Validation {
     // Edit and Update the Table View and Club Table in the Database
     private void updateClubTable(){
         // Setting the error label to show the user to select a row to edit
-        clubManagementErrorLabel.setText("Please select a row to edit");
+        // To display the club name is updated
+        setLabelProperties(clubManagementErrorLabel, Color.BLACK, "Please select a row to edit");
 
         // Club ID column cannot be edited because it is the primary key in the database
         // To edit club name colum
         clubNameColumn.setOnEditCommit(event -> {
-            //
             TableViewEncapsulation tableViewEncapsulation = event.getTableView().getItems().get(event.getTablePosition().getRow());
-
             setClubName(event.getNewValue());
-            // To check if the club name is valid
+
+            // Validation for club name
             boolean validName = nameValidator(clubManagementErrorLabel);
             if (validName) {
                 tableViewEncapsulation.setClubAbbreviation(event.getNewValue());
                 querySearch = "UPDATE club SET ClubName = '" + event.getNewValue() + "' WHERE ClubID = '" + tableViewEncapsulation.getClubID() + "'";
                 manageData.modifyData(querySearch);
-                clubManagementErrorLabel.setTextFill(Color.GREEN);
-                clubManagementErrorLabel.setText("Club Name is Updated");
+                // To display the club name is updated
+                setLabelProperties(clubManagementErrorLabel, Color.GREEN, "Club Name is Updated");
             }
         });
 
@@ -249,16 +258,15 @@ public class ClubManagement extends Validation {
         clubAbbreviationColumn.setOnEditCommit(event -> {
             TableViewEncapsulation tableViewEncapsulation = event.getTableView().getItems().get(event.getTablePosition().getRow());
             setClubAbbreviation(event.getNewValue());
+
             // Validation for club abbreviation
             boolean validAbbreviation = clubAbbreviationValidator(clubManagementErrorLabel);
-            // To check if the club abbreviation is valid
             if (validAbbreviation) {
                 // To update the club abbreviation in the table
                 querySearch = "UPDATE club SET ClubAbbreviation = '" + event.getNewValue() + "' WHERE ClubID = '" + tableViewEncapsulation.getClubID() + "'";
                 manageData.modifyData(querySearch);
                 // To display the club abbreviation is updated
-                clubManagementErrorLabel.setTextFill(Color.GREEN);
-                clubManagementErrorLabel.setText("Club Abbreviation is Updated");
+                setLabelProperties(clubManagementErrorLabel, Color.GREEN, "Club Abbreviation is Updated");
             }
         });
 
@@ -266,13 +274,14 @@ public class ClubManagement extends Validation {
         clubDescriptionColumn.setOnEditCommit(event -> {
             TableViewEncapsulation tableViewEncapsulation = event.getTableView().getItems().get(event.getTablePosition().getRow());
             setDescription(event.getNewValue());
+
+            // Validation for club description
             boolean validDescription = descriptionValidator(clubManagementErrorLabel);
-            // To check if the club description is valid
             if (validDescription) {
                 querySearch = "UPDATE club SET ClubDescription = '" + event.getNewValue() + "' WHERE ClubID = '" + tableViewEncapsulation.getClubID() + "'";
                 manageData.modifyData(querySearch);
-                clubManagementErrorLabel.setTextFill(Color.GREEN);
-                clubManagementErrorLabel.setText("Club Description is Updated");
+                // To display the club description is updated
+                setLabelProperties(clubManagementErrorLabel, Color.GREEN, "Club Description is Updated");
             }
         });
     }
@@ -280,20 +289,43 @@ public class ClubManagement extends Validation {
 
     // If the club advisor wants to delete the club
     @FXML
-    protected void deleteClubDetailsOnActionButton(ActionEvent actionEvent) throws Exception {
+    protected void deleteClubDetailsOnActionButton(ActionEvent actionEvent){
         TableView.TableViewSelectionModel<TableViewEncapsulation> selectionModel = clubManagementTable.getSelectionModel();
-        if(selectionModel.isEmpty()){
+        if (selectionModel.isEmpty()) {
             // The club advisor doesn't select a row to delete
-            clubManagementErrorLabel.setTextFill(Color.RED);
-            clubManagementErrorLabel.setText("Select a row to delete");
-        }else {
+            setLabelProperties(clubManagementErrorLabel, Color.RED, "Select a row to delete");
+        } else {
             TableViewEncapsulation selectedClub = clubManagementTable.getSelectionModel().getSelectedItem();
-            String clubID = selectedClub.getClubID();
+            Integer clubID = selectedClub.getClubID();
+
+            // Query for event table to delete data
+            // Order --> attendance table --> event table --> club and club advisor table  --> club and student table --> club table
+            // To get the event ID from the selected row
+            String getEventIDQuery = "SELECT * FROM event";
+            ArrayList<ArrayList<Object>> eventIDList = manageData.get2DArrayData(getEventIDQuery);
+
+            for (ArrayList<Object> row : eventIDList) {
+                if (row.get(1).equals(clubID)) {
+                    // First have to delete attendance table related to the event
+                    String attendanceDataDeleteQuery = "DELETE FROM attendance WHERE EventID = '" + row.get(0) + "'";
+                    manageData.modifyData(attendanceDataDeleteQuery);
+
+                    // Then have to delete event table related to the event
+                    String eventDataDeleteQuery = "DELETE FROM event WHERE EventID = '" + row.get(0) + "'";
+                    manageData.modifyData(eventDataDeleteQuery);
+                }
+            }
+
             // Query for club and club advisor relation table to delete data
-            String clubAndClubAdvisorDataDeleteQuery = "DELETE FROM club_and_club_advisor WHERE ClubID = '" +  clubID + "'";
+            String clubAndClubAdvisorDataDeleteQuery = "DELETE FROM club_and_club_advisor WHERE ClubID = '" + clubID + "'";
             manageData.modifyData(clubAndClubAdvisorDataDeleteQuery);
+
+            // Query for club and student relation table to delete data
+            String clubAndStudentDataDeleteQuery = "DELETE FROM club_and_student WHERE ClubID = '" + clubID + "'";
+            manageData.modifyData(clubAndStudentDataDeleteQuery);
+
             // Query for club table to delete data
-            String clubDataDeleteQuery = "DELETE FROM club WHERE ClubID = '" +  clubID + "'";
+            String clubDataDeleteQuery = "DELETE FROM club WHERE ClubID = '" + clubID + "'";
             manageData.modifyData(clubDataDeleteQuery);
 
             // Refresh the table
@@ -301,52 +333,54 @@ public class ClubManagement extends Validation {
         }
     }
 
+
     // If the club advisor wants to leave the club
     @FXML
     protected void leaveClubAdvisorClubOnActionButton(ActionEvent actionEvent){
         TableView.TableViewSelectionModel<TableViewEncapsulation> selectionModel = clubManagementTable.getSelectionModel();
         if(selectionModel.isEmpty()){
             // The club advisor doesn't select a row to delete
-            clubManagementErrorLabel.setTextFill(Color.RED);
-            clubManagementErrorLabel.setText("Select a row to Leave");
+            setLabelProperties(clubManagementErrorLabel, Color.RED, "Select a row to Leave");
         }
         else {
             // To get the selected and deleted row
             TableViewEncapsulation selectedClub = clubManagementTable.getSelectionModel().getSelectedItem();
             // Get the club ID from the selected row
-            String clubID = selectedClub.getClubID();
+            int clubID = selectedClub.getClubID();
             // Query for club and club advisor relation table to delete data
             String clubAndClubAdvisorDataDeleteQuery = "DELETE FROM club_and_club_advisor WHERE StaffID = '" + userID + "' AND ClubID = '" + clubID + "'";
             manageData.modifyData(clubAndClubAdvisorDataDeleteQuery);
 
-            // To display you have left the club successfully
-            clubManagementErrorLabel.setTextFill(Color.GREEN);
-            clubManagementErrorLabel.setText("You have left the club successfully");
+            // To display you have left the club successfully\
+            setLabelProperties(clubManagementErrorLabel, Color.GREEN, "You have left the club successfully");
 
             // To refresh the table
             viewClubManagementTable.run();
         }
     }
 
+
     // If the club advisor wants to manage events
     @FXML
     protected void eventManageClubOnActionButton(ActionEvent actionEvent) throws Exception {
         TableView.TableViewSelectionModel<TableViewEncapsulation> selectionModel = clubManagementTable.getSelectionModel();
+
         if (selectionModel.isEmpty()) {
             // The club advisor doesn't select a row to delete
-            clubManagementErrorLabel.setTextFill(Color.RED);
-            clubManagementErrorLabel.setText("Select a row to Handle Events");
+            setLabelProperties(clubManagementErrorLabel, Color.RED, "Select a Handle Events");
         } else {
             // To get the selected and deleted row
             TableViewEncapsulation selectedClub = clubManagementTable.getSelectionModel().getSelectedItem();
             // Get the club ID from the selected row and set it
-            String clubID = selectedClub.getClubID();
+            int clubID = selectedClub.getClubID();
+            tableViewController.setClubID(clubID);
             setClubID(clubID);
 
             // Navigate to the event management page
             mainController.navigateFunction(actionEvent, "Event_Management.fxml", "Event Management");
         }
     }
+
 
     // If the club advisor wants to go back to club advisor profile
     @FXML
@@ -360,6 +394,4 @@ public class ClubManagement extends Validation {
     protected void signOutOnActionButton(ActionEvent actionEvent) throws Exception {
         mainController.navigateFunction(actionEvent, "Main_User_Selection_Page.fxml", "SACM System");
     }
-
-
 }
