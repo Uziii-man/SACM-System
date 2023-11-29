@@ -35,5 +35,6 @@
             </image>
         </ImageView>
       <Button layoutX="562.0" layoutY="411.0" mnemonicParsing="false" onAction="#backOnActionButton" prefHeight="25.0" prefWidth="74.0" styleClass="button" stylesheets="@StyleSheet.css" text="Sign Out" textFill="RED" />
+      <Button layoutX="229.0" layoutY="411.0" mnemonicParsing="false" onAction="#generateClubActivityReportOnActionButton" prefHeight="25.0" prefWidth="193.0" text="Generate Club Activity Report" textFill="#006537" />
     </children>
 </AnchorPane>

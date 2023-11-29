@@ -17,11 +17,9 @@ public class ReportGeneration {
     //  Getters and setters
     // for the event name
     private String eventName;
-
     public String getEventName() {
         return eventName;
     }
-
     public void setEventName(String eventName) {
         this.eventName = eventName;
     }
@@ -29,11 +27,9 @@ public class ReportGeneration {
 
     // for the event ID
     private int eventID;
-
     public int getEventID() {
         return eventID;
     }
-
     public void setEventID(int eventID) {
         this.eventID = eventID;
     }
@@ -41,22 +37,18 @@ public class ReportGeneration {
 
     // for the event date
     private Date eventDate;
-
     public Date getEventDate() {
         return eventDate;
     }
-
     public void setEventDate(Date eventDate) {
         this.eventDate = eventDate;
     }
 
     // for the event time
     private Time eventTime;
-
     public Time getEventTime() {
         return eventTime;
     }
-
     public void setEventTime(Time eventTime) {
         this.eventTime = eventTime;
     }
@@ -159,7 +151,7 @@ public class ReportGeneration {
 
 
     // To generate a club report
-    public void clubReport() {
+    public void clubMembershipReport() {
         // Club report file name
         fileName = "Club Report " + clubName + " " + LocalDate.now().toString().replace(":", "_") + ".txt";
 
@@ -202,16 +194,16 @@ public class ReportGeneration {
         }
 
         // Club report header
-        String[] clubDetailHeader = {"Student ID", "First Name", "Last Name", "Grade", "Joined Date" };
+        String[] clubDetailsHeader = {"Student ID", "First Name", "Last Name", "Grade", "Joined Date" };
 
         try (BufferedWriter writeFile = new BufferedWriter(new FileWriter(fileName))) {
-            writeFile.write("==========================================================================\n");
-            writeFile.write("----------------------------- Club Summary -------------------------------\n");
-            writeFile.write("==========================================================================\n");
-            writeFile.write("Club Name :" + clubName + "\t\t\t\t\t\tNumber of Members :" + noOfMembers + "\n");
-            writeFile.write("==========================================================================\n");
-            writeFile.write(String.format("| %-15s | %-15s | %-15s | %-15s | %-15s |\n", clubDetailHeader));
-            writeFile.write("==========================================================================\n");
+            writeFile.write("===========================================================================================\n");
+            writeFile.write("-------------------------------------- Club Summary ---------------------------------------\n");
+            writeFile.write("===========================================================================================\n");
+            writeFile.write("Club Name :" + clubName + "\t\t\t\t\t\t\t\tNumber of Members :" + noOfMembers + "\n");
+            writeFile.write("===========================================================================================\n");
+            writeFile.write(String.format("| %-15s | %-15s | %-15s | %-15s | %-15s |\n", clubDetailsHeader));
+            writeFile.write("===========================================================================================\n");
 
             // Loop to store the student details with position and points fileName in the text file
             for (ArrayList<String> studentDetail : clubSummary2DArray) {
@@ -220,7 +212,7 @@ public class ReportGeneration {
                 writeFile.write(String.format(formatString, args));
             }
 
-            writeFile.write("==========================================================================\n\n");
+            writeFile.write("===========================================================================================\n\n");
 
             // To display the report is generated successfully
             manageData.alertFunctionBox("Club Report", "Club Report Generated Successfully",
@@ -234,83 +226,75 @@ public class ReportGeneration {
     }
 
     // To generate a club activity report
-//    public void clubActivityReport() {
-//        // Club activity report file name
-//        fileName = "Club Activity Report " + LocalDate.now().toString().replace(":", "_") + ".txt";
-//
-//        // Query to get the club details
-//        String queryClubDetails = "SELECT * FROM club";
-//        String queryEventDetails = "SELECT * FROM event";
-//
-//        // To get details from the database
-//        ArrayList<ArrayList<Object>> clubDetails = manageData.get2DArrayData(queryClubDetails);
-//        ArrayList<ArrayList<Object>> eventDetails = manageData.get2DArrayData(queryEventDetails);
-//
-//        // Creating new array to store club activity summary
-//        ArrayList<ArrayList<String>> clubActivitySummary3DArray = new ArrayList<>();
-//        ArrayList<ArrayList<String>> clubDetailsArray = new ArrayList<>();
-//
-//        // Get the club ID and club name int club details array
-//        for (ArrayList<Object> clubDetail : clubDetails) {
-//            ArrayList<String> temp = new ArrayList<>();
-//            temp.add(String.valueOf(clubDetail.get(0)));
-//            temp.add(String.valueOf(clubDetail.get(1)));
-//
-//            if (!clubDetailsArray.contains(temp)) {
-//                clubDetailsArray.add(temp);
-//            }
-//        }
-//
-//        System.out.println(clubDetailsArray);
-//
-//        String[] clubActivityDetailHeader = {"Event ID", "Event Name", "Event Date", "Event Start Time", "Event End Time"};
-//
-//        try (BufferedWriter writeFile = new BufferedWriter(new FileWriter(fileName))) {
-//            writeFile.write("==========================================================================\n");
-//            writeFile.write("----------------------------- Club Summary -------------------------------\n");
-//            writeFile.write("==========================================================================\n");
-//
-//            for (ArrayList<String> clubDetail : clubDetailsArray) {
-//                writeFile.write("Club ID :"+ clubDetail.get(0) + "\t\t\tClub Name :" + clubDetail.get(1) + "\n");
-//                writeFile.write("==========================================================================\n");
-//                writeFile.write(String.format("| %-15s | %-15s | %-15s | %-15s | %-15s |\n", clubActivityDetailHeader));
-//                writeFile.write("==========================================================================\n");
-//
-//                // Loop to store the student details with position and points fileName in the text file
-//                for (ArrayList<Object> eventDetail : eventDetails) {
-//                    if (clubDetail.get(0).equals(String.valueOf(eventDetail.get(1)))) {
-//                        ArrayList<String> temp = new ArrayList<>();
-//                        temp.add(String.valueOf(eventDetail.get(0)));
-//                        temp.add(String.valueOf(eventDetail.get(2)));
-//                        temp.add(String.valueOf(eventDetail.get(3)));
-//                        temp.add(String.valueOf(eventDetail.get(4)));
-//                        temp.add(String.valueOf(eventDetail.get(5)));
-//
-//                        clubActivitySummary3DArray.add(temp);
-//                    }
-//                }
-//
-//                for (ArrayList<String> clubActivityDetail : clubActivitySummary3DArray) {
-//                    String formatString = "| %-15s | %-15s | %-15s | %-15s | %-15s |\n";
-//                    Object[] args = clubActivityDetail.toArray();
-//                    writeFile.write(String.format(formatString, args));
-//                }
-//
-//                writeFile.write("==========================================================================\n\n");
-//            }
-//
-//
-//
-//            writeFile.write("==========================================================================\n\n");
-//
-//            // To display the report is generated successfully
-//            manageData.alertFunctionBox("Club Report", "Club Report Generated Successfully",
-//                    "Club Report can be found in the project folder" + fileName);
-//
-//        } catch (IOException e) {
-//            // To display the report is not generated
-//            manageData.alertFunctionBox("Club Report", "Club Report Generation Failed",
-//                    "Club Report cannot be generated");
-//        }
-//    }
+    public void clubActivityReport() {
+        // Club activity report file name
+        fileName = "Club Activity Report " + LocalDate.now().toString().replace(":", "_") + ".txt";
+
+        // Query to get the club details
+        String queryClubDetails = "SELECT * FROM club";
+        String queryEventDetails = "SELECT * FROM event";
+
+        // To get details from the database
+        ArrayList<ArrayList<Object>> clubDetails = manageData.get2DArrayData(queryClubDetails);
+        ArrayList<ArrayList<Object>> eventDetails = manageData.get2DArrayData(queryEventDetails);
+
+        // Creating new array to store club activity summary
+        ArrayList<ArrayList<String>> clubDetailsArray = new ArrayList<>();
+
+        // Get the club ID and club name int club details array
+        for (ArrayList<Object> clubDetail : clubDetails) {
+            ArrayList<String> temp = new ArrayList<>();
+            temp.add(String.valueOf(clubDetail.get(0)));
+            temp.add(String.valueOf(clubDetail.get(1)));
+
+            if (!clubDetailsArray.contains(temp)) {
+                clubDetailsArray.add(temp);
+            }
+        }
+
+        System.out.println(clubDetailsArray);
+
+        String[] clubActivityDetailHeader = {"Event ID", "Event Name", "Event Date", "Event Start Time", "Event End Time"};
+
+        try (BufferedWriter writeFile = new BufferedWriter(new FileWriter(fileName))) {
+            writeFile.write("============================================================================================\n");
+            writeFile.write("----------------------------------- Club Activity Report -----------------------------------\n");
+
+
+            for (ArrayList<String> clubDetail : clubDetailsArray) {
+                writeFile.write("============================================================================================\n");
+                writeFile.write("\t\tClub ID :" + clubDetail.get(0) + "\t\t\t\t\t\t\t\t\tClub Name :" + clubDetail.get(1) + "\n");
+                writeFile.write("============================================================================================\n");
+                writeFile.write(String.format("| %-8s | %-10s | %-15s | %-15s | %-15s |\n", clubActivityDetailHeader));
+                writeFile.write("============================================================================================\n");
+
+                // Loop to store the student details with position and points fileName in the text file
+                for (ArrayList<Object> eventDetail : eventDetails) {
+                    if (clubDetail.get(0).equals(String.valueOf(eventDetail.get(1)))) {
+                        ArrayList<String> temp = new ArrayList<>();
+                        temp.add(String.valueOf(eventDetail.get(0)));
+                        temp.add(String.valueOf(eventDetail.get(2)));
+                        temp.add(String.valueOf(eventDetail.get(3)));
+                        temp.add(String.valueOf(eventDetail.get(4)));
+                        temp.add(String.valueOf(eventDetail.get(5)));
+
+                        // Write club activity details to the file
+                        String formatString = "| %-15s | %-15s | %-15s | %-15s | %-15s |\n";
+                        Object[] args = temp.toArray();
+                        writeFile.write(String.format(formatString, args));
+                    }
+                }
+                writeFile.write("============================================================================================\n");
+            }
+
+            // To display the report is generated successfully
+            manageData.alertFunctionBox("Club Report", "Club Report Generated Successfully",
+                    "Club Report can be found in the project folder" + fileName);
+
+        } catch (IOException e) {
+            // To display the report is not generated
+            manageData.alertFunctionBox("Club Report", "Club Report Generation Failed",
+                    "Club Report cannot be generated");
+        }
+    }
 }

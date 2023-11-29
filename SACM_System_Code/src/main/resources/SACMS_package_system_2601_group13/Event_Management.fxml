@@ -45,6 +45,6 @@
         </ImageView>
         <Label fx:id="eventManagementErrorLabel" layoutX="226.0" layoutY="361.0" prefHeight="19.0" prefWidth="198.0" textAlignment="CENTER" wrapText="true" />
         <Button layoutX="117.0" layoutY="388.0" mnemonicParsing="false" onAction="#createEventOnActionButton" prefHeight="47.0" prefWidth="71.0" styleClass="button" stylesheets="@StyleSheet.css" text="Create" textAlignment="CENTER" wrapText="true" />
-      <Button layoutX="341.0" layoutY="388.0" mnemonicParsing="false" onAction="#eventSummaryOnActionButton" prefHeight="47.0" prefWidth="71.0" styleClass="button" stylesheets="@StyleSheet.css" text="Summary" textAlignment="CENTER" wrapText="true" />
+      <Button layoutX="341.0" layoutY="388.0" mnemonicParsing="false" onAction="#eventSummaryOnActionButton" prefHeight="47.0" prefWidth="71.0" styleClass="button" stylesheets="@StyleSheet.css" text="Event Summary" textAlignment="CENTER" wrapText="true" />
     </children>
 </AnchorPane>

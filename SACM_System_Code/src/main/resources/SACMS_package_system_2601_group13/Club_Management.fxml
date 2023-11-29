@@ -39,6 +39,6 @@
       </ImageView>
       <Label fx:id="clubManagementErrorLabel" layoutX="206.0" layoutY="363.0" prefHeight="17.0" prefWidth="258.0" textAlignment="CENTER" wrapText="true" />
       <Button layoutX="464.0" layoutY="389.0" mnemonicParsing="false" onAction="#eventManagerClubOnActionButton" prefHeight="47.0" prefWidth="71.0" styleClass="button" stylesheets="@StyleSheet.css" text="Event" textAlignment="CENTER" wrapText="true" />
-      <Button layoutX="343.0" layoutY="389.0" mnemonicParsing="false" onAction="#clubSummaryOnActionButton" prefHeight="47.0" prefWidth="71.0" styleClass="button" stylesheets="@StyleSheet.css" text="Summary" textAlignment="CENTER" wrapText="true" />
+      <Button layoutX="343.0" layoutY="389.0" mnemonicParsing="false" onAction="#clubSummaryOnActionButton" prefHeight="47.0" prefWidth="71.0" styleClass="button" stylesheets="@StyleSheet.css" text="Club Summary" textAlignment="CENTER" wrapText="true" />
     </children>
 </AnchorPane>

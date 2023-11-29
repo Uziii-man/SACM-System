@@ -31,12 +31,22 @@ public class Events {
     // Creating object instantiation for classes
     TableViewController tableViewController = new TableViewController();
     MainController mainController = new MainController();
+    ReportGeneration reportGeneration = new ReportGeneration();
 
 
      // Method to initialize the table view
     public void initialize() {
         tableViewController.viewTable(eventTable, eventNameColumn, clubNameColumn, eventDateColumn, eventTimeColumn,
                 eventDescriptionColumn);
+    }
+
+
+    // To generate event report
+    @FXML
+    protected void generateClubActivityReportOnActionButton(ActionEvent actionEvent){
+        // This method is called when the user clicks on the generate report button
+        // Report display all the events that in the club (past and upcoming)
+        reportGeneration.clubActivityReport();
     }
 
 

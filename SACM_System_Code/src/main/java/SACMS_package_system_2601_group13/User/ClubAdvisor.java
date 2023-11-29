@@ -103,32 +103,41 @@ public class ClubAdvisor extends Validation implements Person{
         }
     }
 
-    // If the club advisor wants to update the details of the profile
-    @FXML
-    protected void updateOnActionButton(ActionEvent actionEvent) throws Exception {
+    boolean isValidCommonValidator;
+    String clubAdvisorFirstName;
+    String clubAdvisorLastName;
+    String clubAdvisorEmail;
+    String clubAdvisorPassword;
+    String clubAdvisorRePassword;
+    // To check if all the details entered are correct
+
+    @Override
+    public boolean commonValidator() {
+        isValidCommonValidator = false;
+
         // Get the entered new details
         // first name validation
-        String clubAdvisorFirstName = firstNameTextField.getText();
+        clubAdvisorFirstName = firstNameTextField.getText();
         signUp.setName(clubAdvisorFirstName);
         boolean clubAdvisorFirstNameValidation = signUp.nameValidator(firstNameErrorLabel);
 
         // last name validation
-        String clubAdvisorLastName = lastNameTextField.getText();
+        clubAdvisorLastName = lastNameTextField.getText();
         signUp.setName(clubAdvisorLastName);
         boolean clubAdvisorLastNameValidation = nameValidator(lastNameErrorLabel);
 
         // email validation
-        String clubAdvisorEmail = emailTextField.getText();
+        clubAdvisorEmail = emailTextField.getText();
         setEmail(clubAdvisorEmail);
         boolean clubAdvisorEmailValidation = emailValidator(emailErrorLabel, emailTextField);
 
         // password validation
-        String clubAdvisorPassword = passwordTextField.getText();
+        clubAdvisorPassword = passwordTextField.getText();
         setPassword(clubAdvisorPassword);
         boolean clubAdvisorPasswordValidation = passwordValidator(passwordErrorLabel, passwordTextField);
 
         // re-password validation
-        String clubAdvisorRePassword = rePasswordTextField.getText();
+        clubAdvisorRePassword = rePasswordTextField.getText();
         setPassword(clubAdvisorRePassword);
         boolean clubAdvisorRePasswordValidation = passwordValidator(rePasswordErrorLabel, rePasswordTextField);
 
@@ -145,7 +154,19 @@ public class ClubAdvisor extends Validation implements Person{
         // If all the details added are correct in the common validator
         if (clubAdvisorFirstNameValidation && clubAdvisorLastNameValidation && clubAdvisorEmailValidation
                 && clubAdvisorPasswordValidation && clubAdvisorRePasswordValidation && isBothPasswordSame) {
-            // Query to update the club advisor details
+            // If all the details are correct the common validator will be true
+            isValidCommonValidator = true;
+        }
+
+        return isValidCommonValidator;
+    }
+
+
+    // If the club advisor wants to update the details of the profile
+    @FXML
+    protected void updateOnActionButton(ActionEvent actionEvent) throws Exception {
+        if(isValidCommonValidator){
+         // Query to update the club advisor details
             String queryUpdateClubAdvisorDetails = "UPDATE club_advisor SET first_name = '" + clubAdvisorFirstName
                     + "', last_name = '" + clubAdvisorLastName + "', email = '" + clubAdvisorEmail + "', password = '"
                     + clubAdvisorPassword + "' WHERE user_id = '" + signIn.getLoginUserID() + "'";

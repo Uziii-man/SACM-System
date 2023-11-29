@@ -402,10 +402,7 @@ public class ClubManagement extends Validation {
             reportGeneration.setClubName(selectedClub.getClubName());
 
             // To generate a club report
-            reportGeneration.clubReport();
-
-
-
+            reportGeneration.clubMembershipReport();
         }
     }
 

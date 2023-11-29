@@ -193,37 +193,44 @@ public class Student extends Validation implements Person {
     }
 
 
-    // If the student wants to edit details
-    @FXML
-    protected void studentUpdateDetailsOnActionButton(ActionEvent actionEvent) throws Exception {
+    boolean isValidCommonValidator;
+    String studentFirstName;
+    String studentLastName;
+    String studentGrade;
+    String studentEmail;
+    String studentPassword;
+    String studentRePassword;
+    // To check if all the details entered are correct
+    @Override
+    public boolean commonValidator() {
         // Get the entered new details
         // first name validation
-        String studentFirstName = firstNameTextField.getText();
+        studentFirstName = firstNameTextField.getText();
         signUp.setName(studentFirstName);
         boolean validFirstName = signUp.nameValidator(firstNameErrorLabel);
 
         // last name validation
-        String studentLastName = lastNameTextField.getText();
+        studentLastName = lastNameTextField.getText();
         signUp.setName(studentLastName);
         boolean validLastName = signUp.nameValidator(lastNameErrorLabel);
 
         // grade validation
-        String studentGrade = gradeTextField.getText();
+        studentGrade = gradeTextField.getText();
         setGrade(studentGrade);
         boolean validGrade = gradeValidator(gradeErrorLabel, gradeTextField);
 
         // email validation
-        String studentEmail = emailTextField.getText();
+        studentEmail = emailTextField.getText();
         setEmail(studentEmail);
         boolean validEmail = emailValidator(emailErrorLabel, emailTextField);
 
         // password validation
-        String studentPassword = passwordTextField.getText();
+        studentPassword = passwordTextField.getText();
         setPassword(studentPassword);
         boolean validPassword = passwordValidator(passwordErrorLabel, passwordTextField);
 
         // rePassword validation
-        String studentRePassword = rePasswordTextField.getText();
+        studentRePassword = rePasswordTextField.getText();
         setPassword(studentRePassword);
         boolean validRePassword = passwordValidator(rePasswordErrorLabel, rePasswordTextField);
 
@@ -239,6 +246,17 @@ public class Student extends Validation implements Person {
 
         // If all the details added are correct in the common validator
         if (validFirstName && validLastName && validGrade && validEmail && validPassword && validRePassword && isBothPasswordSame) {
+            // If all the details are correct the common validator will be true
+            isValidCommonValidator = true;
+        }
+        return isValidCommonValidator;
+    }
+
+    // If the student wants to edit details
+    @FXML
+    protected void studentUpdateDetailsOnActionButton(ActionEvent actionEvent) throws Exception {
+        // If the common validator is true
+        if (commonValidator()) {
             // Query to update the student details
             String updateStudentDetailsQuery = "UPDATE student SET FirstName = '" + studentFirstName + "', LastName = '" +
                     studentLastName + "', Grade = '" + studentGrade + "', Email = '" + studentEmail +
@@ -248,10 +266,9 @@ public class Student extends Validation implements Person {
 
             // After updating the details, navigate to the sign-in page
             mainController.navigateFunction(actionEvent, "SignIn_Page.fxml", "Student SignIn");
-
         }
-
     }
+
 
     // Redirect to the student profile page
     @FXML
