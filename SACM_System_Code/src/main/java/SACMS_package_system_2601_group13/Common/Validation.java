@@ -273,6 +273,4 @@ public abstract class Validation {
         }
         return isValidData;
     }
-
-
 }

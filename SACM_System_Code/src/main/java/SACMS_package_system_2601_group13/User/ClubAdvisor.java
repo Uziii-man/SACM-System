@@ -36,6 +36,7 @@ public class ClubAdvisor extends Validation implements Person{
         label.setText(text);
     }
 
+
     // If the club advisor wants to view all the available club and details in a table
     @FXML
     protected void viewClubsOnActionButton(ActionEvent actionEvent) throws Exception {
@@ -55,6 +56,7 @@ public class ClubAdvisor extends Validation implements Person{
     protected void clubManageOnActionButton(ActionEvent actionEvent) throws Exception {
         mainController.navigateFunction(actionEvent, "Club_Management.fxml", "Club Management");
     }
+
 
     // If the club advisor wants to edit his or her profile
     @FXML
@@ -89,15 +91,15 @@ public class ClubAdvisor extends Validation implements Person{
     public void loadDetailsToTextFields(){
         // Query to get the student details
         String queryStudentDetails = "SELECT * FROM club_advisor";
-        ArrayList<ArrayList<Object>> studentDetailsList = manageData.get2DArrayData(queryStudentDetails);
+        ArrayList<ArrayList<Object>> clubAdvisorDetailsList = manageData.get2DArrayData(queryStudentDetails);
 
-        for (ArrayList<Object> studentDetails : studentDetailsList){
-            if (studentDetails.get(0).equals(signIn.getLoginUserID())){
-                firstNameTextField.setText((String) studentDetails.get(1));
-                lastNameTextField.setText((String) studentDetails.get(2));
-                emailTextField.setText((String) studentDetails.get(4));
-                passwordTextField.setText((String) studentDetails.get(5));
-                rePasswordTextField.setText((String) studentDetails.get(5));
+        for (ArrayList<Object> clubDetails : clubAdvisorDetailsList){
+            if (clubDetails.get(0).equals(signIn.getLoginUserID())){
+                firstNameTextField.setText((String) clubDetails.get(1));
+                lastNameTextField.setText((String) clubDetails.get(2));
+                emailTextField.setText((String) clubDetails.get(3));
+                passwordTextField.setText((String) clubDetails.get(4));
+                rePasswordTextField.setText((String) clubDetails.get(4));
                 break;
             }
         }
@@ -110,11 +112,9 @@ public class ClubAdvisor extends Validation implements Person{
     String clubAdvisorPassword;
     String clubAdvisorRePassword;
     // To check if all the details entered are correct
-
     @Override
     public boolean commonValidator() {
         isValidCommonValidator = false;
-
         // Get the entered new details
         // first name validation
         clubAdvisorFirstName = firstNameTextField.getText();
@@ -164,14 +164,18 @@ public class ClubAdvisor extends Validation implements Person{
 
     // If the club advisor wants to update the details of the profile
     @FXML
-    protected void updateOnActionButton(ActionEvent actionEvent) throws Exception {
-        if(isValidCommonValidator){
+    protected void updateClubAdvisorOnActionButton(ActionEvent actionEvent) throws Exception {
+        if(commonValidator()){
          // Query to update the club advisor details
-            String queryUpdateClubAdvisorDetails = "UPDATE club_advisor SET first_name = '" + clubAdvisorFirstName
-                    + "', last_name = '" + clubAdvisorLastName + "', email = '" + clubAdvisorEmail + "', password = '"
-                    + clubAdvisorPassword + "' WHERE user_id = '" + signIn.getLoginUserID() + "'";
+            String queryUpdateClubAdvisorDetails = "UPDATE club_advisor SET FirstName = '" + clubAdvisorFirstName
+                    + "', LastName = '" + clubAdvisorLastName + "', Email = '" + clubAdvisorEmail + "', Password = '"
+                    + clubAdvisorPassword + "' WHERE StaffID = '" + signIn.getLoginUserID() + "'";
             // Update the details in the database
             manageData.modifyData(queryUpdateClubAdvisorDetails);
+
+            // Alert box to show the details are updated successfully
+            manageData.alertFunctionBox("Club Advisor Profile Update", "Club Advisor Profile Updated Successfully",
+                    "Details Updated Successfully in Database of the Club Advisor Profile");
 
             // If everything is correct the details will update and navigate into sign in page of the student
             mainController.navigateFunction(actionEvent, "SignIn_Page.fxml", "Club Advisor SignIn");
@@ -184,20 +188,4 @@ public class ClubAdvisor extends Validation implements Person{
     protected void backOnActionButton(ActionEvent actionEvent) throws Exception {
         mainController.navigateFunction(actionEvent, "Club_Advisor_Profile.fxml", "Club Advisor");
     }
-
-
-
-//
-//    // If the user wants to signOut from the profile
-//    @FXML
-//    protected void signOutOnActionButton(ActionEvent actionEvent) throws Exception {
-//        mainController.navigateFunction(actionEvent, "Main_User_Selection_Page.fxml", "SACM System");
-//    }
-//
-//    // if the user wants to go to the back menu
-//    @FXML
-//    protected void backOnActionButton(ActionEvent actionEvent) throws Exception {
-//        mainController.navigateFunction(actionEvent, "Main_User_Selection_Page.fxml", "SACM System");
-//    }
-
 }

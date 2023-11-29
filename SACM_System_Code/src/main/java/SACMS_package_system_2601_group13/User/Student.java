@@ -165,6 +165,14 @@ public class Student extends Validation implements Person {
         }
     }
 
+
+    // To load the student data to the text fields
+    @FXML
+    protected void loadStudentDataOnActionButton(ActionEvent event){
+        loadDetailsToTextFields();
+    }
+
+
     // Method to load the student details to the text fields
     @Override
     public void loadDetailsToTextFields(){
@@ -185,14 +193,6 @@ public class Student extends Validation implements Person {
         }
     }
 
-
-    // To load the student data to the text fields
-    @FXML
-    protected void loadStudentDataOnActionButton(ActionEvent event){
-        loadDetailsToTextFields();
-    }
-
-
     boolean isValidCommonValidator;
     String studentFirstName;
     String studentLastName;
@@ -203,6 +203,7 @@ public class Student extends Validation implements Person {
     // To check if all the details entered are correct
     @Override
     public boolean commonValidator() {
+        isValidCommonValidator = false;
         // Get the entered new details
         // first name validation
         studentFirstName = firstNameTextField.getText();
@@ -263,6 +264,10 @@ public class Student extends Validation implements Person {
                     "', Password = '" + studentPassword + "' WHERE StudentID = '" + signIn.getLoginUserID() + "'";
             // Update the details in the database
             manageData.modifyData(updateStudentDetailsQuery);
+
+            // Alert box to show the details are updated successfully
+            manageData.alertFunctionBox("Student Profile Update", "Student Profile Updated Successfully",
+                    "Details Updated Successfully in Database of the Student Profile");
 
             // After updating the details, navigate to the sign-in page
             mainController.navigateFunction(actionEvent, "SignIn_Page.fxml", "Student SignIn");

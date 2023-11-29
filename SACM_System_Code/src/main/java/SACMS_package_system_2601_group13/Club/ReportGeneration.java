@@ -103,8 +103,8 @@ public class ReportGeneration {
             writeFile.write("==========================================================================\n");
             writeFile.write("----------------------------- Event Summary ------------------------------\n");
             writeFile.write("==========================================================================\n");
-            writeFile.write("Event Name :" + eventName + "\t\t\t\t\t\tEvent Date :" + clubName + "\n");
-            writeFile.write("Event Date :" + eventDate + "\t\t\t\t\t\tEvent Date :" + eventTime + "\n");
+            writeFile.write("Event Name : " + eventName + "\t\t\t\t\tClub Name : " + clubName + "\n");
+            writeFile.write("Event Date : " + eventDate + "\t\t\t\t\t\tEvent Time : " + eventTime + "\n");
             writeFile.write("==========================================================================\n");
             writeFile.write(String.format("| %-15s | %-15s | %-15s | %-15s |\n", eventDetailHeader));
             writeFile.write("==========================================================================\n");
@@ -200,7 +200,7 @@ public class ReportGeneration {
             writeFile.write("===========================================================================================\n");
             writeFile.write("-------------------------------------- Club Summary ---------------------------------------\n");
             writeFile.write("===========================================================================================\n");
-            writeFile.write("Club Name :" + clubName + "\t\t\t\t\t\t\t\tNumber of Members :" + noOfMembers + "\n");
+            writeFile.write("Club Name : " + clubName + "\t\t\t\t\t\t\t\tNumber of Members : " + noOfMembers + "\n");
             writeFile.write("===========================================================================================\n");
             writeFile.write(String.format("| %-15s | %-15s | %-15s | %-15s | %-15s |\n", clubDetailsHeader));
             writeFile.write("===========================================================================================\n");
@@ -263,9 +263,9 @@ public class ReportGeneration {
 
             for (ArrayList<String> clubDetail : clubDetailsArray) {
                 writeFile.write("============================================================================================\n");
-                writeFile.write("\t\tClub ID :" + clubDetail.get(0) + "\t\t\t\t\t\t\t\t\tClub Name :" + clubDetail.get(1) + "\n");
+                writeFile.write("\t\tClub ID : " + clubDetail.get(0) + "\t\t\t\t\t\t\t\t\tClub Name : " + clubDetail.get(1) + "\n");
                 writeFile.write("============================================================================================\n");
-                writeFile.write(String.format("| %-8s | %-10s | %-15s | %-15s | %-15s |\n", clubActivityDetailHeader));
+                writeFile.write(String.format("| %-8s | %-20s | %-12s | %-16s | %-16s |\n", clubActivityDetailHeader));
                 writeFile.write("============================================================================================\n");
 
                 // Loop to store the student details with position and points fileName in the text file
@@ -279,7 +279,7 @@ public class ReportGeneration {
                         temp.add(String.valueOf(eventDetail.get(5)));
 
                         // Write club activity details to the file
-                        String formatString = "| %-15s | %-15s | %-15s | %-15s | %-15s |\n";
+                        String formatString = "| %-8s | %-20s | %-12s | %-16s | %-16s |\n";
                         Object[] args = temp.toArray();
                         writeFile.write(String.format(formatString, args));
                     }

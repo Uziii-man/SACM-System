@@ -24,7 +24,7 @@
         </Text>
         <Button layoutX="14.0" layoutY="411.0" mnemonicParsing="false" onAction="#backOnActionButton" prefHeight="25.0" prefWidth="75.0" styleClass="button" stylesheets="@StyleSheet.css" text="Back" />
         <Button layoutX="561.0" layoutY="411.0" mnemonicParsing="false" onAction="#loadClubAdvisorDetailsOnActionButton" prefHeight="25.0" prefWidth="75.0" styleClass="button" stylesheets="@StyleSheet.css" text="Load" />
-        <Button layoutX="254.0" layoutY="411.0" mnemonicParsing="false" onAction="#updateOnActionButton" prefHeight="25.0" prefWidth="143.0" styleClass="button" stylesheets="@StyleSheet.css" text="Update" textFill="#01835c" />
+        <Button layoutX="254.0" layoutY="411.0" mnemonicParsing="false" onAction="#updateClubAdvisorOnActionButton" prefHeight="25.0" prefWidth="143.0" styleClass="button" stylesheets="@StyleSheet.css" text="Update" textFill="#01835c" />
         <Text layoutX="160.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name">
          <font>
             <Font size="14.0" />

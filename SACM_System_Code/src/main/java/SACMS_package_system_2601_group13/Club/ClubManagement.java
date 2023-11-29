@@ -376,6 +376,7 @@ public class ClubManagement extends Validation {
             // Get the club ID from the selected row and set it
             int clubID = selectedClub.getClubID();
             tableViewController.setClubID(clubID);
+            reportGeneration.setClubID(clubID);
             reportGeneration.setClubName(selectedClub.getClubName());
             setClubID(clubID);
 
@@ -387,7 +388,7 @@ public class ClubManagement extends Validation {
 
     // To generate a club report
     @FXML
-    protected void clubSummaryOnActionButton(ActionEvent actionEvent) throws Exception {
+    protected void clubSummaryOnActionButton(ActionEvent actionEvent){
         TableView.TableViewSelectionModel<TableViewEncapsulation> selectionModel = clubManagementTable.getSelectionModel();
 
         if (selectionModel.isEmpty()) {
