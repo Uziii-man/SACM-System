@@ -48,6 +48,7 @@ public class ClubManagement extends Validation {
     ManageData manageData = new ManageData();
     SignIn signIn = new SignIn();
     TableViewController tableViewController = new TableViewController();
+    ReportGeneration reportGeneration = new ReportGeneration();
 
 
     // Initializing variables
@@ -363,7 +364,7 @@ public class ClubManagement extends Validation {
 
     // If the club advisor wants to manage events
     @FXML
-    protected void eventManageClubOnActionButton(ActionEvent actionEvent) throws Exception {
+    protected void eventManagerClubOnActionButton(ActionEvent actionEvent) throws Exception {
         TableView.TableViewSelectionModel<TableViewEncapsulation> selectionModel = clubManagementTable.getSelectionModel();
 
         if (selectionModel.isEmpty()) {
@@ -375,10 +376,36 @@ public class ClubManagement extends Validation {
             // Get the club ID from the selected row and set it
             int clubID = selectedClub.getClubID();
             tableViewController.setClubID(clubID);
+            reportGeneration.setClubName(selectedClub.getClubName());
             setClubID(clubID);
 
             // Navigate to the event management page
             mainController.navigateFunction(actionEvent, "Event_Management.fxml", "Event Management");
+        }
+    }
+
+
+    // To generate a club report
+    @FXML
+    protected void clubSummaryOnActionButton(ActionEvent actionEvent) throws Exception {
+        TableView.TableViewSelectionModel<TableViewEncapsulation> selectionModel = clubManagementTable.getSelectionModel();
+
+        if (selectionModel.isEmpty()) {
+            // The club advisor doesn't select a row to delete
+            setLabelProperties(clubManagementErrorLabel, Color.RED, "Select a club to generate report");
+        } else {
+            // To get the selected and deleted row
+            TableViewEncapsulation selectedClub = clubManagementTable.getSelectionModel().getSelectedItem();
+            // Get the club ID from the selected row and set it
+            int clubID = selectedClub.getClubID();
+            reportGeneration.setClubID(clubID);
+            reportGeneration.setClubName(selectedClub.getClubName());
+
+            // To generate a club report
+            reportGeneration.clubReport();
+
+
+
         }
     }
 

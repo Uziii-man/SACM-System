@@ -12,10 +12,10 @@
 
 <AnchorPane prefHeight="450.0" prefWidth="650.0" styleClass="backgroundColor" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SACMS_package_system_2601_group13.Club.ClubManagement">
     <children>
-        <Button layoutX="573.0" layoutY="411.0" mnemonicParsing="false" onAction="#loadTableOnActionButton" prefHeight="25.0" prefWidth="63.0" styleClass="button" stylesheets="@StyleSheet.css" text="Load" />
+        <Button layoutX="577.0" layoutY="411.0" mnemonicParsing="false" onAction="#loadTableOnActionButton" prefHeight="25.0" prefWidth="63.0" styleClass="button" stylesheets="@StyleSheet.css" text="Load" />
         <Button layoutX="14.0" layoutY="411.0" mnemonicParsing="false" onAction="#backOnActionButton" prefHeight="25.0" prefWidth="63.0" styleClass="button" stylesheets="@StyleSheet.css" text="Back" />
-        <Button layoutX="159.0" layoutY="388.0" mnemonicParsing="false" onAction="#leaveClubAdvisorClubOnActionButton" prefHeight="47.0" prefWidth="71.0" styleClass="button" stylesheets="@StyleSheet.css" text="Leave" textAlignment="CENTER" wrapText="true" />
-        <Button layoutX="290.0" layoutY="388.0" mnemonicParsing="false" onAction="#deleteClubDetailsOnActionButton" prefHeight="47.0" prefWidth="71.0" styleClass="button" stylesheets="@StyleSheet.css" text="Delete" textAlignment="CENTER" wrapText="true" />
+        <Button layoutX="117.0" layoutY="388.0" mnemonicParsing="false" onAction="#leaveClubAdvisorClubOnActionButton" prefHeight="47.0" prefWidth="71.0" styleClass="button" stylesheets="@StyleSheet.css" text="Leave" textAlignment="CENTER" wrapText="true" />
+        <Button layoutX="234.0" layoutY="388.0" mnemonicParsing="false" onAction="#deleteClubDetailsOnActionButton" prefHeight="47.0" prefWidth="71.0" styleClass="button" stylesheets="@StyleSheet.css" text="Delete" textAlignment="CENTER" wrapText="true" />
       <TableView fx:id="clubManagementTable" editable="true" layoutX="46.0" layoutY="128.0" prefHeight="235.0" prefWidth="562.0">
         <columns>
           <TableColumn fx:id="clubIDColumn" prefWidth="40.0" resizable="false" sortable="false" text="ID" />
@@ -38,6 +38,7 @@
          </image>
       </ImageView>
       <Label fx:id="clubManagementErrorLabel" layoutX="206.0" layoutY="363.0" prefHeight="17.0" prefWidth="258.0" textAlignment="CENTER" wrapText="true" />
-      <Button layoutX="422.0" layoutY="388.0" mnemonicParsing="false" onAction="#eventManageClubOnActionButton" prefHeight="47.0" prefWidth="71.0" styleClass="button" stylesheets="@StyleSheet.css" text="Event" textAlignment="CENTER" wrapText="true" />
+      <Button layoutX="464.0" layoutY="389.0" mnemonicParsing="false" onAction="#eventManagerClubOnActionButton" prefHeight="47.0" prefWidth="71.0" styleClass="button" stylesheets="@StyleSheet.css" text="Event" textAlignment="CENTER" wrapText="true" />
+      <Button layoutX="343.0" layoutY="389.0" mnemonicParsing="false" onAction="#clubSummaryOnActionButton" prefHeight="47.0" prefWidth="71.0" styleClass="button" stylesheets="@StyleSheet.css" text="Summary" textAlignment="CENTER" wrapText="true" />
     </children>
 </AnchorPane>

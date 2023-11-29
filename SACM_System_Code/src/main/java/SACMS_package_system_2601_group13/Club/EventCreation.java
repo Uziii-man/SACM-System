@@ -1,6 +1,5 @@
 package SACMS_package_system_2601_group13.Club;
 
-import SACMS_package_system_2601_group13.Common.DatabaseManager;
 import SACMS_package_system_2601_group13.Common.ManageData;
 import SACMS_package_system_2601_group13.Common.Validation;
 import SACMS_package_system_2601_group13.MainController;
@@ -154,7 +153,7 @@ public class EventCreation extends Validation {
         boolean isValidDate = false;
         if (datePicker.getValue() != null) {
             // To convert the date picker value to sql date
-            datePicked = java.sql.Date.valueOf(datePicker.getValue());
+            datePicked = Date.valueOf(datePicker.getValue());
             // To check if the date is valid
             setEventDate(datePicked);
             isValidDate = dateValidator(dateErrorLabel);

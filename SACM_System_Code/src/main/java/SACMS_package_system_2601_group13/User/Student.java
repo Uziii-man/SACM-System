@@ -65,7 +65,7 @@ public class Student extends Validation implements Person {
     // if the student wants to view upcoming events
     @FXML
     protected void studentViewEventsOnActionButton(ActionEvent actionEvent) throws Exception {
-
+        mainController.navigateFunction(actionEvent, "Events.fxml", "Upcoming Events");
     }
 
     // if the student wants to manage profile (this code directs to the student profile management page)

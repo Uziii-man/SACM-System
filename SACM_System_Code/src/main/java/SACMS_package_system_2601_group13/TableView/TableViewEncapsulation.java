@@ -33,12 +33,14 @@ public class TableViewEncapsulation {
     public TableViewEncapsulation() {
     }
 
+
     // Setters for table view used in view club page
     public TableViewEncapsulation(int clubID, String clubName, String clubDescription) {
         this.clubID = clubID;
         this.clubName = clubName;
         this.clubDescription = clubDescription;
     }
+
 
     // Setters for table view used in club management page
     public TableViewEncapsulation(int clubID, String clubName, String clubAbbreviation, String clubDescription) {
@@ -47,6 +49,25 @@ public class TableViewEncapsulation {
         this.clubAbbreviation = clubAbbreviation;
         this.clubDescription = clubDescription;
     }
+
+
+    // Setters for table view used in attendance management page
+    public TableViewEncapsulation(String studentID, String studentFirstName, String studentLastName, CheckBox attendanceCheckbox) {
+        this.studentID = studentID;
+        this.studentFirstName = studentFirstName;
+        this.studentLastName = studentLastName;
+        this.attendanceCheckbox = attendanceCheckbox;
+    }
+
+    // Setters for table view used in view upcoming events
+    public TableViewEncapsulation(String eventName, String clubName, Date eventDate ,Time eventStartTime, String eventDescription) {
+        this.eventName = eventName;
+        this.clubName = clubName;
+        this.eventDate = eventDate;
+        this.eventStartTime = eventStartTime;
+        this.eventDescription = eventDescription;
+    }
+
 
     // Setters for table view used in event management page
     public TableViewEncapsulation(int eventID, String eventName, Date eventDate, Time eventStartTime, Time eventEndTime ,String eventDescription) {
@@ -57,15 +78,6 @@ public class TableViewEncapsulation {
         this.eventEndTime = eventEndTime;
         this.eventDescription = eventDescription;
     }
-
-    // Setters for table view used in attendance management page
-    public TableViewEncapsulation(String studentID, String studentFirstName, String studentLastName, CheckBox attendanceCheckbox) {
-        this.studentID = studentID;
-        this.studentFirstName = studentFirstName;
-        this.studentLastName = studentLastName;
-        this.attendanceCheckbox = attendanceCheckbox;
-    }
-
 
 
     // Getter and setter for above declared variables

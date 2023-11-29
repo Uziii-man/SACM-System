@@ -32,9 +32,12 @@ public class TableViewController {
         ObservableList<TableViewEncapsulation> clubDetailsObservableList = FXCollections.observableArrayList();
 
         // Add the details to the observable list
-        for (ArrayList<Object> row : clubDetailsList) {
+        for (ArrayList<Object> clubDetail : clubDetailsList) {
             // Create a TableViewEncapsulation object directly
-            clubDetailsObservableList.add(new TableViewEncapsulation((Integer) row.get(0), (String) row.get(1), (String) row.get(2)));
+            clubDetailsObservableList.add(new TableViewEncapsulation(
+                    (Integer) clubDetail.get(0),
+                    (String) clubDetail.get(1),
+                    (String) clubDetail.get(2)));
         }
 
         clubIDColumn.setCellValueFactory(new PropertyValueFactory<>("clubID"));
@@ -53,11 +56,11 @@ public class TableViewController {
                           TableColumn<TableViewEncapsulation, String> clubDescriptionColumn) {
 
         // Query the database and get the data -> clubDetailsList
-        String query = "SELECT * FROM club";
+        String queryClub = "SELECT * FROM club";
 
         // Get the data from the database
-        ArrayList<ArrayList<Object>> clubDetailsList = manageData.get2DArrayData(query);
-        // ObservableList is a list that enables listeners to track changes when they occur
+        ArrayList<ArrayList<Object>> clubDetailsList = manageData.get2DArrayData(queryClub);
+        // Initialize the observable list
         ObservableList<TableViewEncapsulation> clubDetailsObservableList = FXCollections.observableArrayList();
 
         // This done to show the clubs that the club advisor is managing
@@ -84,46 +87,58 @@ public class TableViewController {
         tableName.setItems(clubDetailsObservableList);
     }
 
+
     // To view the events in a table
-//    public void viewTable(TableView<TableViewEncapsulation> tableName,
-//                          TableColumn<TableViewEncapsulation, Integer> eventIDColumn,
-//                          TableColumn<TableViewEncapsulation, String> eventNameColumn,
-//                          TableColumn<TableViewEncapsulation, String> clubNameColumn,
-//                          TableColumn<TableViewEncapsulation, Date> eventDateColumn,
-//                          TableColumn<TableViewEncapsulation, String> eventDescriptionColumn) {
-//
-//        // Query the database and get the data -> clubDetailsList
-//        String query = "SELECT * FROM event";
-//
-//        // Get the data from the database
-//        ArrayList<ArrayList<Object>> eventDetailsList = manageData.get2DArrayData(query);
-//        // ObservableList is a list that enables listeners to track changes when they occur
-//        ObservableList<TableViewEncapsulation> eventDetailsObservableList = FXCollections.observableArrayList();
-//
-//        // This done to show the clubs that host events
-//        String clubDetailsQuery = "SELECT * FROM club";
-//        ArrayList<ArrayList<Object>> clubDetailsList = manageData.get2DArrayData(clubDetailsQuery);
-//
-//        // To add the clubs to the observable list that the club advisor is managing
-//        for (ArrayList<Object> eventRow : eventDetailsList) {
-//            for (ArrayList<Object> clubRow : clubDetailsList) {
-//                if (eventRow.get(1).equals(clubRow.get(0))) {
-//                    // Create a TableViewEncapsulation object directly
-//                    eventDetailsObservableList.add(new TableViewEncapsulation((Integer) eventRow.get(0), String.valueOf(eventRow.get(2)), String.valueOf(clubRow.get(1)), String.valueOf(eventRow.get(3)), String.valueOf(eventRow.get(4))));
-//                    break;
-//                }
-//            }
-//        }
-//
-//        eventIDColumn.setCellValueFactory(new PropertyValueFactory<>("eventID"));
-//        eventNameColumn.setCellValueFactory(new PropertyValueFactory<>("eventName"));
-//        clubNameColumn.setCellValueFactory(new PropertyValueFactory<>("eventAbbreviation"));
-//        eventDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventDescription"));
-//        eventDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("eventDescription"));
-//
-//        tableName.setItems(eventDetailsObservableList);
-//    }
-//
+    public void viewTable(TableView<TableViewEncapsulation> tableName,
+                          TableColumn<TableViewEncapsulation, String> eventNameColumn,
+                          TableColumn<TableViewEncapsulation, String> clubNameColumn,
+                          TableColumn<TableViewEncapsulation, Date> eventDateColumn,
+                          TableColumn<TableViewEncapsulation, Time> eventTimeColumn,
+                          TableColumn<TableViewEncapsulation, String> eventDescriptionColumn) {
+
+        // Query the database and get the data
+        String queryEvents = "SELECT * FROM event";
+        String queryClubs = "SELECT * FROM club";
+
+        // Getting the data from the database
+        ArrayList<ArrayList<Object>> eventDetailsList = manageData.get2DArrayData(queryEvents);
+        ArrayList<ArrayList<Object>> clubDetailsList = manageData.get2DArrayData(queryClubs);
+
+        // Get the local date from the system and compare with the date in the database
+        Date localDate = new Date(System.currentTimeMillis());
+
+        // Initialize the observable list
+        ObservableList<TableViewEncapsulation> eventDetailsObservableList = FXCollections.observableArrayList();
+
+        // To show upcoming events only
+        for (ArrayList<Object> eventRow : eventDetailsList) {
+            // To check if the event date is greater than the local date
+            if (localDate.compareTo((Date) eventRow.get(3)) < 0) {
+                for (ArrayList<Object> clubRow : clubDetailsList) {
+                    if (eventRow.get(1).equals(clubRow.get(0))) {
+                        // Create a TableViewEncapsulation object directly
+                        eventDetailsObservableList.add(new TableViewEncapsulation(
+                                (String) eventRow.get(2),
+                                (String) clubRow.get(1),
+                                (Date) eventRow.get(3),
+                                (Time) eventRow.get(4),
+                                (String) eventRow.get(6)));
+                    }
+                }
+            }
+        }
+
+        // To set the table view columns for the upcoming events
+        eventNameColumn.setCellValueFactory(new PropertyValueFactory<>("eventName"));
+        clubNameColumn.setCellValueFactory(new PropertyValueFactory<>("clubName"));
+        eventDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventDate"));
+        eventTimeColumn.setCellValueFactory(new PropertyValueFactory<>("eventStartTime"));
+        eventDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("eventDescription"));
+
+        // To set the table view for the upcoming events
+        tableName.setItems(eventDetailsObservableList);
+    }
+
 
     // Table view to manage events
     // Getters and setters for the club table view
@@ -145,10 +160,10 @@ public class TableViewController {
 
         // Query the database and get the data -> clubDetailsList
         String query = "SELECT * FROM event";
-
         // Get the data from the database
         ArrayList<ArrayList<Object>> eventDetailsList = manageData.get2DArrayData(query);
-        // ObservableList is a list that enables listeners to track changes when they occur
+
+        // Initialize the observable list
         ObservableList<TableViewEncapsulation> eventDetailsObservableList = FXCollections.observableArrayList();
 
 
@@ -182,6 +197,7 @@ public class TableViewController {
     // Getters and setters for the event table view
     // For event ID
     private static int eventID;
+
     public void setEventID(int eventID) {
         this.eventID = eventID;
     }
@@ -191,6 +207,7 @@ public class TableViewController {
 
     // For event name
     private static String eventName;
+
     public void setEventName(String eventName) {
         this.eventName = eventName;
     }
@@ -200,6 +217,7 @@ public class TableViewController {
 
     // For event date
     private static String eventDate;
+
     public void setEventDate(String eventDate) {
         this.eventDate = eventDate;
     }
@@ -208,7 +226,7 @@ public class TableViewController {
     }
 
 
-
+    // Method to create a checkbox
     private CheckBox createCheckBox(boolean isSelected) {
         CheckBox checkBox = new CheckBox();
         checkBox.setSelected(isSelected);
@@ -225,7 +243,7 @@ public class TableViewController {
         String attendanceDetailsQuery = "SELECT * FROM attendance";
         ArrayList<ArrayList<Object>> attendanceDetailsList = manageData.get2DArrayData(attendanceDetailsQuery);
 
-        // ObservableList is a list that enables listeners to track changes when they occur
+        // Initialize the observable list
         ObservableList<TableViewEncapsulation> attendaceDetailsObservableList = FXCollections.observableArrayList();
 
         // Get the student details from the database

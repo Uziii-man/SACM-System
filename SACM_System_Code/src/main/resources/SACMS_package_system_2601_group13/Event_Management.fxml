@@ -33,17 +33,17 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
         </TableView>
-        <Text layoutX="176.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Event Manager" textAlignment="CENTER" wrappingWidth="298.056640625">
+        <Text layoutX="176.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Event Manager" textAlignment="CENTER" wrappingWidth="298.056640625">
             <font>
                 <Font size="36.0" />
             </font>
         </Text>
-        <ImageView fitHeight="71.0" fitWidth="103.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="78.0" fitWidth="111.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@Images/SACMS_logo.png" />
             </image>
         </ImageView>
-        <Label fx:id="eventManagementErrorLabel" layoutX="208.0" layoutY="361.0" prefHeight="19.0" prefWidth="234.0" textAlignment="CENTER" wrapText="true" />
+        <Label fx:id="eventManagementErrorLabel" layoutX="226.0" layoutY="361.0" prefHeight="19.0" prefWidth="198.0" textAlignment="CENTER" wrapText="true" />
         <Button layoutX="117.0" layoutY="388.0" mnemonicParsing="false" onAction="#createEventOnActionButton" prefHeight="47.0" prefWidth="71.0" styleClass="button" stylesheets="@StyleSheet.css" text="Create" textAlignment="CENTER" wrapText="true" />
       <Button layoutX="341.0" layoutY="388.0" mnemonicParsing="false" onAction="#eventSummaryOnActionButton" prefHeight="47.0" prefWidth="71.0" styleClass="button" stylesheets="@StyleSheet.css" text="Summary" textAlignment="CENTER" wrapText="true" />
     </children>

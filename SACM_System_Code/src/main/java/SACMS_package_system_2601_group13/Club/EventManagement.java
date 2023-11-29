@@ -17,7 +17,7 @@ import java.sql.Date;
 import java.sql.Time;
 
 public class EventManagement extends Validation {
-
+    // Defining JavaFx IDs to connect Java FXML file for event management page
     @FXML
     private Label eventManagementErrorLabel;
     @FXML
@@ -58,7 +58,10 @@ public class EventManagement extends Validation {
 
 
     // Creating runnable object to execute the object frequently and assigned using lambda
-    Runnable viewEvent = () -> tableViewController.viewTable(eventManagementTable, eventIDColumn, eventNameColumn, eventDateColumn, eventStartTimeColumn, eventEndTimeColumn, eventDescriptionColumn);
+    // Use to view the event table in the event management page
+    Runnable viewEventManagementTable = () -> tableViewController.viewTable(eventManagementTable, eventIDColumn,
+            eventNameColumn, eventDateColumn, eventStartTimeColumn, eventEndTimeColumn, eventDescriptionColumn);
+
 
     // No need of another name validator because the event name validator is already in the event creation page
     @Override
@@ -81,7 +84,7 @@ public class EventManagement extends Validation {
     @FXML
     protected void loadTableOnActionButton() {
         // To load the event management table
-        viewEvent.run();
+        viewEventManagementTable.run();
         // To edit the event management
         eventNameColumn.setCellFactory(TextFieldTableCell.<TableViewEncapsulation>forTableColumn());
         eventDescriptionColumn.setCellFactory(TextFieldTableCell.<TableViewEncapsulation>forTableColumn());
@@ -148,7 +151,7 @@ public class EventManagement extends Validation {
             manageData.modifyData(clubAndClubAdvisorDataDeleteQuery);
 
             // Refresh the table after deleting an event
-            viewEvent.run();
+            viewEventManagementTable.run();
         }
     }
 
@@ -197,8 +200,12 @@ public class EventManagement extends Validation {
             TableViewEncapsulation selectedEvent = eventManagementTable.getSelectionModel().getSelectedItem();
 
             // Setting the event name to the report generation class
-            String eventName = selectedEvent.getEventName();
-            reportGeneration.setEventName(eventName);
+            reportGeneration.setEventName(selectedEvent.getEventName());
+            reportGeneration.setEventID(selectedEvent.getEventID());
+            reportGeneration.setEventDate(selectedEvent.getEventDate());
+            reportGeneration.setEventTime(selectedEvent.getEventStartTime());
+            reportGeneration.eventReport();
+
         }
     }
 
