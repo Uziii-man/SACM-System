@@ -52,7 +52,7 @@ public class SignUp extends Validation {
                     labelName.setText("Name must not contain spaces");
                 } else {
                     // Valid name
-                    labelName.setTextFill(Color.GREEN);
+                    labelName.setTextFill(Color.DARKGREEN);
                     labelName.setText("Name is Valid");
                     isValidData = true;
                 }
@@ -61,6 +61,8 @@ public class SignUp extends Validation {
         return isValidData;
     }
 
+
+    // Common validation checker for both club advisor and student
     boolean commonValidationChecker;
     private void commonValidationChecker(){
         // Getting validation in terms of boolean from the UserValidator class
@@ -81,9 +83,11 @@ public class SignUp extends Validation {
         // email validation
         setEmail(emailTextField.getText());
         boolean isValidEmail = emailValidator(emailErrorLabel, emailTextField);
+
         // password validation
         setPassword(passwordTextField.getText());
         boolean isValidPassword = passwordValidator(passwordErrorLabel, passwordTextField);
+
         // rePassword validation
         setPassword(rePasswordTextField.getText());
         boolean isValidRePassword = passwordValidator(rePasswordErrorLabel, rePasswordTextField);
@@ -92,7 +96,7 @@ public class SignUp extends Validation {
         boolean isBothPasswordSame = false;
         if (passwordTextField.getText().equals(rePasswordTextField.getText())) {
             isBothPasswordSame = true;
-            passwordMismatchErrorLabel.setTextFill(Color.GREEN);
+            passwordMismatchErrorLabel.setTextFill(Color.DARKGREEN);
             passwordMismatchErrorLabel.setText("Password Matches");
         } else {
             passwordMismatchErrorLabel.setTextFill(Color.RED);

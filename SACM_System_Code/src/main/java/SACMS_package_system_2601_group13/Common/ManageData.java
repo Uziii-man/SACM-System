@@ -85,8 +85,8 @@ public class ManageData {
                 table2DRecords.add(row);
             }
         } catch (SQLException e) {
-            alertFunctionBox("Data Retrieving", "Error in Gathering 2D Data",
-                    "Please check the database connectivity and try again.");
+//            alertFunctionBox("Data Retrieving", "Error in Gathering 2D Data",
+//                    "Please check the database connectivity and try again.");
         } finally {
             // Closing the database connection via DatabaseManager Class
             DatabaseManager.closeConnection();

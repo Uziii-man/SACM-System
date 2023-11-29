@@ -1,5 +1,7 @@
 package SACMS_package_system_2601_group13.Club;
 
+import SACMS_package_system_2601_group13.Common.ManageData;
+import SACMS_package_system_2601_group13.Common.Validation;
 import SACMS_package_system_2601_group13.MainController;
 import SACMS_package_system_2601_group13.TableView.TableViewController;
 import SACMS_package_system_2601_group13.TableView.TableViewEncapsulation;
@@ -8,12 +10,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.paint.Color;
 
 import java.sql.Date;
 import java.sql.Time;
 
-public class EventManagement {
+public class EventManagement extends Validation {
 
     @FXML
     private Label eventManagementErrorLabel;
@@ -35,7 +38,14 @@ public class EventManagement {
 
     // Creating constructor for classes
     MainController mainController = new MainController();
+    ManageData manageData = new ManageData();
     TableViewController tableViewController = new TableViewController();
+    ReportGeneration reportGeneration = new ReportGeneration();
+
+    EventCreation eventCreation = new EventCreation();
+
+    // Creating variables for the event management page
+    private String queryUpdate;
 
 //    // To store the eventID
 //    private int eventID;
@@ -50,6 +60,11 @@ public class EventManagement {
     // Creating runnable object to execute the object frequently and assigned using lambda
     Runnable viewEvent = () -> tableViewController.viewTable(eventManagementTable, eventIDColumn, eventNameColumn, eventDateColumn, eventStartTimeColumn, eventEndTimeColumn, eventDescriptionColumn);
 
+    // No need of another name validator because the event name validator is already in the event creation page
+    @Override
+    public boolean nameValidator(Label labelName) {
+        return false;
+    }
 
     // Method to set label colors and texts
     private void setLabelProperties(Color color, String text) {
@@ -57,24 +72,84 @@ public class EventManagement {
         eventManagementErrorLabel.setText(text);
     }
 
+    private void setLabelProperties(Label eventManagementErrorLabel, Color color, String text) {
+        eventManagementErrorLabel.setTextFill(color);
+        eventManagementErrorLabel.setText(text);
+    }
 
     // To load the event management table
     @FXML
     protected void loadTableOnActionButton() {
         // To load the event management table
         viewEvent.run();
+        // To edit the event management
+        eventNameColumn.setCellFactory(TextFieldTableCell.<TableViewEncapsulation>forTableColumn());
+        eventDescriptionColumn.setCellFactory(TextFieldTableCell.<TableViewEncapsulation>forTableColumn());
+        updateEventTable();
+
     }
 
     // To update the event management table
     private void updateEventTable() {
+        // Setting the error label to show the user to select a row to edit
+        // To display the club name is updated
+        setLabelProperties(eventManagementErrorLabel, Color.BLACK, "Please select a row to edit");
 
+        // Event ID column cannot be edited because it is the primary key in the database
+        // To edit event name colum
+        eventNameColumn.setOnEditCommit(event -> {
+            TableViewEncapsulation tableViewEncapsulation = event.getTableView().getItems().get(event.getTablePosition().getRow());
+
+            // Validation for event name
+            eventCreation.setEventName(event.getNewValue());
+            boolean validName =  eventCreation.nameValidator(eventManagementErrorLabel);
+            if (validName) {
+                tableViewEncapsulation.setClubAbbreviation(event.getNewValue());
+                queryUpdate = "UPDATE event SET EventName = '" + event.getNewValue() + "' WHERE EventID = '" + tableViewEncapsulation.getEventID() + "'";
+                manageData.modifyData(queryUpdate);
+                // To display the club name is updated
+                setLabelProperties(eventManagementErrorLabel, Color.GREEN, "Event Name is Updated");
+            }
+        });
+
+        // To edit event description column
+        eventDescriptionColumn.setOnEditCommit(event -> {
+            TableViewEncapsulation tableViewEncapsulation = event.getTableView().getItems().get(event.getTablePosition().getRow());
+
+            // Validation for event description
+            setDescription(event.getNewValue());
+            boolean validDescription = descriptionValidator(eventManagementErrorLabel);
+            if (validDescription) {
+                queryUpdate = "UPDATE event SET EventDescription = '" + event.getNewValue() + "' WHERE EventID = '" + tableViewEncapsulation.getEventID() + "'";
+                manageData.modifyData(queryUpdate);
+                // To display the club description is updated
+                setLabelProperties(eventManagementErrorLabel, Color.GREEN, "Event Description is Updated");
+            }
+        });
     }
 
 
-    // To delete an event
+    // If the club advisor wants to delete an event
     @FXML
     protected void deleteEventOnActionButton(ActionEvent actionEvent) throws Exception {
+        TableView.TableViewSelectionModel<TableViewEncapsulation> selectionModel = eventManagementTable.getSelectionModel();
+        if (selectionModel.isEmpty()) {
+            // The club advisor doesn't select a row to delete
+            setLabelProperties(eventManagementErrorLabel, Color.RED, "Select a event to delete");
+        } else {
+            TableViewEncapsulation selectedClub = eventManagementTable.getSelectionModel().getSelectedItem();
+            int eventID = selectedClub.getEventID();
 
+            String attendanceDataDeleteQuery = "DELETE FROM attendance WHERE EventID = '" + eventID + "'";
+            manageData.modifyData(attendanceDataDeleteQuery);
+
+            // Query for event table to delete data
+            String clubAndClubAdvisorDataDeleteQuery = "DELETE FROM event WHERE EventID = '" + eventID + "'";
+            manageData.modifyData(clubAndClubAdvisorDataDeleteQuery);
+
+            // Refresh the table after deleting an event
+            viewEvent.run();
+        }
     }
 
     // To create an event
@@ -91,7 +166,7 @@ public class EventManagement {
         TableView.TableViewSelectionModel<TableViewEncapsulation> selectionModel = eventManagementTable.getSelectionModel();
         if (selectionModel.isEmpty()) {
             // The club is not selected to join
-            setLabelProperties(Color.RED , "Select a row to mark attendance");
+            setLabelProperties(Color.RED , "Select a event to mark attendance");
         } else {
             // To get the selected and insert row
             TableViewEncapsulation selectedEvent = eventManagementTable.getSelectionModel().getSelectedItem();
@@ -112,6 +187,21 @@ public class EventManagement {
     }
 
 
+    @FXML
+    protected void eventSummaryOnActionButton(ActionEvent actionEvent) {
+        TableView.TableViewSelectionModel<TableViewEncapsulation> selectionModel = eventManagementTable.getSelectionModel();
+        if (selectionModel.isEmpty()) {
+            // The club is not selected to join
+            setLabelProperties(Color.RED, "Select a event to Generate Report");
+        } else {
+            TableViewEncapsulation selectedEvent = eventManagementTable.getSelectionModel().getSelectedItem();
+
+            // Setting the event name to the report generation class
+            String eventName = selectedEvent.getEventName();
+            reportGeneration.setEventName(eventName);
+        }
+    }
+
     // To go back to the previous page
     @FXML
     protected void backOnActionButton(ActionEvent actionEvent) throws Exception {
@@ -119,7 +209,4 @@ public class EventManagement {
     }
 
 
-    public void eventSummaryOnActionButton(ActionEvent actionEvent) {
-
-    }
 }

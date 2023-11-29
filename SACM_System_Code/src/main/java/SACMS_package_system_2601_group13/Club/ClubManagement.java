@@ -70,6 +70,7 @@ public class ClubManagement extends Validation {
     public int getClubID() {
         return clubID;
     }
+
     public void setClubID(int clubID) {
         this.clubID = clubID;
     }
@@ -80,6 +81,7 @@ public class ClubManagement extends Validation {
     public String getClubName() {
         return clubName;
     }
+
     public void setClubName(String clubName) {
         this.clubName = clubName;
     }
@@ -167,7 +169,7 @@ public class ClubManagement extends Validation {
         }
 
         // To check if all the details are correct
-        if(isValidClubName && isValidClubAbbreviation && isValidClubDescription){
+        if (isValidClubName && isValidClubAbbreviation && isValidClubDescription){
             // Get the current date in the local desktop's time zone
             LocalDate currentDate = LocalDate.now();
             // Convert to java.sql.Date for insertion into the database
@@ -240,9 +242,9 @@ public class ClubManagement extends Validation {
         // To edit club name colum
         clubNameColumn.setOnEditCommit(event -> {
             TableViewEncapsulation tableViewEncapsulation = event.getTableView().getItems().get(event.getTablePosition().getRow());
-            setClubName(event.getNewValue());
 
             // Validation for club name
+            setClubName(event.getNewValue());
             boolean validName = nameValidator(clubManagementErrorLabel);
             if (validName) {
                 tableViewEncapsulation.setClubAbbreviation(event.getNewValue());
@@ -295,7 +297,7 @@ public class ClubManagement extends Validation {
             setLabelProperties(clubManagementErrorLabel, Color.RED, "Select a row to delete");
         } else {
             TableViewEncapsulation selectedClub = clubManagementTable.getSelectionModel().getSelectedItem();
-            Integer clubID = selectedClub.getClubID();
+            int clubID = selectedClub.getClubID();
 
             // Query for event table to delete data
             // Order --> attendance table --> event table --> club and club advisor table  --> club and student table --> club table

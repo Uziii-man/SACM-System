@@ -66,8 +66,7 @@ public class TableViewEncapsulation {
         this.attendanceCheckbox = attendanceCheckbox;
     }
 
-//    public TableViewEncapsulation(int e, String s, String s1, String s2, String s3) {
-//    }
+
 
     // Getter and setter for above declared variables
     public void setClubID(int clubID) {
@@ -182,6 +181,7 @@ public class TableViewEncapsulation {
     public void setStudentID(String studentID) {
         this.studentID = studentID;
     }
+
     public String getStudentID() {
         return studentID;
     }
@@ -189,6 +189,7 @@ public class TableViewEncapsulation {
     public String getStudentFirstName() {
         return studentFirstName;
     }
+
     public String getStudentLastName() {
         return studentLastName;
     }

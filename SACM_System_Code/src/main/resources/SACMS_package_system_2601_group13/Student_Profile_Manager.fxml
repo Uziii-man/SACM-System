@@ -10,6 +10,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -26,14 +27,13 @@
          </font>
       </Text>
       <Button layoutX="14.0" layoutY="411.0" mnemonicParsing="false" onAction="#backOnActionButton" prefHeight="25.0" prefWidth="68.0" styleClass="button" stylesheets="@StyleSheet.css" text="Back" />
-      <Label fx:id="UserIDLabel" layoutX="461.0" layoutY="14.0" prefHeight="25.0" prefWidth="122.0" />
       <TabPane layoutX="38.0" layoutY="128.0" prefHeight="271.0" prefWidth="575.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab closable="false" text="Leave Club">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="studentLeaveClubTable" layoutX="75.0" layoutY="14.0" prefHeight="189.0" prefWidth="425.0">
+                        <TableView fx:id="studentLeaveClubTable" layoutX="75.0" layoutY="7.0" prefHeight="189.0" prefWidth="425.0">
                           <columns>
                             <TableColumn fx:id="studentClubIDColumn" editable="false" prefWidth="54.0" resizable="false" sortable="false" text="Club ID" />
                             <TableColumn fx:id="studentClubNameColumn" editable="false" prefWidth="138.0" resizable="false" sortable="false" text="Club Name" />
@@ -41,6 +41,8 @@
                           </columns>
                         </TableView>
                         <Button layoutX="236.0" layoutY="216.0" mnemonicParsing="false" onAction="#studentLeaveClubOnActionButton" prefHeight="25.0" prefWidth="103.0" text="Leave Club" textFill="RED" />
+                        <Button layoutX="507.0" layoutY="216.0" mnemonicParsing="false" onAction="#loadTableOnActionButton" prefHeight="25.0" prefWidth="68.0" text="Load" />
+                        <Label fx:id="studentProfileManagementLeaveClubErrorLabel" layoutX="209.0" layoutY="196.0" prefHeight="17.0" prefWidth="157.0" />
                      </children>
                   </AnchorPane>
             </content>
@@ -55,20 +57,22 @@
                         <TextField fx:id="firstNameTextField" layoutX="110.0" layoutY="23.0" prefHeight="25.0" prefWidth="135.0" styleClass="textField" stylesheets="@StyleSheet.css" />
                         <TextField fx:id="gradeTextField" layoutX="110.0" layoutY="86.0" prefHeight="25.0" prefWidth="136.0" styleClass="textField" stylesheets="@StyleSheet.css" />
                         <TextField fx:id="passwordTextField" layoutX="110.0" layoutY="157.0" prefHeight="25.0" prefWidth="135.0" styleClass="textField" stylesheets="@StyleSheet.css" />
-                        <Label fx:id="firstNameErrorLabel" layoutX="103.0" layoutY="44.0" prefHeight="17.0" prefWidth="150.0" textAlignment="CENTER" />
-                        <Label fx:id="gradeErrorLabel" layoutX="102.0" layoutY="111.0" prefHeight="17.0" prefWidth="150.0" textAlignment="CENTER" />
-                        <Label fx:id="passwordErrorLabel" layoutX="103.0" layoutY="182.0" prefHeight="17.0" prefWidth="150.0" textAlignment="CENTER" />
-                        <Text layoutX="356.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
-                        <Text layoutX="342.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name" />
-                        <TextField fx:id="lastNameTextField" layoutX="303.0" layoutY="21.0" prefHeight="25.0" prefWidth="135.0" styleClass="textField" stylesheets="@StyleSheet.css" />
-                        <Text layoutX="332.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Re - Password" />
-                        <TextField fx:id="emailTextField" layoutX="302.0" layoutY="87.0" prefHeight="25.0" prefWidth="143.0" styleClass="textField" stylesheets="@StyleSheet.css" />
-                        <TextField fx:id="rePasswordTextField" layoutX="303.0" layoutY="157.0" prefHeight="25.0" prefWidth="135.0" styleClass="textField" stylesheets="@StyleSheet.css" />
-                        <Label fx:id="lastNameErrorLabel" layoutX="296.0" layoutY="48.0" prefHeight="17.0" prefWidth="150.0" textAlignment="CENTER" />
-                        <Label fx:id="emailErrorLabel" layoutX="272.0" layoutY="113.0" prefHeight="17.0" prefWidth="206.0" textAlignment="CENTER" />
-                        <Label fx:id="rePasswordErrorLabel" layoutX="296.0" layoutY="182.0" prefHeight="17.0" prefWidth="150.0" textAlignment="CENTER" />
-                        <Label fx:id="passwordMismatchErrorLabel" layoutX="177.0" layoutY="191.0" prefHeight="17.0" prefWidth="222.0" textAlignment="CENTER" />
-                        <Button layoutX="211.0" layoutY="216.0" mnemonicParsing="false" onAction="#studentUpdateDetailsOnActionButton" prefHeight="25.0" prefWidth="122.0" styleClass="button" stylesheets="@StyleSheet.css" text="Update" textFill="#01835c" />
+                        <Label fx:id="firstNameErrorLabel" layoutX="110.0" layoutY="49.0" prefHeight="18.0" prefWidth="134.0" textAlignment="CENTER" wrapText="true" />
+                        <Label fx:id="gradeErrorLabel" layoutX="110.0" layoutY="113.0" prefHeight="17.0" prefWidth="135.0" textAlignment="CENTER" wrapText="true" />
+                        <Label fx:id="passwordErrorLabel" layoutX="112.0" layoutY="179.0" prefHeight="17.0" prefWidth="134.0" textAlignment="CENTER" wrapText="true" />
+                        <Text layoutX="380.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
+                        <Text layoutX="367.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name" />
+                        <TextField fx:id="lastNameTextField" layoutX="328.0" layoutY="22.0" prefHeight="25.0" prefWidth="135.0" styleClass="textField" stylesheets="@StyleSheet.css" />
+                        <Text layoutX="356.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Re - Password" />
+                        <TextField fx:id="emailTextField" layoutX="326.0" layoutY="84.0" prefHeight="25.0" prefWidth="143.0" styleClass="textField" stylesheets="@StyleSheet.css" />
+                        <TextField fx:id="rePasswordTextField" layoutX="327.0" layoutY="154.0" prefHeight="25.0" prefWidth="135.0" styleClass="textField" stylesheets="@StyleSheet.css" />
+                        <Label fx:id="lastNameErrorLabel" layoutX="330.0" layoutY="49.0" prefHeight="17.0" prefWidth="138.0" textAlignment="CENTER" wrapText="true" />
+                        <Label fx:id="emailErrorLabel" layoutX="324.0" layoutY="110.0" prefHeight="17.0" prefWidth="151.0" textAlignment="CENTER" wrapText="true" />
+                        <Label fx:id="rePasswordErrorLabel" layoutX="326.0" layoutY="179.0" prefHeight="17.0" prefWidth="143.0" textAlignment="CENTER" wrapText="true" />
+                        <Label fx:id="passwordMismatchErrorLabel" layoutX="206.0" layoutY="196.0" prefHeight="17.0" prefWidth="180.0" textAlignment="CENTER" />
+                        <Button layoutX="227.0" layoutY="216.0" mnemonicParsing="false" onAction="#studentUpdateDetailsOnActionButton" prefHeight="25.0" prefWidth="122.0" styleClass="button" stylesheets="@StyleSheet.css" text="Update" textFill="#01835c" />
+                        <Button layoutX="502.0" layoutY="216.0" mnemonicParsing="false" onAction="#loadStudentDataOnActionButton" prefHeight="25.0" prefWidth="68.0" text="Load" />
+                        <Line endX="-12.0" endY="94.0" layoutX="299.0" layoutY="83.0" startX="-12.0" startY="-63.0" />
                      </children>
                   </AnchorPane>
             </content>

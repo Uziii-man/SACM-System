@@ -47,7 +47,6 @@ public class EventCreation extends Validation {
     }
     public void setEventName(String eventName) {
         this.eventName = eventName;
-//        eventNameTextField.setText(eventName);
     }
 
 
@@ -68,19 +67,19 @@ public class EventCreation extends Validation {
         } else {
             // To check if the event name contains only letters and numbers
             if (!eventName.matches("^[a-zA-Z0-9 ]+")) {
+                // If the event name contains other characters, the user is asked to enter another event name
                 setLabelProperties(labelName ,Color.RED, "Invalid Event Name");
             } else {
                 // To check if the event name is already in the database
                 String query = "SELECT EventName FROM event WHERE EventName = '" + eventName + "'";
                 ArrayList<Object> eventNameList = manageData.get1DArrayData(query);
                 if (!eventNameList.isEmpty()) {
+                    // If the event name is already in the database, the user is asked to enter another event name
                     setLabelProperties(labelName ,Color.RED, "Event Name Already Exists");
                 } else {
                     setLabelProperties(labelName ,Color.GREEN, "Valid Event Name");
                     isValidData = true;
                 }
-//                setLabelProperties(labelName ,Color.GREEN, "Valid Event Name");
-//                isValidData = true;
             }
         }
         return isValidData;
@@ -97,9 +96,10 @@ public class EventCreation extends Validation {
             int endTimeHour = Integer.parseInt(eventEndTimeHourTextField.getText());
             int endTimeMinute = Integer.parseInt(eventEndTimeMinuteTextField.getText());
 
+            // Start time and end time should be in 24-hour format
             if(startTimeHour < 0 || startTimeHour > 23 || startTimeMinute < 0 || startTimeMinute > 59 ||
                     endTimeHour < 0 || endTimeHour > 23 || endTimeMinute < 0 || endTimeMinute > 59){
-                setLabelProperties(eventTimeErrorLabel, Color.RED, "Invalid Time");
+                setLabelProperties(eventTimeErrorLabel, Color.RED, "Invalid Time Format");
             }else{
                 // To check if the start time is greater than the end time
                 if(startTimeHour > endTimeHour){
@@ -120,17 +120,22 @@ public class EventCreation extends Validation {
                     }
                 }
             }
+            if (isValidData){
+
+            }
         }
         catch (NumberFormatException e){
+            // If the user enters some other character other than numbers
             setLabelProperties(eventTimeErrorLabel ,Color.RED, "Invalid Time");
         }
+
         return isValidData;
     }
 
 
-    // To check if all the details are valid
+    // To check if all the event details are valid or not in one method
+    // Initializing the variables
     boolean isValidAllDetails;
-
     Time sqlStartTime = null;
     Time sqlEndTimes = null;
     Date datePicked = null;
@@ -147,7 +152,6 @@ public class EventCreation extends Validation {
 
         // To check if the date is selected or not
         boolean isValidDate = false;
-//        Date datePicked = null;
         if (datePicker.getValue() != null) {
             // To convert the date picker value to sql date
             datePicked = java.sql.Date.valueOf(datePicker.getValue());
@@ -168,8 +172,6 @@ public class EventCreation extends Validation {
 
         // To check if the time is valid
         boolean isValidTime = timeValidator();
-//        Time sqlStartTime = null;
-//        Time sqlEndTimes = null;
         if (!isValidTime) {
             eventStartTimeHourTextField.clear();
             eventStartTimeMinuteTextField.clear();
@@ -189,7 +191,6 @@ public class EventCreation extends Validation {
             sqlEndTimes = Time.valueOf(combinedEndTimes);
         }
 
-
         // To check if the event name, date, description and time is valid
         if (isValidEventName && isValidDescription && isValidDate && isValidTime) {
             isValidAllDetails = true;
@@ -197,6 +198,7 @@ public class EventCreation extends Validation {
         }
     return isValidAllDetails;
     }
+
 
     // To create an event
     @FXML
@@ -246,6 +248,7 @@ public class EventCreation extends Validation {
             mainController.navigateFunction(actionEvent, "Event_Management.fxml", "Event Management");
         }
     }
+
 
     // To move back to the event management page
     @FXML

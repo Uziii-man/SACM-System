@@ -47,9 +47,26 @@ public class ViewAndJoinClubs {
     // To view the table when it loads using initialize method
     @FXML
     private void initialize() {
-        tableViewController.viewTable(viewClubsTable, clubIDColumn, clubNameColumn, clubDescriptionColumn);
+        tableViewController.viewTable(viewClubsTable, clubIDColumn, clubNameColumn, clubDescriptionColumn,
+                get2DArrayDataForViewJoinClub());
     }
 
+    // Array list
+    public ArrayList<ArrayList<Object>> get2DArrayDataForViewJoinClub() {
+        ArrayList<ArrayList<Object>> clubDetailsList = new ArrayList<>();
+        // Query the database and get the data -> clubDetailsList
+        String query = "SELECT * FROM club";
+
+        // Execute the provided query to get the data
+        ArrayList<ArrayList<Object>> clubDetails2DArray = manageData.get2DArrayData(query);
+
+        // Extract specific columns (0, 1, and 4) and form a new 2D ArrayList
+        for (ArrayList<Object> row : clubDetails2DArray) {
+            ArrayList<Object> newRow = new ArrayList<>(Arrays.asList(row.get(0), row.get(1), row.get(4)));
+            clubDetailsList.add(newRow);
+        }
+        return clubDetailsList;
+    }
 
     // To check if the user has already joined the club and the number of clubs the user has joined
     boolean userJoinedClub;

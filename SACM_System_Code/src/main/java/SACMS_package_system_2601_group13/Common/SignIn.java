@@ -35,8 +35,7 @@ public class SignIn {
     ManageData manageData = new ManageData();
 
     // To check login credentials
-    private boolean validLogin(String querySearch, Label IDErrorLabel, Label passwordErrorLabel, TextField IDTextField,
-                               TextField passwordTextField){
+    private boolean validLogin(String querySearch){
         // To store the login details that comes from the database
         ArrayList<Object> loginDetails = manageData.get1DArrayData(querySearch);
         boolean validLogin = false;
@@ -50,7 +49,7 @@ public class SignIn {
             passwordTextField.clear();
         }
         else {
-            IDErrorLabel.setTextFill(Color.GREEN);
+            IDErrorLabel.setTextFill(Color.DARKGREEN);
             IDErrorLabel.setText("ID Exist");
             // If the user ID exists
             // To check if the password is correct
@@ -82,7 +81,7 @@ public class SignIn {
              String queryClubAdvisorSearch = "SELECT StaffID, Password FROM club_advisor WHERE StaffID = '" + loginUserID + "'";
 
             // Validate the username and password of the club advisor
-            if(validLogin(queryClubAdvisorSearch, IDErrorLabel, passwordErrorLabel, IDTextField, passwordTextField)) {
+            if(validLogin(queryClubAdvisorSearch)) {
                 // Direct to club advisor profile after successful login
                 mainController.navigateFunction(actionEvent, "Club_Advisor_Profile.fxml",
                         "Club Advisor Profile");
@@ -91,7 +90,7 @@ public class SignIn {
         // If the user has selected student previously
         else {
             String queryStudentSearch = "SELECT StudentID, Password FROM student WHERE StudentID = '" + loginUserID + "'";
-            if(validLogin(queryStudentSearch, IDErrorLabel, passwordErrorLabel, IDTextField, passwordTextField)) {
+            if(validLogin(queryStudentSearch)) {
                 // Direct to student profile after successful login
                 mainController.navigateFunction(actionEvent, "Student_Profile.fxml", "Student Profile");
             }

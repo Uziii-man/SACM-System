@@ -16,12 +16,26 @@ public abstract class Validation {
     // For name validation as an abstract method
     public abstract boolean nameValidator(Label labelName);
 
+    // Method to set label colors and texts
+    private void setLabelValidProperties(Label label, String text) {
+        label.setTextFill(Color.DARKGREEN);
+        label.setText(text);
+    }
+
+    // Method to set label colors and texts and clear text fields if the data is invalid
+    private void setLabelInvalidProperties(Label label, TextField textField , String text) {
+        label.setTextFill(Color.RED);
+        label.setText(text);
+        textField.clear();
+    }
+
     // For ID validation
     private String userID;
 
     public void setUserID(String userID) {
         this.userID = userID;
     }
+
     public String getUserID() {
         return userID;
     }
@@ -31,26 +45,21 @@ public abstract class Validation {
         isValidData = false;
         // Length validation
         if (userID.length() != requiredLength) {
-            labelID.setTextFill(Color.RED);
-            labelID.setText("ID must be " + requiredLength + " characters");
-            textFieldID.clear();
+            // If the ID does not meet the length criteria
+            setLabelInvalidProperties(labelID, textFieldID, "ID must be " + requiredLength + " characters");
         } else {
             // Format validation
             if (!userID.matches(IDPattern)) {
-                labelID.setTextFill(Color.RED);
-                labelID.setText("Invalid ID format");
-                textFieldID.clear();
+                // If the ID does not match the format criteria
+                setLabelInvalidProperties(labelID, textFieldID, "Invalid ID format");
             } else {
                 // Check if ID exists in the database
                 if(manageData.get1DArrayData("SELECT " + columName + " FROM " + tableName).contains(userID)){
                     // ID already exists in the database
-                    labelID.setTextFill(Color.RED);
-                    labelID.setText("ID Exists");
-                    textFieldID.clear();
+                    setLabelInvalidProperties(labelID, textFieldID, "ID Exists");
                 } else {
-                    // ID available
-                    labelID.setTextFill(Color.GREEN);
-                    labelID.setText("ID Valid");
+                    // ID available and valid
+                    setLabelValidProperties(labelID, "ID is Valid");
                     isValidData = true;
                 }
             }
@@ -64,6 +73,7 @@ public abstract class Validation {
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -78,16 +88,9 @@ public abstract class Validation {
         int emailLength = email.length();
 
         if (!email.matches(emailRegex) || emailLength < 10 || emailLength > 50) {
-            labelName.setTextFill(Color.RED);
-            if (!email.matches(emailRegex)) {
-                labelName.setText("Invalid Email");
-            } else {
-                labelName.setText("Characters Limited");
-            }
-            textFieldName.clear();
+            setLabelInvalidProperties(labelName, textFieldName, "Invalid Email");
         } else {
-            labelName.setTextFill(Color.GREEN);
-            labelName.setText("Email is Valid");
+            setLabelValidProperties(labelName, "Email is Valid");
             isValidData = true;
         }
         return isValidData;
@@ -99,6 +102,7 @@ public abstract class Validation {
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -111,18 +115,14 @@ public abstract class Validation {
         int maxLength = 10;
         // Check if the password meets the length criteria
         if (getPassword().length() < minLength || getPassword().length() > maxLength) {
-            labelName.setTextFill(Color.RED);
-            labelName.setText("Password must be between " + minLength + " and " + maxLength + " characters");
-            textFieldName.clear();
+            // If the password does not meet the length criteria
+            setLabelInvalidProperties(labelName, textFieldName, "Password must be between " + minLength + " and " + maxLength + " characters");
         } else {
             // Check if the password contains at least one special character
             if (!getPassword().matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\",.<>/?].*")) {
-                labelName.setTextFill(Color.RED);
-                labelName.setText("Password must contain at least one special character");
-                textFieldName.clear();
+                setLabelInvalidProperties(labelName, textFieldName, "Password must contain at least one special character");
             } else {
-                labelName.setTextFill(Color.GREEN);
-                labelName.setText("Password is Valid");
+                setLabelValidProperties(labelName, "Password is Valid");
                 isValidData = true;
             }
         }
@@ -135,6 +135,7 @@ public abstract class Validation {
     public String getGrade() {
         return grade;
     }
+
     public void setGrade(String grade) {
         this.grade = grade;
     }
@@ -147,18 +148,15 @@ public abstract class Validation {
             int intGrade = Integer.parseInt(getGrade());
             // Check if the grade is within the specified range
             if (intGrade >= minGrade && intGrade <= maxGrade) {
-                labelGrade.setTextFill(Color.GREEN);
-                labelGrade.setText("Grade is Valid");
+                setLabelValidProperties(labelGrade, "Grade is Valid");
                 isValidData = true;
             } else {
-                labelGrade.setTextFill(Color.RED);
-                labelGrade.setText("Enter a valid grade between " + minGrade + " and " + maxGrade);
-                textFieldGrade.clear();
+                // If the grade is not within the specified range
+                setLabelInvalidProperties(labelGrade, textFieldGrade, "Enter a valid grade between " + minGrade + " and " + maxGrade);
             }
         } catch (NumberFormatException e) {
-            labelGrade.setTextFill(Color.RED);
-            labelGrade.setText("Enter a valid numeric grade");
-            textFieldGrade.clear();
+            // If the grade is not a number
+            setLabelInvalidProperties(labelGrade, textFieldGrade, "Enter a valid numeric grade");
         }
         return isValidData;
     }
@@ -166,9 +164,11 @@ public abstract class Validation {
 
     // Setting up the getter and setter for club abbreviation
     private String clubAbbreviation;
+
     public String getClubAbbreviation() {
         return clubAbbreviation;
     }
+
     public void setClubAbbreviation(String clubAbbreviation) {
         this.clubAbbreviation = clubAbbreviation;
     }
@@ -199,7 +199,7 @@ public abstract class Validation {
                     labelAbbreviation.setText("Club Abbreviation Exists");
                 } else {
                     // Club abbreviation available
-                    labelAbbreviation.setTextFill(Color.GREEN);
+                    labelAbbreviation.setTextFill(Color.DARKGREEN);
                     labelAbbreviation.setText("Club Abbreviation is Valid");
                     isValidData = true;
                 }
@@ -214,6 +214,7 @@ public abstract class Validation {
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -235,7 +236,7 @@ public abstract class Validation {
                 labelDescription.setText("Description must contain only numbers and alphabets");
             } else {
                 // Valid description
-                labelDescription.setTextFill(Color.GREEN);
+                labelDescription.setTextFill(Color.DARKGREEN);
                 labelDescription.setText("Description is Valid");
                 isValidData = true;
             }
@@ -249,6 +250,7 @@ public abstract class Validation {
     public Date getEventDate() {
         return eventDate;
     }
+
     public void setEventDate(Date eventDate) {
         this.eventDate = eventDate;
     }
@@ -262,7 +264,7 @@ public abstract class Validation {
         // Convert to java.sql.Date for insertion into the database
         Date presentDate = java.sql.Date.valueOf(currentDate);
         if (eventDate.after(presentDate)) {
-            labelName.setTextFill(Color.GREEN);
+            labelName.setTextFill(Color.DARKGREEN);
             labelName.setText("Date is valid");
             isValidData = true;
         } else {

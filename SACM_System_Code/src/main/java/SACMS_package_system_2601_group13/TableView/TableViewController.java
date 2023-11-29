@@ -12,7 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.ArrayList;
+import java.util.ArrayList;;
 
 
 public class TableViewController {
@@ -20,23 +20,21 @@ public class TableViewController {
     SignIn signIn = new SignIn();
 
 
-    /// Table View for the club advisor and student to view all the clubs
+    // Table View for the club advisor and student to view all the clubs and join
+    // Also used for students to leave the club they joined
     public void viewTable(TableView<TableViewEncapsulation> tableName,
                           TableColumn<TableViewEncapsulation, Integer> clubIDColumn,
                           TableColumn<TableViewEncapsulation, String> clubNameColumn,
-                          TableColumn<TableViewEncapsulation, String> clubDescriptionColumn) {
+                          TableColumn<TableViewEncapsulation, String> clubDescriptionColumn,
+                          ArrayList<ArrayList<Object>> clubDetailsList) {
 
-        // Query the database and get the data -> clubDetailsList
-        String query = "SELECT * FROM club";
-
-        // Get the data from the database
-        ArrayList<ArrayList<Object>> clubDetailsList = manageData.get2DArrayData(query);
         // ObservableList is a list that enables listeners to track changes when they occur
         ObservableList<TableViewEncapsulation> clubDetailsObservableList = FXCollections.observableArrayList();
 
+        // Add the details to the observable list
         for (ArrayList<Object> row : clubDetailsList) {
             // Create a TableViewEncapsulation object directly
-            clubDetailsObservableList.add(new TableViewEncapsulation((Integer) row.get(0), String.valueOf(row.get(1)), String.valueOf(row.get(4))));
+            clubDetailsObservableList.add(new TableViewEncapsulation((Integer) row.get(0), (String) row.get(1), (String) row.get(2)));
         }
 
         clubIDColumn.setCellValueFactory(new PropertyValueFactory<>("clubID"));
@@ -224,8 +222,8 @@ public class TableViewController {
                           TableColumn<TableViewEncapsulation, CheckBox> attendanceCheckboxColumn) {
 
         // Get the attendance data from the database
-        String attendanceDtailsQuery = "SELECT * FROM attendance";
-        ArrayList<ArrayList<Object>> attendanceDetailsList = manageData.get2DArrayData(attendanceDtailsQuery);
+        String attendanceDetailsQuery = "SELECT * FROM attendance";
+        ArrayList<ArrayList<Object>> attendanceDetailsList = manageData.get2DArrayData(attendanceDetailsQuery);
 
         // ObservableList is a list that enables listeners to track changes when they occur
         ObservableList<TableViewEncapsulation> attendaceDetailsObservableList = FXCollections.observableArrayList();
@@ -234,22 +232,14 @@ public class TableViewController {
         String studentDetailsQuery = "SELECT * FROM student";
         ArrayList<ArrayList<Object>> studentDetailsList = manageData.get2DArrayData(studentDetailsQuery);
 
-
-
         // To add the attendance to the observable list that the attendance table
-
         for (ArrayList<Object> attendanceRow : attendanceDetailsList) {
-            System.out.println("\nEvent ID: " + attendanceRow.get(0));
             for (ArrayList<Object> studentRow : studentDetailsList) {
-                System.out.println("Student ID: " + studentRow.get(0));
-                System.out.println("Event ID " + attendanceRow.get(0));
-                System.out.println("Event " + eventID);
+                // To check if the event ID and student ID matches
                 if (attendanceRow.get(0).equals(eventID)) {
-                    System.out.println("\n First IF \n" );
+                    // To check if the student ID matches
                     if (attendanceRow.get(1).equals(studentRow.get(0))) {
-                        System.out.println("\n Seconds IF \n");
-                                // Create a TableViewEncapsulation object directly
-                        System.out.println("Attendance: " + attendanceRow.get(2));
+                        // Create a TableViewEncapsulation object directly
                         attendaceDetailsObservableList.add(new TableViewEncapsulation(
                                 (String) attendanceRow.get(1),
                                 (String) studentRow.get(1),
