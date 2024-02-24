@@ -1,19 +1,11 @@
 # SACM-System
-OOD CW --> Year 2 Sem 1
+The repository is about school activity managment system to manage clubs and club members, which done as a part of course work for the module Object Oriented Programming in IIT university.
 
 # Components
-1. Designing the UI --> Team 
-2. Selecting your role --> Seth
-3. Sign-up option with validation --> Haroon
-4. Sign-in option --> Gaindu
-5. Club advisor profile managment --> Seth
-6. Student profile managment --> Gaindu
-7. Club managment --> Seth
-8. Club creation --> Uzman
-9. Event handling --> Uzman
-10. Marking the attendance --> Uzman
-11. Generating event summary --> Haroon
-12. View clubs --> Seth
-13. Join or leave a club for students --> Gaindu
-14. Join or leave a club for club advisor --> Haroon
+All the components are done by me except for the css, even though there are different committed profile in the repositories.
+
+# Coding language: Java
+# GUI design: FXML using SceneBuilder
+
+Thanks and Regards
 
