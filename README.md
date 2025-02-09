@@ -1,7 +1,11 @@
 # SACM-System
-The repository is about school activity managment system to manage clubs and club members, which done as a part of course work for the module Object Oriented Programming in IIT Sri Lanka.
 
-# Coding language: Java
+The repository is designed to manage school activities, specifically focusing on club management and club member administration.
 
-# GUI design: FXML using SceneBuilder
+
+Tech Stack
+  1. Java
+  2. MySQL
+  3. JDBC
+  4. Scene-Builder
 
